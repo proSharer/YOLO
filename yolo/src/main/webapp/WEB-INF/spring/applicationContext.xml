@@ -33,4 +33,8 @@
 		<property name="tripService" ref="tripServiceImpl"/>
 	</bean>
 	
+	<bean id = "dailyController" class="com.yolo.daily.web.DailyController">
+		<property name="dailyService" ref="dailyServiceImpl"></property>
+	</bean>
+	
 </beans>
