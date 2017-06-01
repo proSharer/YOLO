@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import com.yolo.daily.vo.DailyVO;
 import com.yolo.like.vo.LikeVO;
+import com.yolo.trip.vo.TripVO;
 
 public class LikeDaoImpl extends SqlSessionDaoSupport implements LikeDao {
 	

@@ -2,7 +2,9 @@ package com.yolo.like.biz;
 
 import java.util.List;
 
+import com.yolo.daily.vo.DailyVO;
 import com.yolo.like.vo.LikeVO;
+import com.yolo.trip.vo.TripVO;
 
 public interface LikeBiz {
 	
