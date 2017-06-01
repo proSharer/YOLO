@@ -22,7 +22,7 @@
 		};
 		        
 		$(".geocomplete").geocomplete(options);
-		$(".place")
+
 		$("#addBtn").click(function(){
 	
 			var appendPart = $(".part").html(); 
