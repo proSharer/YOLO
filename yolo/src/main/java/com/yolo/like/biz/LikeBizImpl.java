@@ -6,6 +6,7 @@ import com.yolo.daily.vo.DailyVO;
 import com.yolo.like.dao.LikeDao;
 import com.yolo.like.vo.LikeVO;
 import com.yolo.trip.vo.TripVO;
+import com.yolo.user.vo.UserVO;
 
 public class LikeBizImpl implements LikeBiz {
 	

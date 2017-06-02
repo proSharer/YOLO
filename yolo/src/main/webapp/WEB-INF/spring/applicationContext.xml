@@ -37,4 +37,6 @@
 		<property name="dailyService" ref="dailyServiceImpl"></property>
 	</bean>
 	
+	<bean id="socketContoller" class="com.yolo.common.utilities.handler.socket.web.SocketController" />
+	
 </beans>
