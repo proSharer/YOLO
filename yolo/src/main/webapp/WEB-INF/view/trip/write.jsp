@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@taglib  prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,22 +42,22 @@
 </head>
 <body>
 
-	<form id="writeForm">
+	<form:form id="writeForm" commandName="writeFrm" enctype="multipart/form-data">
 		<input type="text" name="title" placeholder="제목">
 		<input type="text" name="userId" placeholder="userId">
 		<div class="tripPart">
 			<div class="part">
 				<input type="text" name="tripPartListVO.startTime" placeholder="시작시간"><br/>
 				<input type="text" name="tripPartListVO.endTime" placeholder="끝나는시간"><br/>
-				
+				<input type="text" name="tripPartListVO.place" placeholder="장소를 입력해주세요"><br/>
 			
-					<input class="geocomplete" class="contorls" type="text" name="tripPartListVO.place" 
-					placeholder="주소를 입력해주세요." size="90" onClick="value=''" />
+					<input class="geocomplete" class="contorls" type="text" name="tripPartListVO.map" 
+					placeholder="상세주소를 입력해주세요." size="90" onClick="value=''" />
 	
 				<div class="map_canvas"></div>
 				
 				<input type="text" class="timeControl" name="tripPartListVO.timeControl" placeholder="시간구분"><br/>
-				<input type="text" name="tripPartListVO.map" placeholder="지도"><br/>
+				<input type="file" name="tripPartListVO.file"><br/>
 				<textarea name="tripPartListVO.content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
 			</div>
 		</div>
@@ -67,7 +67,7 @@
 		
 		<input type="button" id="writeBtn" value="submit">
 		
-	</form>
+	</form:form>
 	
 </body>
 </html>
