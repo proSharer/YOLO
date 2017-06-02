@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+	<bean id="dataSource" 
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
+		<property name="username" value="YOLO"/>
+		<property name="password" value="yolo"/>
+	</bean>
+	
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- Create -->
+			<tx:method name="insert*" rollback-for="RuntimeException" />
+			<tx:method name="create*" rollback-for="RuntimeException" />
+			<tx:method name="new*" rollback-for="RuntimeException" />
+			<tx:method name="plus*" rollback-for="RuntimeException" />
+			<tx:method name="make*" rollback-for="RuntimeException" />
+			<tx:method name="add*" rollback-for="RuntimeException" />
+			<tx:method name="append*" rollback-for="RuntimeException" />
+			
+			<!-- Read --> <!-- 데이터를 가져오는것이라면 데이터 수정을 하지말아라. ready-only="true" -->
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="read*" read-only="true" />
+			<tx:method name="view*" read-only="true" />
+			
+			<!-- Update -->
+			<tx:method name="update*" rollback-for="RuntimeException" />
+			<tx:method name="modify*" rollback-for="RuntimeException" />
+			<tx:method name="edit*" rollback-for="RuntimeException" />
+			<tx:method name="fix*" rollback-for="RuntimeException" />
+			<tx:method name="alter*" rollback-for="RuntimeException" />
+			<tx:method name="change*" rollback-for="RuntimeException" />
+			
+			<!-- Delete -->
+			<tx:method name="remove*" rollback-for="RuntimeException" />
+			<tx:method name="delete*" rollback-for="RuntimeException" />
+			<tx:method name="erase*" rollback-for="RuntimeException" />
+			<tx:method name="signOut*" rollback-for="RuntimeException" />
+			
+			
+			<!-- ETC -->
+			<tx:method name="tx*" rollback-for="RuntimeException" />
+			<tx:method name="*Action" rollback-for="RuntimeException" />
+			
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * com.yolo
+		
+		..*.*ServiceImpl.*(..))" 
+					id="transactionScope" />
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionScope" />
+	</aop:config>
+
+	 
+	<bean id="sqlSessionFactory"
+			class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource"	ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis.xml"/>
+	</bean>
+	
+	<bean id="sqlSessionTemplate"
+			class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	
+</beans>
