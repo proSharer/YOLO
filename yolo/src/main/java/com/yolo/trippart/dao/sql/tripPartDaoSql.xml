@@ -16,6 +16,8 @@
 								, PLACE 
 								, CONT
 								, MAP
+								, DSPLY_FL_NM
+								, RL_FL_NM
 								 ) 
 				 VALUES			
 				 				(	
@@ -27,6 +29,8 @@
 								, #{place}
 								, #{content}
 								, #{map}
+								, #{displayFileName}
+								, #{realFileName}
 								 ) 
 
 	</insert> 

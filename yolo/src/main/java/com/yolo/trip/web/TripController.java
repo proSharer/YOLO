@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.yolo.common.web.checker.ExtFilter;
 import com.yolo.common.web.checker.ExtensionFilter;
@@ -29,6 +30,15 @@ public class TripController {
 		this.tripService = tripService;
 	}
 	
+	@RequestMapping(value="/trip/list",method=RequestMethod.GET)
+	public ModelAndView viewListPage(){
+		
+		ModelAndView view = new ModelAndView();
+		
+		return view;
+		
+	}
+	
 	@RequestMapping(value="/trip/write",method=RequestMethod.GET)
 	public String viewWritePage(){
 		
@@ -37,6 +47,7 @@ public class TripController {
 	}
 	@RequestMapping(value="/trip/write",method=RequestMethod.POST)
 	public String insertNewTripPart(HttpServletRequest request, TripVO tripVO){
+		
 		List<MultipartFile> files = tripVO.getTripPartListVO().getFile();
 		
 		List<String> displayFileName = new ArrayList<String>();
@@ -46,13 +57,15 @@ public class TripController {
 			for ( int i = 0 ; i< files.size(); i++ ){
 				String originalfileName = files.get(i).getOriginalFilename();
 				String fileName = UUID.randomUUID().toString();
-				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img"+fileName;
+				System.out.println(fileName);
+				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
 				File newFile = new File(filePath);
 				
 				try {
 					files.get(i).transferTo(newFile);
 					ExtensionFilter filter = ExtensionFilterFactory.getFilter(ExtFilter.APACHE_TIKA);
 					boolean isImage = filter.doFilter(newFile.getAbsolutePath(), "image/gif" , "image/jpeg", "image/png", "image/bmp" );
+					
 					if(!isImage){
 						newFile.delete();
 						displayFileName.add("");
@@ -61,6 +74,8 @@ public class TripController {
 					else {
 						displayFileName.add(fileName);
 						realFileName.add(originalfileName);
+						
+						
 					}
 				} catch (IllegalStateException e) {
 					throw new RuntimeException(e.getMessage(),e);
@@ -70,10 +85,14 @@ public class TripController {
 		
 			}
 		}
-	
+		
+		tripVO.getTripPartListVO().setDisplayFileName(displayFileName);
+		tripVO.getTripPartListVO().setRealFileName(realFileName);
+		
 		boolean isSuccess = tripService.addNewOneTrip(tripVO);
 		System.out.println(isSuccess);
 		return "trip/list";
 		
 	}
+	
 }

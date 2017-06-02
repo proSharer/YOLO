@@ -17,11 +17,11 @@ a {
   text-decoration: underline;
 }
 
-.geocomplete { width: 200px}
+#geocomplete { width: 200px}
 
 .map_canvas { 
-  width: 400px; 
-  height: 300px; 
+  width: 600px; 
+  height: 400px; 
   margin: 10px 20px 10px 0;
 }
 

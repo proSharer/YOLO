@@ -28,8 +28,10 @@ public class TripServiceImpl implements TripService{
 		
 		boolean isSuccess = false;
 		
+		System.out.println("===size"+size);
 		for (int i = 0 ; i < size ; i++){
 			TripPartVO tripPartVO = new TripPartVO();
+			
 			tripPartVO.setTripId(tripId);
 			tripPartVO.setStartTime(tripPartListVO.getStartTime().get(i));
 			tripPartVO.setEndTime(tripPartListVO.getEndTime().get(i));
@@ -37,6 +39,8 @@ public class TripServiceImpl implements TripService{
 			tripPartVO.setPlace(tripPartListVO.getPlace().get(i));
 			tripPartVO.setContent(tripPartListVO.getContent().get(i));
 			tripPartVO.setMap(tripPartListVO.getMap().get(i));
+			tripPartVO.setDisplayFileName(tripPartListVO.getDisplayFileName().get(i));
+			tripPartVO.setRealFileName(tripPartListVO.getRealFileName().get(i));
 			
 			isSuccess = tripPartBiz.addOneTripPart(tripPartVO);
 			
