@@ -37,4 +37,8 @@
 		<property name="dailyService" ref="dailyServiceImpl"></property>
 	</bean>
 	
+	<bean id = "messageController" class="com.yolo.message.web.MessageController">
+		<property name="messageService" ref="messageServiceImpl"></property>
+	</bean>
+	
 </beans>

@@ -10,7 +10,7 @@
 		SELECT	LK_ID
 				, USR_ID
 				, DL_ID
-		FROM	LIKE
+		FROM	LK
 		WHERE	USR_ID = #{userVO.userId}
 		AND		DL_ID = #{dailyVO.dailyId}
 	</select>
@@ -19,7 +19,7 @@
 		SELECT	LK_ID
 				, USR_ID
 				, TR_ID
-		FROM	LIKE
+		FROM	LK
 		WHERE	USR_ID = #{userVO.userId}
 		AND		TR_ID = #{tripVO.tripId}
 	</select>
@@ -29,8 +29,8 @@
 				, USR_ID
 				, DL_ID
 				, TR_ID
-		FROM	LIKE
-		WHERE	USR_ID = #{userVO.userId}
+		FROM	LK
+		WHERE	USR_ID = #{userId}
 		ORDER	BY	LK_ID DESC
 	</select>
 	
@@ -43,22 +43,22 @@
 								)
 		VALUES					(
 									'LK-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(LK_ID_SEQ.NEXTVAL, 6, '0')
-									, #{likeVO.userId}
-									, #{likeVO.dailyId}
-									, #{likeVO.tripId}
+									, #{userId}
+									, #{dailyId}
+									, #{tripId}
 								)
 	</insert>
 	
 	<delete id="deleteOneLikeByDailyId" parameterType="hashmap">
 		DELETE	
-		FROM	LIKE
+		FROM	LK
 		WHERE	USR_ID = #{userVO.userId}
 		AND		DL_ID = #{dailyVO.dailyId}
 	</delete>
 
 	<delete id="deleteOneLikeByTripId" parameterType="hashmap">
 		DELETE	
-		FROM	LIKE
+		FROM	LK
 		WHERE	USR_ID = #{userVO.userId}
 		AND		TR_ID = #{tripVO.tripId}
 	</delete>
