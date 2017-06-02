@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="TripPartDao">
+	<insert id="insertOneTripPart" parameterType="TripPartVO">
+		INSERT INTO  TR_PART /*[TripPartDao][insertOneTripPart]*/	
+								(	
+								TR_PART_ID 
+								, TR_ID
+								, ST_TM 
+								, ED_TM 
+								, TM_CTR
+								, PLACE 
+								, CONT
+								, MAP
+								 ) 
+				 VALUES			
+				 				(	
+								'TP-' || TO_CHAR(SYSDATE,'YYYYMMDDHH24')|| '-' || LPAD(TR_PART_ID_SEQ.NEXTVAL,6,'0')
+								, #{tripId}
+								, #{startTime}
+								, #{endTime}
+								, #{timeControl}
+								, #{place}
+								, #{content}
+								, #{map}
+								 ) 
+
+	</insert> 
+	
+
+</mapper>
