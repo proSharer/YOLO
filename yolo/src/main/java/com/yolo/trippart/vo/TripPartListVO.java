@@ -12,12 +12,10 @@ public class TripPartListVO {
 	private List<Integer> endTime;
 	private List<String> timeControl;
 	private List<String> place;
-	private List<MultipartFile> file;
+	private MultipartFile file;
 	private List<String> content;
 	private List<String> map;
-	private List<String> displayFileName;
-	private List<String> realFileName;
-	
+
 	public List<String> getTripPartId() {
 		return tripPartId;
 	}
@@ -66,11 +64,11 @@ public class TripPartListVO {
 		this.place = place;
 	}
 
-	public List<MultipartFile> getFile() {
+	public MultipartFile getFile() {
 		return file;
 	}
 
-	public void setFile(List<MultipartFile> file) {
+	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
 
@@ -90,21 +88,8 @@ public class TripPartListVO {
 		this.map = map;
 	}
 
-	public List<String> getDisplayFileName() {
-		return displayFileName;
-	}
-
-	public void setDisplayFileName(List<String> displayFileName) {
-		this.displayFileName = displayFileName;
-	}
-
-	public List<String> getRealFileName() {
-		return realFileName;
-	}
-
-	public void setRealFileName(List<String> realFileName) {
-		this.realFileName = realFileName;
-	}
+	
+	
 
 
 }
