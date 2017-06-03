@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="TripDao">
+	
+	<insert id="insertOneTrip" parameterType="TripVO">
+		INSERT INTO  TRIP /*[TripDao][insertOneTrip]*/	
+								(	
+								TR_ID 
+								, TITLE
+								, CRT_DT
+								, USR_ID
+								, LIKE_CNT
+								, OVER_ALL
+								 ) 
+				 VALUES			(	
+				 				#{tripId}
+								, #{title}
+								, SYSDATE
+								, #{userId}
+								, 0	
+								, #{overAll}
+								 ) 
+	</insert>
+	
+	<select id="generateTripPK" resultType="string">
+		SELECT	/*[TripDao][generateTripPK]*/	
+				'TR-' || TO_CHAR(SYSDATE,'YYYYMMDDHH24')|| '-' || LPAD(TR_ID_SEQ.NEXTVAL,6,'0')
+		FROM	DUAL
+		
+	</select>
+	
+</mapper>
