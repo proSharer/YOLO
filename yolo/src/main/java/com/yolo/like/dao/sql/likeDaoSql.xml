@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -64,3 +65,71 @@
 	</delete>
 
 </mapper>
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="LikeDao">
+
+	<select id="selectOneLikeByDailyId" parameterType="hashmap" resultType="LikeVO">
+		SELECT	LK_ID
+				, USR_ID
+				, DL_ID
+		FROM	LK
+		WHERE	USR_ID = #{userVO.userId}
+		AND		DL_ID = #{dailyVO.dailyId}
+	</select>
+	
+	<select id="selectOneLikeByTripId" parameterType="hashmap" resultType="LikeVO">
+		SELECT	LK_ID
+				, USR_ID
+				, TR_ID
+		FROM	LK
+		WHERE	USR_ID = #{userVO.userId}
+		AND		TR_ID = #{tripVO.tripId}
+	</select>
+
+	<select id="selectAllLikesByUserID" parameterType="UserVO" resultType="LikeVO">
+		SELECT	LK_ID
+				, USR_ID
+				, DL_ID
+				, TR_ID
+		FROM	LK
+		WHERE	USR_ID = #{userId}
+		ORDER	BY	LK_ID DESC
+	</select>
+	
+	<insert id="insertOneLike" parameterType="LikeVO">
+		INSERT	INTO	LIKE	(
+									LK_ID
+									, USR_ID
+									, DL_ID
+									, TR_ID
+								)
+		VALUES					(
+									'LK-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(LK_ID_SEQ.NEXTVAL, 6, '0')
+									, #{userId}
+									, #{dailyId}
+									, #{tripId}
+								)
+	</insert>
+	
+	<delete id="deleteOneLikeByDailyId" parameterType="hashmap">
+		DELETE	
+		FROM	LK
+		WHERE	USR_ID = #{userVO.userId}
+		AND		DL_ID = #{dailyVO.dailyId}
+	</delete>
+
+	<delete id="deleteOneLikeByTripId" parameterType="hashmap">
+		DELETE	
+		FROM	LK
+		WHERE	USR_ID = #{userVO.userId}
+		AND		TR_ID = #{tripVO.tripId}
+	</delete>
+
+</mapper>
+>>>>>>> ec84d1370c9272f2042c8bd887192802fa20e1e4
