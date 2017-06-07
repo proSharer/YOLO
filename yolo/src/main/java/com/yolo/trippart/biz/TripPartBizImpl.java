@@ -1,5 +1,7 @@
 package com.yolo.trippart.biz;
 
+import java.util.List;
+
 import com.yolo.trippart.dao.TripPartDao;
 import com.yolo.trippart.vo.TripPartVO;
 
@@ -15,5 +17,11 @@ public class TripPartBizImpl implements TripPartBiz {
 	public boolean addOneTripPart(TripPartVO tripPartVO) {
 		return tripPartDao.insertOneTripPart(tripPartVO) > 0;
 	}
+
+	@Override
+	public List<TripPartVO> selectTripPartByTripId(String tripId) {
+		return tripPartDao.getTripPartByTripId(tripId);
+	}
+	
 
 }

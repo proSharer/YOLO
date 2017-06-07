@@ -6,6 +6,21 @@
 
 <mapper namespace="TripDao">
 	
+	<resultMap type="TripVO" id="TripMap">
+		<id column="TR_ID" property="tripId"/>
+		<result column="TITLE" property="title"/>
+		<result column="CRT_DT" property="createDate"/>
+		<result column="USR_ID" property="userId"/>
+		<result column="LIKE_CNT" property="likeCount"/>
+		<result column="OVER_ALL" property="overAll"/>
+		<collection select="TripPartDao.getTripPartByTripId" 
+					property="tripPartList"
+					column="TR_ID" 	
+					javaType="java.util.ArrayList"
+					ofType="TripPartVO">
+		</collection>
+	</resultMap>
+	
 	<insert id="insertOneTrip" parameterType="TripVO">
 		INSERT INTO  TRIP /*[TripDao][insertOneTrip]*/	
 								(	
@@ -33,4 +48,39 @@
 		
 	</select>
 	
+	<select id="getAllTripCount" resultType="_int" parameterType="TripSearchVO">
+		SELECT	/* [TripDao][getAllTripCount] */
+				COUNT(1)
+		FROM	TRIP
+		WHERE	1 = 1 
+<!-- 		<if test="keyword != null">
+		AND		SUBJECT LIKE '%' || #{keyword} || '%'
+		</if>
+		<if test="writer != null">
+		AND		WRITER LIKE '%' || #{writer} || '%'
+		</if>
+		<if test="content != null">
+		AND		CONTENT LIKE '%' || #{content} || '%'
+		</if> -->
+	</select>
+	
+	<select id="getAllTrips" resultMap="TripMap" parameterType="TripSearchVO">
+		<include refid="CommonDao.PAGING_HEADER"/>
+			SELECT	/* [TripDao][getAllTrip] */
+					TR_ID 
+					, TITLE
+					, CRT_DT
+					, USR_ID
+					, LIKE_CNT
+					, OVER_ALL
+			FROM	TRIP
+		<include refid="CommonDao.PAGING_FOOTER"/>
+	</select>
+	
+	<delete id="deleteTrip" parameterType="string">
+			DELETE	
+			FROM	TRIP
+			WHERE	TR_ID = #{tripId}
+	</delete>
+
 </mapper>

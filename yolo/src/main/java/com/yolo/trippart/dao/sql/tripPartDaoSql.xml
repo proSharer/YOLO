@@ -16,7 +16,6 @@
 								, PLACE 
 								, CONT
 								, MAP
-								, DSPLY_FL_NM
 								, RL_FL_NM
 								 ) 
 				 VALUES			
@@ -29,11 +28,24 @@
 								, #{place}
 								, #{content}
 								, #{map}
-								, #{displayFileName}
 								, #{realFileName}
 								 ) 
 
 	</insert> 
+	
+	<select id="getTripPartByTripId" resultType="TripPartVO"  parameterType="string">
+		SELECT	TR_PART_ID tripPartId
+				, TR_ID tripId
+				, ST_TM startTime
+				, ED_TM endTime
+				, TM_CTR timeControl
+				, PLACE place
+				, CONT content
+				, MAP map
+				, RL_FL_NM realFileName
+		FROM	TR_PART
+		WHERE	TR_ID = #{tripId}
+	</select>
 	
 
 </mapper>
