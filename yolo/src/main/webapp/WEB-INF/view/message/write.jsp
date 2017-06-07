@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Send Message</title>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function () {
 		
 		$("#messageForm").find("#submitBtn").click(function () {
 			$("#messageForm").attr({
-				action: "<c:url value = "/message/write"/>",
+				action: "<c:url value = "/message/write/${userId}"/>",
 				method: "post" 
 			});
 			
@@ -26,14 +26,17 @@
 </head>
 <body>
 	
-	<p>Message</p>
+	<p>Message to ${userId}</p>
 	
 	<form:form id="messageForm" commandName="MessageVO" name="dataform">
-		<input type="hidden" name="sender" value="test">
-		<input type="hidden" name="receiver" value="${param.userId}">
-		<textarea name="content"></textarea>
+		<input type="hidden" name="sender" value="${loginUser.userId}"><!-- Session UserId value값으로 바꿔주기! -->
+		<input type="hidden" name="receiver" value="${userId}">
+		<textarea name="content"></textarea><br/>
 		<input type="button" id="submitBtn" value="Send" />
 	</form:form>
+	
+	<!-- 팝업창 만들기 코드 -->
+	<!-- <a href="/yolo/message/write" onclick='javascript:window.open("/yolo/message/write", "window", "width=500,height=300")'>새창</a> -->
 	
 </body>
 </html>

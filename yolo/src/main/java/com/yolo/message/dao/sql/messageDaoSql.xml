@@ -7,31 +7,31 @@
 <mapper namespace="MessageDao">
 
 	<select id="selectOneMessage" parameterType="String" resultType="MessageVO">
-		SELECT	MSG_ID
-				, SNDR
-				, CONT
-				, RCVR
-				, SND_TM
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
 		FROM	MSG
 		WHERE	MSG_ID = #{messageId}
 	</select>
 
 	<select id="selectAllMessagesByReceiver" parameterType="UserVO" resultType="MessageVO">
-		SELECT	MSG_ID
-				, SNDR
-				, CONT
-				, RCVR
-				, SND_TM
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
 		FROM	MSG
 		WHERE	RCVR = #{userId}
 	</select>
 	
 	<select id="selectAllMessagesBySender" parameterType="UserVO" resultType="MessageVO">
-		SELECT	MSG_ID
-				, SNDR
-				, CONT
-				, RCVR
-				, SND_TM
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
 		FROM	MSG
 		WHERE	SNDR = #{userId}
 	</select>
