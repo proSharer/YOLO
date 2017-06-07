@@ -11,7 +11,6 @@ public class TripVO {
 	private String userId;
 	private int likeCount;
 	private String overAll;
-	
 	private TripPartListVO tripPartListVO;
 	
 	public String getTripId() {
