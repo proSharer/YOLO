@@ -1,6 +1,10 @@
 package com.yolo.trip.service;
 
+import java.util.List;
+
 import com.yolo.trip.biz.TripBiz;
+import com.yolo.trip.vo.TripListVO;
+import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.biz.TripPartBiz;
 import com.yolo.trippart.vo.TripPartListVO;
@@ -28,8 +32,10 @@ public class TripServiceImpl implements TripService{
 		
 		boolean isSuccess = false;
 		
+		System.out.println("===size"+size);
 		for (int i = 0 ; i < size ; i++){
 			TripPartVO tripPartVO = new TripPartVO();
+			
 			tripPartVO.setTripId(tripId);
 			tripPartVO.setStartTime(tripPartListVO.getStartTime().get(i));
 			tripPartVO.setEndTime(tripPartListVO.getEndTime().get(i));
@@ -37,6 +43,7 @@ public class TripServiceImpl implements TripService{
 			tripPartVO.setPlace(tripPartListVO.getPlace().get(i));
 			tripPartVO.setContent(tripPartListVO.getContent().get(i));
 			tripPartVO.setMap(tripPartListVO.getMap().get(i));
+			tripPartVO.setRealFileName(tripPartListVO.getRealFileName().get(i));
 			
 			isSuccess = tripPartBiz.addOneTripPart(tripPartVO);
 			
@@ -44,5 +51,18 @@ public class TripServiceImpl implements TripService{
 		
 		
 		return isSuccess;
+	}
+	@Override
+	public TripListVO selectAllTrips(TripSearchVO tripSearchVO) {
+		return tripBiz.selectAllTrips(tripSearchVO);
+	}
+	@Override
+	public List<TripPartVO> selectTripPartByTripId(String tripId) {
+
+		return tripPartBiz.selectTripPartByTripId(tripId);
+	}
+	@Override
+	public boolean removeTrip(String tripId) {
+		return tripBiz.removeTrip(tripId);
 	}
 }
