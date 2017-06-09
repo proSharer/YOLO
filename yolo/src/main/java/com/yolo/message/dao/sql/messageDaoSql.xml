@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="MessageDao">
+
+	<select id="selectOneMessage" parameterType="String" resultType="MessageVO">
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
+		FROM	MSG
+		WHERE	MSG_ID = #{messageId}
+	</select>
+
+	<select id="selectAllMessagesByReceiver" parameterType="UserVO" resultType="MessageVO">
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
+		FROM	MSG
+		WHERE	RCVR = #{userId}
+		ORDER	BY	SND_TM	DESC
+	</select>
+	
+	<select id="selectAllMessagesBySender" parameterType="UserVO" resultType="MessageVO">
+		SELECT	MSG_ID messageId
+				, SNDR sender
+				, CONT content
+				, RCVR receiver
+				, SND_TM sendTime
+		FROM	MSG
+		WHERE	SNDR = #{userId}
+		ORDER	BY	SND_TM	DESC
+	</select>
+	
+	<insert id="insertOneMessage" parameterType="MessageVO">
+		INSERT INTO	MSG	(
+							MSG_ID
+							, SNDR
+							, CONT
+							, RCVR
+							, SND_TM
+						)
+		VALUES			(
+							'MS-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(MSG_ID_SEQ.NEXTVAL, 6, '0')
+							, #{sender}
+							, #{content}
+							, #{receiver}
+							, SYSDATE
+						)
+	</insert>
+
+	<delete id="deleteOneMessage" parameterType="String">
+		DELETE	FROM	MSG
+		WHERE	MSG_ID = #{messageId}
+	</delete>
+
+</mapper>

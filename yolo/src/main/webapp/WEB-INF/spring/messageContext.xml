@@ -3,16 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="dailyDaoImpl" class="com.yolo.daily.dao.DailyDaoImpl">
+	<bean id="messageDaoImpl" class="com.yolo.message.dao.MessageDaoImpl">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
 	</bean>
 
-	<bean id="dailyBizImpl" class="com.yolo.daily.biz.DailyBizImpl">
-		<property name="dailyDao" ref="dailyDaoImpl"></property>
+	<bean id="messageBizImpl" class="com.yolo.message.biz.MessageBizImpl">
+		<property name="messageDao" ref="messageDaoImpl"></property>
 	</bean>
 
-	<bean id="dailyServiceImpl" class="com.yolo.daily.service.DailyServiceImpl">
-		<property name="dailyBiz" ref="dailyBizImpl"></property>
+	<bean id="messageServiceImpl" class="com.yolo.message.service.MessageServiceImpl">
+		<property name="messageBiz" ref="messageBizImpl"></property>
 	</bean>
-
+	
 </beans>
