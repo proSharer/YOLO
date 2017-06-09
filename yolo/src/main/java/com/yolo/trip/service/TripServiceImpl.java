@@ -32,7 +32,6 @@ public class TripServiceImpl implements TripService{
 		
 		boolean isSuccess = false;
 		
-		System.out.println("===size"+size);
 		for (int i = 0 ; i < size ; i++){
 			TripPartVO tripPartVO = new TripPartVO();
 			
