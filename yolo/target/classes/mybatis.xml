@@ -10,12 +10,8 @@
 		<typeAlias type="com.yolo.trippart.vo.TripPartVO" alias="TripPartVO"/>
 		<typeAlias type="com.yolo.trippart.vo.TripPartListVO" alias="TripPartListVO"/>
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
-<<<<<<< HEAD
 		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
 		<typeAlias type="com.yolo.message.vo.MessageVO" alias="MessageVO"/>
-=======
-		
->>>>>>> jungjin
 	</typeAliases>
 	
 	<mappers>
