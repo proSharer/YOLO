@@ -14,5 +14,5 @@
 	<bean id="messageServiceImpl" class="com.yolo.message.service.MessageServiceImpl">
 		<property name="messageBiz" ref="messageBizImpl"></property>
 	</bean>
-
+	
 </beans>

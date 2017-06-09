@@ -35,8 +35,5 @@
 		<input type="button" id="submitBtn" value="Send" />
 	</form:form>
 	
-	<!-- 팝업창 만들기 코드 -->
-	<!-- <a href="/yolo/message/write" onclick='javascript:window.open("/yolo/message/write", "window", "width=500,height=300")'>새창</a> -->
-	
 </body>
 </html>

@@ -9,9 +9,9 @@
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded',function(){
 		
-		$.getJSON ("/yolo/message/list/received", function(result){
+		/* $.getJSON ("/yolo/message/list/received", function(result){
 			console.log(result);
-		});
+		}); */
 
 		//document.getElementById('button').addEventListener('click',function(){
 			if (! ('Notification' in window) ){

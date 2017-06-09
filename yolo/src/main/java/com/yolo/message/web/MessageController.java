@@ -6,12 +6,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yolo.common.service.MainService;
 import com.yolo.message.service.MessageService;
 import com.yolo.message.vo.MessageVO;
 import com.yolo.user.vo.UserVO;
@@ -25,7 +28,7 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
-	@RequestMapping(value="/message/list/received", method=RequestMethod.GET)
+	@RequestMapping(value="/message/list/received")
 	public ModelAndView receivedMessageListView(HttpSession session) {
 		ModelAndView view = new ModelAndView();
 		
@@ -40,11 +43,12 @@ public class MessageController {
 		return view;
 	}
 	
-	@RequestMapping(value="/message/list/received", method=RequestMethod.POST)
-	public void receivedMessageListAction(HttpServletRequest request) {
-		List<Object> messageList = (List<Object>) request.getAttribute("messageList");
-		System.out.println(messageList.get(0));
-	}
+	/*@RequestMapping(value="/message/list/received", method=RequestMethod.POST)
+	public void receivedMessageListAction(@RequestBody List<MessageVO> messageList, ModelMap map) {
+		System.out.println("messageList : " + messageList);
+		
+		return;
+	}*/
 	
 	@RequestMapping(value="/message/list/sent")
 	public ModelAndView sentMessageListView(HttpSession session) {

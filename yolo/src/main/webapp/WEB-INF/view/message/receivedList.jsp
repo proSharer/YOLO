@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		var messageList = new Array();
+		/* var messageList = new Array();
 		
 		<c:forEach items="${messageList}" var="message">
 			var data = new Object();
@@ -20,9 +20,9 @@
 			messageList.push(data);
 		</c:forEach>
 		
-		var jsonData = JSON.stringify(messageList);
+		var jsonData = JSON.stringify(messageList); */
 		
-		$.ajax({
+		/* $.ajax({
 			url : "/yolo/message/list/received",
 			type : 'POST',
 			dataType : 'json',
@@ -35,7 +35,24 @@
 			error : function(data, status, er) {
 				alert("error: " + data + " status: " + status + " er:" + er);
 			}
-		});
+		}); */
+		
+		/* $.post("/yolo/message/list/received",
+				jsonData,
+				function(data) {
+			alert("success");
+		}); */
+		
+		/* $.ajax({ url: "/yolo/message/list/received",
+			method: "post", 
+			type: "json", 
+			contentType: "application/json", 
+			data: jsonData, 
+			success: function(data){
+				console.log(data); 
+			}
+		}); */
+		
 	});
 </script>
 </head>
