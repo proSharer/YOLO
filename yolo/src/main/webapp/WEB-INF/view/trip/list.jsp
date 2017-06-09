@@ -9,7 +9,6 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function(){
-		
 	});
 
 </script>
@@ -33,5 +32,20 @@
 		</tr>
 		</c:forEach>
 	</table>
+	
+	<form id="searchForm">
+		${pager}
+		<select name="searchType">
+			<option value="1">제목+내용</option>
+			<option value="2">제목</option>
+			<option value="3">내용</option>
+			<option value="4">세부내용</option>
+		</select>
+		
+		<input type="text" name="keyword" value="${sessionScope._SEARCH_.keyword}"/>
+		<input type="button" value="search" onclick="movePage(0)" />
+		<input type="button" value="검색 초기화" onclick="location.href='<c:url value="/trip/list/init"/>'"/>
+	</form>
+		
 </body>
 </html>

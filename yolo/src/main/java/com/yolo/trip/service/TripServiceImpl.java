@@ -65,4 +65,12 @@ public class TripServiceImpl implements TripService{
 	public boolean removeTrip(String tripId) {
 		return tripBiz.removeTrip(tripId);
 	}
+	@Override
+	public TripVO selectOneTrip(String tripId) {
+		return tripBiz.selectOneTrip(tripId);
+	}
+	@Override
+	public boolean tripLikeCountPlus(String tripId) {
+		return tripBiz.tripLikeCountPlus(tripId);
+	}
 }

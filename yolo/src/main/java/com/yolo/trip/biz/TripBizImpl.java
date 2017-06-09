@@ -58,4 +58,14 @@ public class TripBizImpl implements TripBiz {
 		return tripDao.deleteTrip(tripId)>0;
 	}
 
+	@Override
+	public TripVO selectOneTrip(String tripId) {
+		return tripDao.getOneTrip(tripId);
+	}
+
+	@Override
+	public boolean tripLikeCountPlus(String tripId) {
+		return tripDao.tripLikeCountUpdate(tripId) > 0;
+	}
+
 }

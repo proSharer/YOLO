@@ -52,16 +52,7 @@
 		SELECT	/* [TripDao][getAllTripCount] */
 				COUNT(1)
 		FROM	TRIP
-		WHERE	1 = 1 
-<!-- 		<if test="keyword != null">
-		AND		SUBJECT LIKE '%' || #{keyword} || '%'
-		</if>
-		<if test="writer != null">
-		AND		WRITER LIKE '%' || #{writer} || '%'
-		</if>
-		<if test="content != null">
-		AND		CONTENT LIKE '%' || #{content} || '%'
-		</if> -->
+
 	</select>
 	
 	<select id="getAllTrips" resultMap="TripMap" parameterType="TripSearchVO">
@@ -73,14 +64,60 @@
 					, USR_ID
 					, LIKE_CNT
 					, OVER_ALL
-			FROM	TRIP
+			FROM	TRIP<if test="searchType == 4">T, <include refid="TripPartDao.getTripContentByKeyword"></include> 
+			WHERE T.TR_ID = P.P_TR_ID
+			</if> 
+			
+			<if test="searchType == 1">
+				WHERE	1=1
+				<if test="keyword != null  and keyword != '' ">
+				AND		( TITLE LIKE '%' || #{keyword} || '%'
+ 				OR		OVER_ALL LIKE '%' || #{keyword} || '%' 
+ 				OR		#{keyword} IN <include refid="TripPartDao.getTripContentByKeyword">
+				</include> ) 
+				</if> 
+			</if>
+			<if test="searchType == 2">
+				WHERE	1=1
+				<if test="keyword != null  and keyword != '' ">
+				AND		TITLE LIKE '%' || #{keyword} || '%'
+				
+				</if> 
+			</if>
+			<if test="searchType == 3">
+				WHERE	1=1
+				<if test="keyword != null  and keyword != '' ">
+				AND		( OVER_ALL LIKE '%' || #{keyword} || '%'
+				OR		#{keyword} IN <include refid="TripPartDao.getTripContentByKeyword">
+				</include> )
+				</if> 
+			</if>
 		<include refid="CommonDao.PAGING_FOOTER"/>
 	</select>
 	
 	<delete id="deleteTrip" parameterType="string">
-			DELETE	
-			FROM	TRIP
-			WHERE	TR_ID = #{tripId}
+		DELETE	/* [TripDao][deleteTrip] */
+		FROM	TRIP
+		WHERE	TR_ID = #{tripId}
 	</delete>
 
+	<select id="getOneTrip" resultType="TripVO" parameterType="string">
+		SELECT /* [TripDao][getOneTrip] */
+				TR_ID tripId
+				, TITLE title
+				, CRT_DT createDate
+				, USR_ID userId
+				, LIKE_CNT likeCount
+				, OVER_ALL overAll
+		FROM	TRIP
+		WHERE	TR_ID = #{tripId}
+	</select>
+	
+	<update id="tripLikeCountUpdate" parameterType="string">
+		UPDATE TRIP
+		SET     LIKE_CNT = LIKE_CNT + 1
+		WHERE   TR_ID = #{tripId}
+		
+	</update>
+	
 </mapper>

@@ -11,4 +11,9 @@ public interface TripBiz {
 	public TripListVO selectAllTrips(TripSearchVO tripSearchVO);
 
 	public boolean removeTrip(String tripId);
+	
+	public TripVO selectOneTrip(String tripId);
+	
+	public boolean tripLikeCountPlus(String tripId);
+	
 }
