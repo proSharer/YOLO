@@ -13,7 +13,6 @@ public class TripPartVO {
 	private MultipartFile file;
 	private String content;
 	private String map;
-	private String displayFileName;
 	private String realFileName;
 	
 	
@@ -70,12 +69,6 @@ public class TripPartVO {
 	}
 	public void setMap(String map) {
 		this.map = map;
-	}
-	public String getDisplayFileName() {
-		return displayFileName;
-	}
-	public void setDisplayFileName(String displayFileName) {
-		this.displayFileName = displayFileName;
 	}
 	public String getRealFileName() {
 		return realFileName;

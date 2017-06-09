@@ -1,7 +1,10 @@
 package com.yolo.trip.vo;
 
 
+import java.util.List;
+
 import com.yolo.trippart.vo.TripPartListVO;
+import com.yolo.trippart.vo.TripPartVO;
 
 public class TripVO {
 	
@@ -12,6 +15,7 @@ public class TripVO {
 	private int likeCount;
 	private String overAll;
 	private TripPartListVO tripPartListVO;
+	private List<TripPartVO> tripPartList;
 	
 	public String getTripId() {
 		return tripId;
@@ -54,6 +58,12 @@ public class TripVO {
 	}
 	public void setTripPartListVO(TripPartListVO tripPartListVO) {
 		this.tripPartListVO = tripPartListVO;
+	}
+	public List<TripPartVO> getTripPartList() {
+		return tripPartList;
+	}
+	public void setTripPartList(List<TripPartVO> tripPartList) {
+		this.tripPartList = tripPartList;
 	}
 
 
