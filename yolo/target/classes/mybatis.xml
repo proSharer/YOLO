@@ -5,11 +5,11 @@
 						
 <configuration>
 	<typeAliases>
-		
+		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
 	</typeAliases>
 	
 	<mappers>
-	
+		<mapper resource="com/yolo/user/dao/sql/userDaoSql.xml"/>
 	</mappers>
 
 </configuration>
