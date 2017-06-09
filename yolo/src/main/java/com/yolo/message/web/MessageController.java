@@ -25,7 +25,7 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
-	@RequestMapping(value="/message/list/received")
+	@RequestMapping(value="/message/list/received", method=RequestMethod.GET)
 	public ModelAndView receivedMessageListView(HttpSession session) {
 		ModelAndView view = new ModelAndView();
 		
@@ -38,6 +38,12 @@ public class MessageController {
 		view.setViewName("message/receivedList");
 		
 		return view;
+	}
+	
+	@RequestMapping(value="/message/list/received", method=RequestMethod.POST)
+	public void receivedMessageListAction(HttpServletRequest request) {
+		List<Object> messageList = (List<Object>) request.getAttribute("messageList");
+		System.out.println(messageList.get(0));
 	}
 	
 	@RequestMapping(value="/message/list/sent")

@@ -41,4 +41,5 @@
 		<property name="messageService" ref="messageServiceImpl"></property>
 	</bean>
 	
+	<bean id="mainController" class="com.yolo.common.web.MainController"></bean>
 </beans>

@@ -24,6 +24,7 @@
 				, SND_TM sendTime
 		FROM	MSG
 		WHERE	RCVR = #{userId}
+		ORDER	BY	SND_TM	DESC
 	</select>
 	
 	<select id="selectAllMessagesBySender" parameterType="UserVO" resultType="MessageVO">
@@ -34,6 +35,7 @@
 				, SND_TM sendTime
 		FROM	MSG
 		WHERE	SNDR = #{userId}
+		ORDER	BY	SND_TM	DESC
 	</select>
 	
 	<insert id="insertOneMessage" parameterType="MessageVO">
