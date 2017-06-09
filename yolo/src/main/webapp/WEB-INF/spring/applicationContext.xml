@@ -13,7 +13,7 @@
 	 -->
 	<mvc:resources location="/WEB-INF/resources/js/" mapping="/static/js/**" />
 	<mvc:resources location="/WEB-INF/resources/css/" mapping="/static/css/**"  />
-	<mvc:resources location="/WEB-INF/resources/img" mapping="/static/img/**" />
+	<mvc:resources location="/WEB-INF/resources/img/" mapping="/static/img/**" />
 	
 	<bean id="validator" 
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"></bean>

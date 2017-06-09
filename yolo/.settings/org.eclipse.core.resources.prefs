@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/java/com/yolo/common/utilities/SHA256Util.java=UTF-8
 encoding//src/main/webapp/WEB-INF/view/user/loginByKaKao.jsp=UTF-8
+=======
+encoding//src/main/java/com/yolo/common/web/ClassicPageExplorer.java=UTF-8
+encoding//src/main/java/com/yolo/common/web/DownloadUtil.java=UTF-8
+encoding/<project>=UTF-8
+>>>>>>> jungjin
