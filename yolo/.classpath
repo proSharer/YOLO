@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jmimemagic-0.1.4.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/lucy-xss-1.6.3.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tika-app-1.14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/owner/.m2/repository/org/springframework/spring-context/4.3.7.RELEASE/spring-context-4.3.7.RELEASE.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

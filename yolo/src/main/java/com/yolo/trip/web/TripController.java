@@ -46,7 +46,7 @@ public class TripController {
 		ModelAndView view = new ModelAndView();
 		
 		PageExplorer pageExplorer = new ListPageExplorer(tripList.getPager());
-		String pager = pageExplorer.getPagingList("pageNo", "[@]", "이전", "다음", "searchForm");
+		String pager = pageExplorer.getPagingList("pageNo", "[@]", "�씠�쟾", "�떎�쓬", "searchForm");
 		
 		view.setViewName("trip/list");
 		view.addObject("tripList",tripList);
@@ -75,7 +75,7 @@ public class TripController {
 				String fileName = files.get(i).getOriginalFilename();
 				
 				System.out.println(fileName);
-				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				String filePath = "C:\\Users\\owner\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
 				File newFile = new File(filePath);
 				
 				try {
