@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.yolo.user.service.UserService;
 import com.yolo.user.vo.UserVO;
 
-@Controller()
+@Controller
 public class UserController {
 	
 
@@ -113,7 +113,7 @@ public class UserController {
 				}
 			}
 		} catch (RuntimeException e) {
-			throw new RuntimeException("에러에러에러", e);
+			throw new RuntimeException("�뿉�윭�뿉�윭�뿉�윭", e);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class UserController {
 	}
 
 	public boolean verify(String password) {
-		String passwordPolicy = "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,})";
+		String passwordPolicy = "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9媛�-�옡]).{8,})";
 		Pattern pattern = Pattern.compile(passwordPolicy);
 		Matcher matcher = pattern.matcher(password);
 		return matcher.matches();
