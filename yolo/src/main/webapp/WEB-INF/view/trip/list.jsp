@@ -24,7 +24,7 @@
 		</tr>
 		<c:forEach items="${tripList.tripList}" var="trip">
 		<tr>
-			<td><img src="<c:url value="/static/img/${trip.tripPartList[0].realFileName}"/>" width="50px" height="50px"/></td>
+			<td><img src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName}"/>" width="50px" height="50px"/></td>
 			<td>${trip.tripId}</td>
 			<td><a href="<c:url value="/trip/detail/${trip.tripId}"/>">${trip.title}</a></td>
 			<td>${trip.userId}</td>
@@ -34,8 +34,8 @@
 	</table>
 	
 	<form id="searchForm">
-		${pager}
-		<select name="searchType">
+		${pager}<br/>
+ 		<select name="searchType">
 			<option value="1">제목+내용</option>
 			<option value="2">제목</option>
 			<option value="3">내용</option>
@@ -46,6 +46,8 @@
 		<input type="button" value="search" onclick="movePage(0)" />
 		<input type="button" value="검색 초기화" onclick="location.href='<c:url value="/trip/list/init"/>'"/>
 	</form>
-		
+		<c:if test="${!empty sessionScope._USER_}">
+			<a href="<c:url value="/trip/write"/>">글쓰기</a>
+		</c:if>
 </body>
 </html>

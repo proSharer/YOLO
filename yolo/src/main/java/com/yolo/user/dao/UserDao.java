@@ -1,0 +1,26 @@
+package com.yolo.user.dao;
+
+import com.yolo.user.vo.UserVO;
+
+public interface UserDao {
+	
+	public static final String UD = "UserDao";
+	
+	public int insertNewUser(UserVO userVO);
+	
+	public UserVO selectOneUser(UserVO userVO);
+	
+	public String getSaltById(String userId);
+	
+	public int plusLoginFailCount(String userId);
+	
+	public int updateLockStatus(String userId);
+	
+	public int selectLockStatus(String userId);
+	
+	public int updateClearLoginFailCount(String userId);
+	
+	public int updateClearLockCount(String userId);
+	
+
+}

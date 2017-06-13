@@ -65,7 +65,12 @@ public class TripBizImpl implements TripBiz {
 
 	@Override
 	public boolean tripLikeCountPlus(String tripId) {
-		return tripDao.tripLikeCountUpdate(tripId) > 0;
+		return tripDao.tripLikeCountUpdatePlus(tripId) > 0;
+	}
+
+	@Override
+	public boolean tripLikeCountMinus(String tripId) {
+		return tripDao.tripLikeCountUpdateMinus(tripId)>0;
 	}
 
 }

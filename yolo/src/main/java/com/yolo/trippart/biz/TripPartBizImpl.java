@@ -14,8 +14,8 @@ public class TripPartBizImpl implements TripPartBiz {
 	}
 	
 	@Override
-	public boolean addOneTripPart(TripPartVO tripPartVO) {
-		return tripPartDao.insertOneTripPart(tripPartVO) > 0;
+	public boolean addOneTripPart(List<TripPartVO> tripPartVOList) {
+		return tripPartDao.insertOneTripPart(tripPartVOList) > 0;
 	}
 
 	@Override

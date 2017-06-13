@@ -41,8 +41,13 @@ public class TripDaoImpl extends SqlSessionDaoSupport implements TripDao {
 	}
 
 	@Override
-	public int tripLikeCountUpdate(String tripId) {
-		return getSqlSession().update("TripDao.tripLikeCountUpdate",tripId);
+	public int tripLikeCountUpdatePlus(String tripId) {
+		return getSqlSession().update("TripDao.tripLikeCountUpdatePlus",tripId);
+	}
+
+	@Override
+	public int tripLikeCountUpdateMinus(String tripId) {
+		return getSqlSession().update("TripDao.tripLikeCountUpdateMinus",tripId);
 	}
 
 }

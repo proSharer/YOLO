@@ -14,8 +14,7 @@ public class TripVO {
 	private String userId;
 	private int likeCount;
 	private String overAll;
-	private TripPartListVO tripPartListVO;
-	private List<TripPartVO> tripPartList;
+	private List<TripPartVO> tripPartVO;
 	
 	public String getTripId() {
 		return tripId;
@@ -53,17 +52,11 @@ public class TripVO {
 	public void setOverAll(String overAll) {
 		this.overAll = overAll;
 	}
-	public TripPartListVO getTripPartListVO() {
-		return tripPartListVO;
+	public List<TripPartVO> getTripPartVO() {
+		return tripPartVO;
 	}
-	public void setTripPartListVO(TripPartListVO tripPartListVO) {
-		this.tripPartListVO = tripPartListVO;
-	}
-	public List<TripPartVO> getTripPartList() {
-		return tripPartList;
-	}
-	public void setTripPartList(List<TripPartVO> tripPartList) {
-		this.tripPartList = tripPartList;
+	public void setTripPartVO(List<TripPartVO> tripPartVO) {
+		this.tripPartVO = tripPartVO;
 	}
 
 
