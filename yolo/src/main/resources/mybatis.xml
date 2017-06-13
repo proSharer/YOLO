@@ -6,15 +6,20 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.yolo.trip.vo.TripVO" alias="TripVO"/>
+		<typeAlias type="com.yolo.trip.vo.TripSearchVO" alias="TripSearchVO"/>
 		<typeAlias type="com.yolo.trippart.vo.TripPartVO" alias="TripPartVO"/>
+		<typeAlias type="com.yolo.trippart.vo.TripPartListVO" alias="TripPartListVO"/>
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
 		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
+		<typeAlias type="com.yolo.message.vo.MessageVO" alias="MessageVO"/>
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="commonDaoSql.xml"/>
 		<mapper resource="com/yolo/trip/dao/sql/tripDaoSql.xml"/>
 		<mapper resource="com/yolo/trippart/dao/sql/tripPartDaoSql.xml"/>
 		<mapper resource="com/yolo/daily/dao/sql/DailyDaoSql.xml"/>
+		<mapper resource="com/yolo/message/dao/sql/messageDaoSql.xml"/>
 		<mapper resource="com/yolo/user/dao/sql/userDaoSql.xml"/>
 	</mappers>
 

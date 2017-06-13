@@ -11,7 +11,7 @@
 <link href="<c:url value="/static/css/styles.css"/>" rel="stylesheet">
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrX88apxamUwGdt3GMcN-P3b_C0qFrQBo&libraries=places"></script>
-<script type="text/javascript" src="<c:url value="/static/js/jquery.geocomplete.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/jquery.geocomplete.min.js"/>"></script>
 <script src="<c:url value="/static/js/logger.js"/>"></script>
 <script type="text/javascript">
 
@@ -24,11 +24,10 @@
 		$(".geocomplete").geocomplete(options);
 
 		$("#addBtn").click(function(){
-	
 			var appendPart = $(".part").html(); 
-			console.log(appendPart);
-			
+
 			$(".tripPart").append(appendPart);
+			$(".geocomplete").geocomplete(options);
 		});
 		
 		$("#writeBtn").click(function(){
@@ -56,7 +55,13 @@
 	
 				<div class="map_canvas"></div>
 				
-				<input type="text" class="timeControl" name="tripPartListVO.timeControl" placeholder="시간구분"><br/>
+				
+				<select name="tripPartListVO.timeControl">
+				    <option value="">시간구분</option>
+				    <option value="오전">오전</option>
+				    <option value="오후">오후</option>
+				</select>
+				
 				<input type="file" name="tripPartListVO.file"><br/>
 				<textarea name="tripPartListVO.content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
 			</div>

@@ -13,7 +13,7 @@
 	 -->
 	<mvc:resources location="/WEB-INF/resources/js/" mapping="/static/js/**" />
 	<mvc:resources location="/WEB-INF/resources/css/" mapping="/static/css/**"  />
-	<mvc:resources location="/WEB-INF/resources/img" mapping="/static/img/**" />
+	<mvc:resources location="/WEB-INF/resources/img/" mapping="/static/img/**" />
 	
 	<bean id="validator" 
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"></bean>
@@ -34,6 +34,14 @@
 	
 	<bean id = "dailyController" class="com.yolo.daily.web.DailyController">
 		<property name="dailyService" ref="dailyServiceImpl"></property>
+	</bean>
+	
+	<bean id = "messageController" class="com.yolo.message.web.MessageController">
+		<property name="messageService" ref="messageServiceImpl"></property>
+	</bean>
+	
+	<bean id="mainController" class="com.yolo.common.web.MainController">
+		<property name="mainService" ref="mainServiceImpl"></property>
 	</bean>
 
 	<bean id="userController" class="com.yolo.user.web.UserController">

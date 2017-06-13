@@ -12,6 +12,7 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
+
 class JMimeMagicMimeTypeFilter extends ExtensionFilter {
 
 	@Override
