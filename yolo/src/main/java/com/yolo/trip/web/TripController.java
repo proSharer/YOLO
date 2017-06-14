@@ -131,7 +131,7 @@ public class TripController {
 		
 		
 		boolean isSuccess = tripService.addNewOneTrip(tripVO);
-		System.out.println(isSuccess+"성공했냐규ㅗ고고고");
+		
 		if ( isSuccess ){
 			return "redirect:/trip/list";
 		}
@@ -164,7 +164,7 @@ public class TripController {
 	}
 	
 	@RequestMapping("/trip/delete/{tripId}")
-	public String DoDeletePage(@PathVariable String tripId){
+	public String doDeletePage(@PathVariable String tripId){
 	
 		boolean isSuccess = tripService.removeTrip(tripId);
 		
@@ -177,9 +177,38 @@ public class TripController {
 		
 	}
 	
+	
+	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.GET)
+	public ModelAndView viewUpdatePage(@PathVariable String tripId){
+		ModelAndView view = new ModelAndView();
+		
+		TripVO tripVO = tripService.selectOneTrip(tripId);
+		
+		view.setViewName("/trip/update");
+		view.addObject("tripVO",tripVO);
+		
+		return view;
+		
+	}
+	
+	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.POST)
+	public String doUpdatePage(TripVO tripVO,@PathVariable String tripId){
+		tripVO.setTripId(tripId);
+
+		boolean isSuccess = tripService.modifyOneTrip(tripVO);
+		
+		if ( isSuccess ){
+			return "redirect:/trip/detail/"+tripVO.getTripId();
+		}
+		else {
+			return "redirect:/trip/update/"+tripVO.getTripId();
+		}
+		
+	}
+	
 	@RequestMapping(value="/trip/likeCountPlus",method=RequestMethod.POST)
 	@ResponseBody
-	public String DolikeCountPlus(HttpServletRequest request){
+	public String dolikeCountPlus(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("_USER_");
@@ -206,7 +235,7 @@ public class TripController {
 	
 	@RequestMapping(value="/trip/likeCountMinus",method=RequestMethod.POST)
 	@ResponseBody
-	public String DolikeCountMinus(HttpServletRequest request){
+	public String dolikeCountMinus(HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("_USER_");

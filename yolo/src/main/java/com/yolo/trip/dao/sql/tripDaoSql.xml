@@ -127,4 +127,11 @@
 		
 	</update>
 	
+	<update id="updateOneTrip" parameterType="TripVO">
+		UPDATE TRIP
+		SET		TITLE = #{title}
+				OVER_ALL = #{overAll}
+		WEHRE	TR_ID = #{tripId}
+	</update>
+	
 </mapper>

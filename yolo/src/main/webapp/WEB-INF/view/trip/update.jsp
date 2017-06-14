@@ -10,42 +10,88 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function(){
+		$(".file").hide();
+		$(".preview").hide();
+		
+		$(".update").click(function(){
+			var img = $(this).prev().prev();
+			$(img).hide();
+			$(img).prev().prev().show();
+			$(this).hide();
+		});
+		
+ 		$(".file").on("change",function(){
+            readtoURL(this);
+        	var that = $(this);
+        	console.log(that);
+        	
+			function readtoURL(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function (e) {
+							$(that).next().next().attr('src', e.target.result);
+							$(that).next().next().show();
+		            	}
+		          reader.readAsDataURL(input.files[0]);
+		        	}
+			}
+	   	}); 
+ 		
+ 		$("#updateBtn").click(function(){
+ 			
+ 			$("#updateForm").attr({
+ 				"action" : "<c:url value="/trip/update/"/>"+$("#tripId").val(),
+ 				"method" : "post"
+ 			}).submit();
+ 		});
+ 		
+ 		
 	});
 
 </script>
 </head>
 <body>
 
-	<form:form id="writeForm" commandName="writeFrm" enctype="multipart/form-data">
-			<input type="text" name="title" placeholder="제목">
-			<input type="text" name="userId" placeholder="userId">
+	<form:form id="updateForm" commandName="tripVO" enctype="multipart/form-data">
+			<input type="text" name="title" value="${tripVO.title}">
+			<input type="hidden" id="tripId" value="${tripVO.tripId}">
 			<div class="tripPart">
+			
+			<c:set var="i" value="-1"/>
+			<c:forEach items="${tripVO.tripPartVO}" var="tripPart" varStatus="status">
+				<c:set var="i" value="${i+1}"/>
 				<div class="part">
-					<input type="text" name="tripPartListVO.startTime" placeholder="시작시간"><br/>
-					<input type="text" name="tripPartListVO.endTime" placeholder="끝나는시간"><br/>
-					<input type="text" name="tripPartListVO.place" placeholder="장소를 입력해주세요"><br/>
-				
-						<input class="geocomplete" class="contorls" type="text" name="tripPartListVO.map" 
-						placeholder="상세주소를 입력해주세요." size="90" onClick="value=''" />
-		
-					<div class="map_canvas"></div>
-					
-					
-					<select name="tripPartListVO.timeControl">
-					    <option value="">시간구분</option>
-					    <option value="오전">오전</option>
-					    <option value="오후">오후</option>
+					<input type="hidden" name="tripPartVO[${i}].tripPartId" value="${tripPart.tripPartId}"><br/>
+					<input type="text" name="tripPartVO[${i}].startTime" value="${tripPart.startTime}"><br/>
+					<input type="text" name="tripPartVO[${i}].endTime" value="${tripPart.endTime}"><br/>
+					<input type="text" name="tripPartVO[${i}].place" value="${tripPart.place}"><br/>
+			
+					<select name="tripPartVO[${i}].timeControl">
+					    
+					    <option value="${tripPart.timeControl}">${tripPart.timeControl}</option>
+					    <c:if test="${tripPart.timeControl eq '오후'}">
+					    	<option value="오전">오전</option>
+					    </c:if>
+					    <c:if test="${tripPart.timeControl eq '오전'}">
+					    	<option value="오후">오후</option>
+					    </c:if>
+					    
 					</select>
 					
-					<input type="file" name="tripPartListVO.file"><br/>
-					<textarea name="tripPartListVO.content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
+					<input type="file" name="tripPartVO[${i}].file" class="file" ><br/>
+					<img src="<c:url value="/static/img/${tripPart.realFileName}"/>">
+					<img src="#" class="preview"  style='display: block;'/>
+					<input type="button" class="update" value="수정하기"/>
+					
+					<textarea name="tripPartVO[${i}].content" placeholder="내용을 입력해주세요">${tripPart.content}</textarea><br/><hr/>
 				</div>
+				</c:forEach>
 			</div>
-			<input type="button" id="addBtn" value="+">
+
 			
-			<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요"></textarea>
+			<textarea id="overAll" name="overAll">${tripVO.overAll}</textarea>
 			
-			<input type="button" id="writeBtn" value="submit">
+			<input type="button" id="updateBtn" value="submit">
 			
 	</form:form>
 </body>

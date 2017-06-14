@@ -23,4 +23,5 @@ public interface TripService {
 	
 	public boolean tripLikeCountMinus(String tripId, String userId);
 	
+	public boolean modifyOneTrip(TripVO tripVO);
 }

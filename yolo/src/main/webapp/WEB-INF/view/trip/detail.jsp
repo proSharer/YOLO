@@ -84,8 +84,7 @@
 	
 	
 	좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
-
-	<c:if test="${sessionScope._USER_.userId ne ''}">
+	<c:if test="${!empty sessionScope._USER_.userId}">
 		<c:if test="${!like}">
 		<input type="button" class="likeBtn" value="♡"/>
 		</c:if>

@@ -73,4 +73,10 @@ public class TripBizImpl implements TripBiz {
 		return tripDao.tripLikeCountUpdateMinus(tripId)>0;
 	}
 
+	@Override
+	public boolean modifyOneTrip(TripVO tripVO) {
+	
+		return false;
+	}
+
 }

@@ -22,6 +22,16 @@ public class TripPartBizImpl implements TripPartBiz {
 	public List<TripPartVO> selectTripPartByTripId(String tripId) {
 		return tripPartDao.getTripPartByTripId(tripId);
 	}
+
+	@Override
+	public boolean modifyTripPart(List<TripPartVO> tripPartVOList) {
+		//return tripPartDao.updateOneTripPart(tripPartVO)>0;
+		
+		for(TripPartVO tripPartVO : tripPartVOList){
+			// null 값 체크해주기.
+		}
+		return false;
+	}
 	
 
 }

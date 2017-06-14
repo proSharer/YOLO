@@ -11,7 +11,6 @@ import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.biz.TripPartBiz;
-import com.yolo.trippart.vo.TripPartListVO;
 import com.yolo.trippart.vo.TripPartVO;
 import com.yolo.user.vo.UserVO;
 
@@ -81,7 +80,13 @@ public class TripServiceImpl implements TripService{
 	}
 	@Override
 	public TripVO selectOneTrip(String tripId) {
-		return tripBiz.selectOneTrip(tripId);
+		
+		TripVO tripVO = tripBiz.selectOneTrip(tripId);
+		
+		List<TripPartVO> tripPartList = tripPartBiz.selectTripPartByTripId(tripId);
+		tripVO.setTripPartVO(tripPartList);
+		
+		return tripVO;
 	}
 	@Override
 	public boolean tripLikeCountPlus(String tripId, String userId) {
@@ -114,5 +119,23 @@ public class TripServiceImpl implements TripService{
 			return false;
 		}
 		
+	}
+	@Override
+	public boolean modifyOneTrip(TripVO tripVO) {
+		List<TripPartVO> tripPartList 
+				= tripBiz.selectOneTrip(tripVO.getTripId()).getTripPartVO();
+		
+		List<TripPartVO> tripPartVOList = tripVO.getTripPartVO();
+		
+		for(int i = 0; i< tripPartVOList.size(); i++){
+			tripPartVOList.get(i).setTripPartId(tripPartList.get(i).getTripPartId());
+		}
+		
+		tripPartBiz.modifyTripPart(tripPartVOList);
+		/*	 TODO tripPartVO 를 생성후, tripVO 에 있는 tripPartVO (List) 만큼
+  		반복문을 돌면서 update 됨.. null을 막기위해 tripVO 와
+  		 tripPartVO를 select 하는 쿼리를 짜줘야..*/
+		
+		return tripBiz.modifyOneTrip(tripVO);
 	}
 }

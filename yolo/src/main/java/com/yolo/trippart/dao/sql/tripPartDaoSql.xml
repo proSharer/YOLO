@@ -59,5 +59,31 @@
                         WHERE CONT LIKE '%' || #{keyword} || '%' ) P 
 		]]>
 	</sql>
+	
+	<update id="updateOneTripPart" parameterType="TripPartVO">
+		UPDATE TR_PART
+		SET		ST_TM = #{startTime},
+				ED_TM = #{endTime},
+				TM_CTR = #{timeControl},
+				PLACE = #{place},
+				CONT = #{content},
+				MAP  = #{map},
+				RL_FL_NM = #{realFileName}
+		WHERE	TR_PART_ID = #{tripPartId}
+	</update>
+	
+	<select id="getOneTripPart" resultType="TripPartVO">
+		SELECT	TR_PART_ID tripPartId
+				, TR_ID tripId
+				, ST_TM startTime
+				, ED_TM endTime
+				, TM_CTR timeControl
+				, PLACE place
+				, CONT content
+				, MAP map
+				, RL_FL_NM realFileName
+		FROM	TR_PART
+		WHERE	TR_PART_ID = #{tripPartId}
+	</select>
 
 </mapper>
