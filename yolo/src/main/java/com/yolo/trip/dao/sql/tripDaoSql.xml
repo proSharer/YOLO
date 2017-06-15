@@ -14,7 +14,7 @@
 		<result column="LIKE_CNT" property="likeCount"/>
 		<result column="OVER_ALL" property="overAll"/>
 		<collection select="TripPartDao.getTripPartByTripId" 
-					property="tripPartList"
+					property="tripPartVO"
 					column="TR_ID" 	
 					javaType="java.util.ArrayList"
 					ofType="TripPartVO">
@@ -113,11 +113,26 @@
 		WHERE	TR_ID = #{tripId}
 	</select>
 	
-	<update id="tripLikeCountUpdate" parameterType="string">
+	<update id="tripLikeCountUpdatePlus" parameterType="string">
 		UPDATE TRIP
 		SET     LIKE_CNT = LIKE_CNT + 1
 		WHERE   TR_ID = #{tripId}
 		
+	</update>
+	
+	<update id="tripLikeCountUpdateMinus" parameterType="string">
+		UPDATE TRIP
+		SET     LIKE_CNT = LIKE_CNT - 1
+		WHERE   TR_ID = #{tripId}
+		
+	</update>
+	
+	<update id="updateOneTrip" parameterType="TripVO">
+		UPDATE TRIP
+		SET		TITLE = #{title}
+				, OVER_ALL = #{overAll}
+				, UPDT_DT = SYSDATE
+		WHERE	TR_ID = #{tripId}
 	</update>
 	
 </mapper>

@@ -10,14 +10,14 @@ import com.yolo.user.vo.UserVO;
 
 public interface LikeDao {
 	
-	public LikeVO selectOneLikeByDailyId(UserVO userVO, DailyVO dailyVO);
-	public LikeVO selectOneLikeByTripId(UserVO userVO, TripVO tripVO);
+	public LikeVO selectOneLikeByDailyId(LikeVO likeVO);
+	public LikeVO selectOneLikeByTripId(LikeVO likeVO);
 	
 	public List<LikeVO> selectAllLikesByUserID(UserVO userVO);
 	
 	public int insertOneLike(LikeVO likeVO);
 	
-	public int deleteOneLikeByDailyId(UserVO userVO, DailyVO dailyVO);
-	public int deleteOneLikeByTripId(UserVO userVO, TripVO tripVO);
+	public int deleteOneLikeByDailyId(LikeVO likeVO);
+	public int deleteOneLikeByTripId(LikeVO likeVO);
 	
 }

@@ -12,6 +12,7 @@
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
 		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
 		<typeAlias type="com.yolo.message.vo.MessageVO" alias="MessageVO"/>
+		<typeAlias type="com.yolo.like.vo.LikeVO" alias="LikeVO"/>
 	</typeAliases>
 	
 	<mappers>
@@ -21,6 +22,7 @@
 		<mapper resource="com/yolo/daily/dao/sql/DailyDaoSql.xml"/>
 		<mapper resource="com/yolo/message/dao/sql/messageDaoSql.xml"/>
 		<mapper resource="com/yolo/user/dao/sql/userDaoSql.xml"/>
+		<mapper resource="com/yolo/like/dao/sql/likeDaoSql.xml"/>
 	</mappers>
 
 </configuration>

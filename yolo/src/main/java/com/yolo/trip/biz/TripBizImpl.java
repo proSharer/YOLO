@@ -65,7 +65,29 @@ public class TripBizImpl implements TripBiz {
 
 	@Override
 	public boolean tripLikeCountPlus(String tripId) {
-		return tripDao.tripLikeCountUpdate(tripId) > 0;
+		return tripDao.tripLikeCountUpdatePlus(tripId) > 0;
+	}
+
+	@Override
+	public boolean tripLikeCountMinus(String tripId) {
+		return tripDao.tripLikeCountUpdateMinus(tripId)>0;
+	}
+
+	@Override
+	public boolean modifyOneTrip(TripVO tripVO) {
+		TripVO trip = selectOneTrip(tripVO.getTripId());
+		
+		// null값 체크
+		if ( tripVO.getTitle().length() < 0 || tripVO.getTitle().isEmpty()){
+			tripVO.setTitle(trip.getTitle());
+		}
+		if ( tripVO.getOverAll().length() < 0 || tripVO.getOverAll().isEmpty()){
+			tripVO.setOverAll(trip.getOverAll());
+		}
+		tripVO.setCreateDate(trip.getCreateDate());
+		tripVO.setLikeCount(trip.getLikeCount());
+		
+		return tripDao.updateOneTrip(tripVO)>0;
 	}
 
 }
