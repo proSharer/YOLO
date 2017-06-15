@@ -32,8 +32,8 @@ public abstract class Pager {
 	 * 로 기본 설정됨.
 	 */
 	public Pager() {
-		this.printArticle = 10;
-		this.printPage = 10;
+		this.printArticle = 9;
+		this.printPage = 5;
 	}
 	
 	public Pager(int printArticle, int printPage) {

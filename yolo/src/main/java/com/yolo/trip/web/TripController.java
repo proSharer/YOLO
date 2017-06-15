@@ -67,7 +67,7 @@ public class TripController {
 		TripListVO tripList = tripService.selectAllTrips(tripSearchVO);
 		
 		session.setAttribute("_SEARCH_", tripSearchVO);
-		session.getAttribute("_USER_");
+		UserVO user = (UserVO)session.getAttribute("_USER_");
 		ModelAndView view = new ModelAndView();
 		
 		PageExplorer pageExplorer = new ListPageExplorer(tripList.getPager());
@@ -76,6 +76,7 @@ public class TripController {
 		view.setViewName("trip/list");
 		view.addObject("tripList",tripList);
 		view.addObject("pager",pager);
+		view.addObject("user", user);
 		
 		return view;
 		

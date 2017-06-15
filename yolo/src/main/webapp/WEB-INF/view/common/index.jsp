@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Agency - Start Bootstrap Theme</title>
+<title>Yolo : Share Your Life!</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>"
@@ -82,9 +82,9 @@
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
+							<li><a href='<c:url value="/daily/list#list" />' id="dailyBtn">Daily</a>
 							</li>
-							<li><a href='<c:url value="/trip/list" />' id="tripBtn">Trip</a>
+							<li><a href='<c:url value="/trip/list#list" />' id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
@@ -314,7 +314,6 @@
 						data-toggle="modal">
 						<div class="portfolio-hover">
 							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
 							</div>
 						</div> <img src="<c:url value="/static/img/dreams.png"/>"
 						class="img-responsive" alt="">
