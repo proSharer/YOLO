@@ -56,7 +56,7 @@
 	<sql id="getTripContentByKeyword">
 		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID P_TR_ID
                         FROM TR_PART
-                        WHERE CONT LIKE '%' || #{keyword} || '%' ) P 
+                        WHERE CONT LIKE '%' || #{keyword} || '%' ) 
 		]]>
 	</sql>
 	

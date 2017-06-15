@@ -17,7 +17,6 @@ public class TripVO {
 	private String overAll;
 	private List<TripPartVO> tripPartVO;
 	
-	
 	public String getTripId() {
 		return tripId;
 	}

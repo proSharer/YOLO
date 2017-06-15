@@ -65,7 +65,7 @@
 					<input type="text" name="tripPartVO[${i}].startTime" value="${tripPart.startTime}"><br/>
 					<input type="text" name="tripPartVO[${i}].endTime" value="${tripPart.endTime}"><br/>
 					<input type="text" name="tripPartVO[${i}].place" value="${tripPart.place}"><br/>
-			
+					<input type="text" name="tripPartVO[${i}].map" value="${tripPart.map}"><br/>
 					<select name="tripPartVO[${i}].timeControl">
 					    
 					    <option value="${tripPart.timeControl}">${tripPart.timeControl}</option>

@@ -125,7 +125,7 @@ public class TripServiceImpl implements TripService{
 		
 		// tripPartVO 에 아이디 setting 해주기.
 		List<TripPartVO> tripPartList 
-				= tripBiz.selectOneTrip(tripVO.getTripId()).getTripPartVO();
+				= tripPartBiz.selectTripPartByTripId(tripVO.getTripId());
 		
 		List<TripPartVO> tripPartVOList = tripVO.getTripPartVO();
 		

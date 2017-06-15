@@ -36,9 +36,9 @@
 	<form id="searchForm">
 		${pager}<br/>
  		<select name="searchType">
-			<option value="1">제목+내용</option>
+			<option value="1">제목+총평</option>
 			<option value="2">제목</option>
-			<option value="3">내용</option>
+			<option value="3">총평</option>
 			<option value="4">세부내용</option>
 		</select>
 		

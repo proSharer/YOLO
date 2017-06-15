@@ -14,10 +14,10 @@
 		<result column="LIKE_CNT" property="likeCount"/>
 		<result column="OVER_ALL" property="overAll"/>
 		<collection select="TripPartDao.getTripPartByTripId" 
-					property="tripPartVO"
-					column="TR_ID" 	
-					javaType="java.util.ArrayList"
-					ofType="TripPartVO">
+							property="tripPartVO"
+							column="TR_ID" 	
+							javaType="java.util.ArrayList"
+							ofType="TripPartVO">
 		</collection>
 	</resultMap>
 	
@@ -55,7 +55,7 @@
 
 	</select>
 	
-	<select id="getAllTrips" resultMap="TripMap" parameterType="TripSearchVO">
+		<select id="getAllTrips" resultMap="TripMap" parameterType="TripSearchVO">
 		<include refid="CommonDao.PAGING_HEADER"/>
 			SELECT	/* [TripDao][getAllTrip] */
 					TR_ID 
@@ -64,7 +64,7 @@
 					, USR_ID
 					, LIKE_CNT
 					, OVER_ALL
-			FROM	TRIP<if test="searchType == 4">T, <include refid="TripPartDao.getTripContentByKeyword"></include> 
+			FROM	TRIP<if test="searchType == 4">T, <include refid="TripPartDao.getTripContentByKeyword"/> P 
 			WHERE T.TR_ID = P.P_TR_ID
 			</if> 
 			
@@ -72,24 +72,18 @@
 				WHERE	1=1
 				<if test="keyword != null  and keyword != '' ">
 				AND		( TITLE LIKE '%' || #{keyword} || '%'
- 				OR		OVER_ALL LIKE '%' || #{keyword} || '%' 
- 				OR		#{keyword} IN <include refid="TripPartDao.getTripContentByKeyword">
-				</include> ) 
+ 				OR		OVER_ALL LIKE '%' || #{keyword} || '%'  ) 
 				</if> 
 			</if>
 			<if test="searchType == 2">
-				WHERE	1=1
 				<if test="keyword != null  and keyword != '' ">
-				AND		TITLE LIKE '%' || #{keyword} || '%'
+				WHERE		TITLE LIKE '%' || #{keyword} || '%'
 				
 				</if> 
 			</if>
 			<if test="searchType == 3">
-				WHERE	1=1
 				<if test="keyword != null  and keyword != '' ">
-				AND		( OVER_ALL LIKE '%' || #{keyword} || '%'
-				OR		#{keyword} IN <include refid="TripPartDao.getTripContentByKeyword">
-				</include> )
+				WHERE		 OVER_ALL LIKE '%' || #{keyword} || '%' 
 				</if> 
 			</if>
 		<include refid="CommonDao.PAGING_FOOTER"/>

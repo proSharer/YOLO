@@ -48,7 +48,10 @@ public class TripPartBizImpl implements TripPartBiz {
 			if ( tripPartVO.getPlace().isEmpty() || tripPartVO.getPlace().length() < 0) {
 				tripPartVO.setPlace(tripPart.getPlace());
 			}
-			
+			// 나중에 뺄지 말지 생각..
+			if ( tripPartVO.getMap().isEmpty() || tripPartVO.getMap().length()< 0 ){
+				tripPartVO.setMap(tripPart.getMap());
+			}
 			if ( tripPartVO.getTimeControl().isEmpty() 
 					|| tripPartVO.getTimeControl().length() < 0 ) {
 				tripPartVO.setTimeControl(tripPart.getTimeControl());
