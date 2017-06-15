@@ -14,7 +14,7 @@
 		}); */
 
 		//document.getElementById('button').addEventListener('click',function(){
-			if (! ('Notification' in window) ){
+			/* if (! ('Notification' in window) ){
 				alert('Sorry, your browser is not good enough to display notification');
 				return;
 			}
@@ -38,12 +38,14 @@
 					var notification = new Notification(title, options);
 					setTimeout(notification.close.bind(notification), 5000);
 				});
-			} 
+			}  */
 			/* var showAlert = setTimeout(function() {
 			      alert('Wow!!!');
 			   }, 5000); */
 		//});
+		$("#contents").load("/yolo/message/write/test");
 	});
+	
 </script>
 </head>
 <body>
@@ -52,6 +54,8 @@
 	<a href="/yolo/message/list/sent">[보낸 메세지]</a>
 	<a href="" onclick='javascript:window.open("/yolo/message/write/test", "window", "width=400,height=400")'>[새 메세지]</a>
 	<br/><br/>
+	<div><c:import url="http://localhost:3000"/></div>
+	<div id="contents"></div>
 	
 </body>
 </html>

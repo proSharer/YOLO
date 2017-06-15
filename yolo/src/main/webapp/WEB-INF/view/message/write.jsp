@@ -12,15 +12,21 @@
 <script type="text/javascript">
 	$().ready(function () {
 		
-		$("#messageForm").find("#submitBtn").click(function () {
+		/* $("#messageForm").find("#submitBtn").click(function () {
 			$("#messageForm").attr({
 				action: "<c:url value = "/message/write/${userId}"/>",
 				method: "post" 
 			});
 			
 			$("#messageForm").submit();
-		});
+		}); */
 		
+		$("#messageForm").find("#submitBtn").click(function() {
+			$.post( "<c:url value = "/message/write/${userId}"/>",$("#messageForm").serialize(),function(response){
+				console.log(response);
+			});
+		});
+
 	});
 </script>
 </head>
@@ -29,9 +35,9 @@
 	<p>Message to ${userId}</p>
 	
 	<form:form id="messageForm" commandName="MessageVO" name="dataform">
-		<input type="hidden" name="sender" value="${loginUser.userId}"><!-- Session UserId value값으로 바꿔주기! -->
-		<input type="hidden" name="receiver" value="${userId}">
-		<textarea name="content"></textarea><br/>
+		<input id="loginUserId" type="hidden" name="sender" value="${loginUser.userId}"><!-- Session UserId value값으로 바꿔주기! -->
+		<input id="receiver" type="hidden" name="receiver" value="${userId}">
+		<textarea id="content" name="content"></textarea><br/>
 		<input type="button" id="submitBtn" value="Send" />
 	</form:form>
 	

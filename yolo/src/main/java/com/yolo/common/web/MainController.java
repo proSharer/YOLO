@@ -26,9 +26,9 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		
 		List<MessageVO> messageList = null;
-		//UserVO user = (UserVO)session.getAttribute("_USER_");
-		UserVO user = new UserVO();
-		user.setUserId("test");
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		/*UserVO user = new UserVO();
+		user.setUserId("test");*/
 		
 		/*if (user != null) {
 			messageList = mainService.getMessageList(user);
@@ -54,7 +54,8 @@ public class MainController {
 			}
 		}*/
 		
-		view.setViewName("common/mainFrame");
+		view.addObject("user", user);
+		view.setViewName("common/index");
 		
 		return view;
 	}

@@ -117,11 +117,11 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/user/signout")
+	@RequestMapping("/user/signOut")
 	public String doSignOutAction(HttpSession session) {
 		session.invalidate();
 
-		return "redirect:/yolo/test";
+		return "redirect:/home";
 	}
 
 	public boolean verify(String password) {

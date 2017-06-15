@@ -13,7 +13,7 @@ $().ready(function () {
 	$("#signInForm").find("input[type=button]").click(function () {
 		$.post("<c:url value="/user/signIn" />", $("#signInForm").serialize(), function(data) {
 			if ( data == "OK" ) {
-				window.location.href = "<c:url value="/user/test"/>";
+				window.location.href = "<c:url value="/home"/>";
 			}
 			else if (data == "FAIL") {
 				alert("로그인 실패");
