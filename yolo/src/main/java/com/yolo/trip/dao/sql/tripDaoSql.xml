@@ -130,8 +130,9 @@
 	<update id="updateOneTrip" parameterType="TripVO">
 		UPDATE TRIP
 		SET		TITLE = #{title}
-				OVER_ALL = #{overAll}
-		WEHRE	TR_ID = #{tripId}
+				, OVER_ALL = #{overAll}
+				, UPDT_DT = SYSDATE
+		WHERE	TR_ID = #{tripId}
 	</update>
 	
 </mapper>

@@ -11,4 +11,6 @@ public interface TripPartBiz {
 	public List<TripPartVO> selectTripPartByTripId(String tripId);
 	
 	public boolean modifyTripPart(List<TripPartVO> tripPartVOList);
+	
+	public TripPartVO selectOneTripPart(String tripPartId);
 }

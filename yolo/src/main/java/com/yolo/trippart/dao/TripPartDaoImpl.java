@@ -28,4 +28,9 @@ public class TripPartDaoImpl extends SqlSessionDaoSupport implements TripPartDao
 		return getSqlSession().update("TripPartDao.updateOneTripPart",tripPartVO);
 	}
 
+	@Override
+	public TripPartVO getOneTripPart(String tripPartId) {
+		return getSqlSession().selectOne("TripPartDao.getOneTripPart",tripPartId);
+	}
+
 }

@@ -98,9 +98,10 @@ public class TripController {
 		tripVO.setUserId(userId);
 		
 		for ( int i = 0 ; i< tripVO.getTripPartVO().size(); i++ ){
+			
 			System.out.println(tripVO.getTripPartVO().get(i).getPlace());
 			MultipartFile file = tripVO.getTripPartVO().get(i).getFile();
-			System.out.println(file.getOriginalFilename());
+
 			if(!file.isEmpty() && file.getSize() > 0){
 				String fileName = file.getOriginalFilename();
 				
@@ -192,9 +193,46 @@ public class TripController {
 	}
 	
 	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.POST)
-	public String doUpdatePage(TripVO tripVO,@PathVariable String tripId){
+	public String doUpdatePage(TripVO tripVO,@PathVariable String tripId, HttpSession session){
+		
+		UserVO user = (UserVO) session.getAttribute("_USER_");
+		
+		tripVO.setUserId(user.getUserId());
 		tripVO.setTripId(tripId);
-
+		
+		List<TripPartVO> tripPartList = tripVO.getTripPartVO();
+		
+		// 파일 수정 부분 파일 setting..
+		for ( TripPartVO tripPartVO : tripPartList ){
+			if ( ! tripPartVO.getFile().isEmpty() 
+					|| tripPartVO.getFile().getSize() > 0 ){
+				
+				String fileName = tripPartVO.getFile().getOriginalFilename();
+				
+				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				File newFile = new File(filePath);
+				
+				try {
+					tripPartVO.getFile().transferTo(newFile);
+					ExtensionFilter filter = ExtensionFilterFactory.getFilter(ExtFilter.APACHE_TIKA);
+					boolean isImage = filter.doFilter(newFile.getAbsolutePath(), "image/gif" , "image/jpeg", "image/png", "image/bmp" );
+					
+					if(!isImage){
+						newFile.delete();
+						tripPartVO.setRealFileName("");
+					}
+					else {
+						tripPartVO.setRealFileName(fileName);
+				
+					}
+				} catch (IllegalStateException e) {
+					throw new RuntimeException(e.getMessage(),e);
+				}catch (IOException e) {
+					throw new RuntimeException(e.getMessage(),e);
+				}
+			}
+		}
+		
 		boolean isSuccess = tripService.modifyOneTrip(tripVO);
 		
 		if ( isSuccess ){

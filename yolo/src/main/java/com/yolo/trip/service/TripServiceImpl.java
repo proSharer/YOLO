@@ -122,6 +122,8 @@ public class TripServiceImpl implements TripService{
 	}
 	@Override
 	public boolean modifyOneTrip(TripVO tripVO) {
+		
+		// tripPartVO 에 아이디 setting 해주기.
 		List<TripPartVO> tripPartList 
 				= tripBiz.selectOneTrip(tripVO.getTripId()).getTripPartVO();
 		
@@ -132,9 +134,7 @@ public class TripServiceImpl implements TripService{
 		}
 		
 		tripPartBiz.modifyTripPart(tripPartVOList);
-		/*	 TODO tripPartVO 를 생성후, tripVO 에 있는 tripPartVO (List) 만큼
-  		반복문을 돌면서 update 됨.. null을 막기위해 tripVO 와
-  		 tripPartVO를 select 하는 쿼리를 짜줘야..*/
+		tripBiz.modifyOneTrip(tripVO);
 		
 		return tripBiz.modifyOneTrip(tripVO);
 	}

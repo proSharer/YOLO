@@ -11,4 +11,6 @@ public interface TripPartDao {
 	public List<TripPartVO> getTripPartByTripId(String partId);
 	
 	public int updateOneTripPart(TripPartVO tripPartVO);
+	
+	public TripPartVO getOneTripPart(String tripPartId);
 }

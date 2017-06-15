@@ -11,10 +11,12 @@ public class TripVO {
 	private String tripId;
 	private String title;
 	private String createDate;
+	private String updateDate;
 	private String userId;
 	private int likeCount;
 	private String overAll;
 	private List<TripPartVO> tripPartVO;
+	
 	
 	public String getTripId() {
 		return tripId;
@@ -33,6 +35,12 @@ public class TripVO {
 	}
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+	public String getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 	public String getUserId() {
 		return userId;
@@ -59,6 +67,7 @@ public class TripVO {
 		this.tripPartVO = tripPartVO;
 	}
 
+	
 
 
 }
