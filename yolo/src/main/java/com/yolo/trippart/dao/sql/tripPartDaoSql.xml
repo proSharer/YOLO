@@ -5,6 +5,12 @@
 
 
 <mapper namespace="TripPartDao">
+	
+	<resultMap type="TripPartVO" id="tripMap">
+		<id column="TR_PART_ID" property="tripId"/>
+		<result column="CONT" property="content"/>
+	</resultMap>
+	
 	<insert id="insertOneTripPart" parameterType="TripPartVO">
 		INSERT INTO  TR_PART /*[TripPartDao][insertOneTripPart]*/	
 								(	
@@ -47,5 +53,11 @@
 		WHERE	TR_ID = #{tripId}
 	</select>
 	
+	<sql id="getTripContentByKeyword">
+		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID P_TR_ID
+                        FROM TR_PART
+                        WHERE CONT LIKE '%' || #{keyword} || '%' ) P 
+		]]>
+	</sql>
 
 </mapper>

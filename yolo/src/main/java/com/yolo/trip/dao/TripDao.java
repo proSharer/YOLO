@@ -16,4 +16,8 @@ public interface TripDao {
 	public int getAllTripCount(TripSearchVO tripSearchVO);
 	
 	public int deleteTrip(String tripId);
+	
+	public TripVO getOneTrip(String tripId);
+	
+	public int tripLikeCountUpdate(String tripId);
 }

@@ -32,7 +32,6 @@ public class TripServiceImpl implements TripService{
 		
 		boolean isSuccess = false;
 		
-		System.out.println("===size"+size);
 		for (int i = 0 ; i < size ; i++){
 			TripPartVO tripPartVO = new TripPartVO();
 			
@@ -64,5 +63,13 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public boolean removeTrip(String tripId) {
 		return tripBiz.removeTrip(tripId);
+	}
+	@Override
+	public TripVO selectOneTrip(String tripId) {
+		return tripBiz.selectOneTrip(tripId);
+	}
+	@Override
+	public boolean tripLikeCountPlus(String tripId) {
+		return tripBiz.tripLikeCountPlus(tripId);
 	}
 }

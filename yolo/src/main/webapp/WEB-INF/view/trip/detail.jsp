@@ -13,12 +13,39 @@
 <script type="text/javascript">
 
 	$().ready(function(){
-	 
+		
+		var param = "<c:out value="${param.tripId}"/>";
+		
+	 	console.log(param);
+	 	
+		$("#likeBtn").click(function(){
+			$.ajax({
+				url : "<c:url value="/trip/likeCountPlus"/>",
+				dataType : "json",
+				type : "post",
+				data : {
+					"tripId" : $("#tripId").val()
+				}, 
+				success: function(response) {
+					if( response.status == "success"){
+						$("#likeBtn").val("♥");
+						$("#likeCount").text(response.trip.likeCount);
+					}
+			    },
+			    error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"error:"+error);
+			    }
+			 
+			});
+			
+
+		});
+
 	});
 </script>
 </head>
 <body>
-
+	<input type="hidden" id="tripId" value="${tripVO.tripId}"/>
 	<c:forEach items="${tripPartList}" var="tripPart">
 		<div>
 		<img src="<c:url value="/static/img/${tripPart.realFileName}"/>" width="400px" height="300px"/><br/>
@@ -31,7 +58,9 @@
 		</div><br>
 	</c:forEach>
 	
-	<a href="<c:url value="/trip/delete/${tripId}"/>">삭제하기</a>
+	좋아요 : <p id="likeCount"> ${tripVO.likeCount}</p>
+	<input type="button" id="likeBtn" value="♡ "/>
+	<a href="<c:url value="/trip/delete/${tripVO.tripId}"/>">삭제하기</a>
 	
 </body>
 </html>

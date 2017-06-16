@@ -17,4 +17,8 @@ public interface TripService {
 	
 	public boolean removeTrip(String tripId);
 	
+	public TripVO selectOneTrip(String tripId);
+	
+	public boolean tripLikeCountPlus(String tripId);
+	
 }

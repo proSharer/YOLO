@@ -3,22 +3,23 @@ package com.yolo.trip.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.yolo.common.web.DownloadUtil;
+import com.google.gson.Gson;
 import com.yolo.common.web.ListPageExplorer;
 import com.yolo.common.web.PageExplorer;
 import com.yolo.common.web.checker.ExtFilter;
@@ -39,10 +40,33 @@ public class TripController {
 		this.tripService = tripService;
 	}
 	
+	@RequestMapping("/trip/list/init")
+	public String viewInitListPage(HttpSession session){
+		
+		session.removeAttribute("_SEARCH_");
+		return "redirect:/trip/list";
+		
+	}
+	
+	
 	@RequestMapping("/trip/list")
-	public ModelAndView viewListPage(TripSearchVO tripSearchVO){
+	public ModelAndView viewListPage(TripSearchVO tripSearchVO, HttpSession session){
+		
+		// 페이지 정보가 없이 들어왔다면 
+		if ( tripSearchVO.getPageNo() == null ||
+				tripSearchVO.getPageNo().length() == 0 ){
+			TripSearchVO tripSearchVOInSession = (TripSearchVO) session.getAttribute("_SEARCH_");
+
+			if ( tripSearchVOInSession != null ){
+				tripSearchVO = tripSearchVOInSession;
+			}
+		}
+		
 		
 		TripListVO tripList = tripService.selectAllTrips(tripSearchVO);
+		
+		session.setAttribute("_SEARCH_", tripSearchVO);
+		
 		ModelAndView view = new ModelAndView();
 		
 		PageExplorer pageExplorer = new ListPageExplorer(tripList.getPager());
@@ -116,11 +140,13 @@ public class TripController {
 	public ModelAndView viewDetailPage(@PathVariable String tripId){
 		ModelAndView view = new ModelAndView();
 		
+		TripVO tripVO = tripService.selectOneTrip(tripId);
+
 		List<TripPartVO> tripPartList = tripService.selectTripPartByTripId(tripId);
 		
 		view.setViewName("/trip/detail");
 		view.addObject("tripPartList",tripPartList);
-		view.addObject("tripId",tripId);
+		view.addObject("tripVO",tripVO);
 		return view;
 		
 	}
@@ -139,5 +165,27 @@ public class TripController {
 		
 	}
 	
+	@RequestMapping(value="/trip/likeCountPlus",method=RequestMethod.POST)
+	@ResponseBody
+	public String DolikeCountPlus(HttpServletRequest request){
+
+		String tripId = request.getParameter("tripId");
+		boolean isSuccess = tripService.tripLikeCountPlus(tripId);
+		TripVO tripVO = tripService.selectOneTrip(tripId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if( isSuccess ) {
+			map.put("status", "success");
+			map.put("trip", tripVO);
+		}
+		else { 
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+	
+		return json;
+	}
 	
 }
