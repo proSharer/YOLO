@@ -32,7 +32,7 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 <link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt"
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
 	rel="stylesheet">
 <!-- Theme CSS -->
 <link href="<c:url value="/static/css/agency.min.css"/>"
@@ -82,21 +82,21 @@
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list#list" />' id="dailyBtn">Daily</a>
-							</li>
+							<li><a href='<c:url value="/daily/list#list" />'
+								id="dailyBtn">Daily</a></li>
 							<li><a href='<c:url value="/trip/list#list" />' id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
 					<c:choose>
 						<c:when test="${user eq null}">
-							<li><a class="page-scroll" href="<c:url value="/user/signIn" />" id="loginBtn">Login</a>
-							</li>
-							<li><a class="page-scroll" href="#signUp" id="joinBtn">Join</a>
+							<li><a class="page-scroll" href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
+							<li><a class="page-scroll"
+								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
 							</li>
 							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
 							</li>
@@ -127,7 +127,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<h2 class="section-heading">New Post</h2>
+					<h2 class="section-heading"
+						style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">New Post</h2>
 					<br /> <br />
 					<h3 class="section-subheading text-muted">- Daily Life -</h3>
 				</div>
@@ -144,7 +145,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Round Icons</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
 						<p class="text-muted">Graphic Design</p>
 					</div>
 				</div>
@@ -159,7 +160,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Startup Framework</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -174,7 +175,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Treehouse</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -189,7 +190,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Golden</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -204,7 +205,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Escape</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -219,7 +220,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Dreams</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -245,7 +246,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Round Icons</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
 						<p class="text-muted">Graphic Design</p>
 					</div>
 				</div>
@@ -260,7 +261,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Startup Framework</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -275,7 +276,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Treehouse</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -290,7 +291,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Golden</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -305,7 +306,7 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Escape</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -313,13 +314,12 @@
 					<a href="#portfolioModal6" class="portfolio-link"
 						data-toggle="modal">
 						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-							</div>
+							<div class="portfolio-hover-content"></div>
 						</div> <img src="<c:url value="/static/img/dreams.png"/>"
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4>Dreams</h4>
+						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>

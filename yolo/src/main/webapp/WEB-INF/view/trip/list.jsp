@@ -15,6 +15,27 @@
 <title>Yolo : Trip List</title>
 
 <style type="text/css">
+
+/* nav bar search box - drop down menu button */
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.dropdown-menu .label-icon {
+	margin-left: 5px;
+}
+
+/* TODO: 색상바꾸기  */
+.dropdown-menu>.active>a {
+	background-color: #ccc;
+}
+
+.btn-outline {
+	background-color: transparent;
+	color: inherit;
+	transition: all .5s;
+}
+
 #list .portfolio-item .portfolio-link .portfolio-hover {
 	background: rgba(254, 209, 54, .9);
 	position: absolute;
@@ -29,11 +50,15 @@
 #list .portfolio-item:hover .portfolio-link .portfolio-hover:hover {
 	opacity: 1;
 }
+
+#searchText:focus {
+	
+}
+
 </style>
 
 <!-- Bootstrap Core CSS -->
-<link href="<c:url value="/static/css/bootstrap.min.css"/>"
-	rel="stylesheet">
+<link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link href="<c:url value="/static/css/font-awesome.min.css"/>"
@@ -49,7 +74,7 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 <link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt"
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
 	rel="stylesheet">
 <!-- Theme CSS -->
 <link href="<c:url value="/static/css/agency.min.css"/>"
@@ -68,17 +93,30 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		
+
 		var maxHeight = 0;
 		var maxWidth = 0;
 		$('.img').each(function() {
 			maxHeight = Math.max(maxHeight, $(this).height());
 			maxWidth = Math.max(maxWidth, $(this).width());
 		});
+
+		$('.portfolio-hover').css({
+			height : maxHeight + 'px'
+		});
+		$('.portfolio-hover').css({
+			width : maxWidth + 'px'
+		});
 		
-		$('.portfolio-hover').css({height:maxHeight + 'px'});
-		$('.portfolio-hover').css({width:maxWidth + 'px'});
-		
+		$(".input-group-btn .dropdown-menu li a").click(function(){
+			var selText = $(this).html();
+			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
+			
+			var option = $(this).find("span").data("option");
+			
+			$("#searchType").val(option);
+		});
+
 	});
 </script>
 
@@ -103,8 +141,8 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="<c:url value="/home#main" />" id="mainBtn">Main</a>
-					</li>
+					<li><a class="page-scroll" href="<c:url value="/home#main" />"
+						id="mainBtn">Main</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
 							<span class="caret"></span>
@@ -112,19 +150,20 @@
 						<ul class="dropdown-menu">
 							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
 							</li>
-							<li><a href='<c:url value="/trip/list" />' id="tripBtn">Trip</a>
+							<li><a href='#list' class="page-scroll" id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
 					<c:choose>
 						<c:when test="${user eq null}">
-							<li><a class="page-scroll" href="<c:url value="/user/signIn" />" id="loginBtn">Login</a>
-							</li>
-							<li><a class="page-scroll" href="#signUp" id="joinBtn">Join</a>
+							<li><a class="page-scroll"
+								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
+							<li><a class="page-scroll"
+								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
 							</li>
 							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
 							</li>
@@ -137,67 +176,97 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	
-	<header id="header">
-	</header>
-	<form id="searchForm" style="text-align: center;">
-	<section id="list">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h2 class="section-heading">Trip</h2>
-					<br /> <br />
-					<h3 class="section-subheading text-muted">- New -</h3>
+
+	<header id="header"> </header>
+	<form id="searchForm" style="text-align: center;"
+		class="navbar-form navbar-search" role="search">
+		<section id="list">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2 style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px" class="section-heading">Trip</h2>
+						<br /> <br />
+						<h3 class="section-subheading text-muted">- New -</h3>
+					</div>
 				</div>
-			</div>
-			
-			<div class="row">
-				<select name="searchType">
-					<option value="1">제목+내용</option>
-					<option value="2">제목</option>
-					<option value="3">내용</option>
-					<option value="4">세부내용</option>
-				</select>
-				<input type="text" name="keyword" value="${sessionScope._SEARCH_.keyword}"/>
-				<input type="button" value="search" onclick="movePage(0)" />
-				<input type="button" value="검색 초기화" onclick="location.href='<c:url value="/trip/list/init"/>'"/><br/>
-			</div>
-			
-			<div class="row" style="text-align: center;">
-				<c:forEach items="${tripList.tripList}" var="trip">
-					<div class="col-md-4 col-sm-6">
-						<div class="imgDiv portfolio-item">
-							<a href="#portfolioModal1" class="portfolio-link"
-								data-toggle="modal">
-								<div class="portfolio-hover">
-									<div class="portfolio-hover-content">
-									</div>
-								</div> 
-								<img class="img" src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName }"/>"
-								class="img-responsive" alt="" style="width:360px; height:260.09px; margin: auto;">
-							</a>
+
+				<div class="row">
+					<div class="input-group">
+						<input type="hidden" id="searchType" name="searchType" />
+						<div class="input-group-btn">
+							<button type="button"
+								class="btn btn-search btn-default dropdown-toggle"
+								data-toggle="dropdown" value="1">
+								<span class="label-icon">Search</span> <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu pull-left" role="menu">
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="1">제목+총평</span>
+								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="2">제목</span>
+								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="3">총평</span>
+								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="4">세부내용</span>
+								</a></li>
+							</ul>
 						</div>
-						<div class="portfolio-caption">
-							<h4>${trip.title}</h4>
-							<p class="text-muted">${trip.userId}</p>
+
+						<input id="searchText" name="keyword" type="text"
+							class="form-control" value="${sessionScope._SEARCH_.keyword}">
+
+						<div class="input-group-btn">
+							<input type="button" class="btn btn-search btn-default"
+								onclick="movePage(0)" value="&#10140;" />
+						</div>
+						<div class="input-group-btn">
+							<input type="button" class="btn btn-search btn-default"
+								onclick="location.href=‘<c:url value="/trip/list/init"/>‘"
+								value="초기화" />
 						</div>
 					</div>
-				</c:forEach>
-			</div>
-		</div><br/><br/>
-		
-		<div class="container">
-			<div class="row">
-				
+				</div>
+				<br />
+				<br />
+				<br />
+				<br />
+				<div class="row" style="text-align: center;">
+					<c:forEach items="${tripList.tripList}" var="trip">
+						<div class="col-md-4 col-sm-6">
+							<div class="imgDiv portfolio-item">
+								<a href="#portfolioModal1" class="portfolio-link"
+									data-toggle="modal">
+									<div class="portfolio-hover">
+										<div class="portfolio-hover-content"></div>
+									</div> <img class="img"
+									src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName }"/>"
+									class="img-responsive" alt=""
+									style="width: 360px; height: 260.09px; margin: auto;">
+								</a>
+							</div><br/>
+							<div class="portfolio-caption">
+								<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">${trip.title}</h4>
+								<p class="text-muted">${trip.userId}</p>
+							</div>
+							<br/>
+						</div>
+					</c:forEach>
+				</div>
+				<br />
+				<br />
+
+				<div class="row">
 					${pager}
-			 		
-	</form>
 					<c:if test="${!empty sessionScope._USER_}">
 						<a href="<c:url value="/trip/write"/>">글쓰기</a>
 					</c:if>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</form>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 

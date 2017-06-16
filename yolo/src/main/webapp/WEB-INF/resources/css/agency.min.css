@@ -358,11 +358,11 @@ section h3.section-subheading {
 	padding: 25px
 }
 
-#main .portfolio-item .portfolio-caption h4 {
+#main .portfolio-item .portfolio-caption h4  {
 	text-transform: none;
 	margin: 0;
-	font-family: 'Rokkitt', serif;
-	font-size: 22px;
+	font-family: 'Abel', sans-serif;
+	font-size: 19px;
 }
 
 #main .portfolio-item .portfolio-caption p {
