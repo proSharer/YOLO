@@ -9,15 +9,28 @@ import com.yolo.trippart.vo.TripPartVO;
 public class TripPartDaoImpl extends SqlSessionDaoSupport implements TripPartDao{
 
 	@Override
-	public int insertOneTripPart(TripPartVO tripPartVO) {
+	public int insertOneTripPart(List<TripPartVO> tripPartVOList) {
 		
-		return getSqlSession().insert("TripPartDao.insertOneTripPart",tripPartVO);
-	
+		int isSuccess = 0;
+		for(TripPartVO tripPartVO : tripPartVOList ){
+			isSuccess = getSqlSession().insert("TripPartDao.insertOneTripPart",tripPartVO);
+		}
+		return isSuccess;
 	}
 
 	@Override
 	public List<TripPartVO> getTripPartByTripId(String partId) {
 		return getSqlSession().selectList("TripPartDao.getTripPartByTripId",partId);
+	}
+
+	@Override
+	public int updateOneTripPart(TripPartVO tripPartVO) {
+		return getSqlSession().update("TripPartDao.updateOneTripPart",tripPartVO);
+	}
+
+	@Override
+	public TripPartVO getOneTripPart(String tripPartId) {
+		return getSqlSession().selectOne("TripPartDao.getOneTripPart",tripPartId);
 	}
 
 }

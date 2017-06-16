@@ -7,7 +7,15 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
+<<<<<<< HEAD
 		<config>src/main/webapp/WEB-INF/spring/dailyContext.xml</config>
+<<<<<<< HEAD
+		<config>src/main/webapp/WEB-INF/spring/mainContext.xml</config>
+=======
+=======
+		<config>src/main/webapp/WEB-INF/spring/userContext.xml</config>
+>>>>>>> James
+>>>>>>> c8882cea89da8f3b5549d5ef0d880caf043fbd59
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

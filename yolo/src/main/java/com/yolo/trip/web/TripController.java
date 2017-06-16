@@ -3,10 +3,10 @@ package com.yolo.trip.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,6 +30,7 @@ import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.vo.TripPartVO;
+import com.yolo.user.vo.UserVO;
 
 @Controller
 public class TripController {
@@ -66,11 +67,11 @@ public class TripController {
 		TripListVO tripList = tripService.selectAllTrips(tripSearchVO);
 		
 		session.setAttribute("_SEARCH_", tripSearchVO);
-		
+		session.getAttribute("_USER_");
 		ModelAndView view = new ModelAndView();
 		
 		PageExplorer pageExplorer = new ListPageExplorer(tripList.getPager());
-		String pager = pageExplorer.getPagingList("pageNo", "[@]", "�씠�쟾", "�떎�쓬", "searchForm");
+		String pager = pageExplorer.getPagingList("pageNo", " @ ", "이전", "다음", "searchForm");
 		
 		view.setViewName("trip/list");
 		view.addObject("tripList",tripList);
@@ -90,29 +91,35 @@ public class TripController {
 	@RequestMapping(value="/trip/write",method=RequestMethod.POST)
 	public String insertNewTripPart(HttpServletRequest request, TripVO tripVO){
 		
-		List<MultipartFile> files = tripVO.getTripPartListVO().getFile();
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
 		
-		List<String> realFileName  = new ArrayList<String>();
+		String userId= userVO.getUserId();
+		tripVO.setUserId(userId);
 		
-		if(tripVO.getTripPartListVO().getFile() != null && !tripVO.getTripPartListVO().getFile().isEmpty()){
-			for ( int i = 0 ; i< files.size(); i++ ){
-				String fileName = files.get(i).getOriginalFilename();
+		for ( int i = 0 ; i< tripVO.getTripPartVO().size(); i++ ){
+			
+			System.out.println(tripVO.getTripPartVO().get(i).getPlace());
+			MultipartFile file = tripVO.getTripPartVO().get(i).getFile();
+
+			if(!file.isEmpty() && file.getSize() > 0){
+				String fileName = file.getOriginalFilename();
 				
-				System.out.println(fileName);
-				String filePath = "C:\\Users\\owner\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
 				File newFile = new File(filePath);
 				
 				try {
-					files.get(i).transferTo(newFile);
+					file.transferTo(newFile);
 					ExtensionFilter filter = ExtensionFilterFactory.getFilter(ExtFilter.APACHE_TIKA);
 					boolean isImage = filter.doFilter(newFile.getAbsolutePath(), "image/gif" , "image/jpeg", "image/png", "image/bmp" );
 					
 					if(!isImage){
 						newFile.delete();
-						realFileName.add("");
+						tripVO.getTripPartVO().get(i).setRealFileName("");
 					}
 					else {
-						realFileName.add(fileName);
+						tripVO.getTripPartVO().get(i).setRealFileName(fileName);
+				
 					}
 				} catch (IllegalStateException e) {
 					throw new RuntimeException(e.getMessage(),e);
@@ -123,10 +130,9 @@ public class TripController {
 			}
 		}
 		
-		tripVO.getTripPartListVO().setRealFileName(realFileName);
 		
 		boolean isSuccess = tripService.addNewOneTrip(tripVO);
-	
+		
 		if ( isSuccess ){
 			return "redirect:/trip/list";
 		}
@@ -137,22 +143,29 @@ public class TripController {
 	}
 	
 	@RequestMapping("/trip/detail/{tripId}")
-	public ModelAndView viewDetailPage(@PathVariable String tripId){
+	public ModelAndView viewDetailPage(@PathVariable String tripId, HttpSession session){
+		
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+	
 		ModelAndView view = new ModelAndView();
 		
 		TripVO tripVO = tripService.selectOneTrip(tripId);
 
-		List<TripPartVO> tripPartList = tripService.selectTripPartByTripId(tripId);
+		Map<String,Object> map = tripService.selectTripPartByTripId(tripId,userVO);
 		
+		boolean like = (boolean) map.get("like");
+		List<TripPartVO> tripPartList = (List<TripPartVO>) map.get("tripPartList");
+				
 		view.setViewName("/trip/detail");
 		view.addObject("tripPartList",tripPartList);
+		view.addObject("like",like);
 		view.addObject("tripVO",tripVO);
 		return view;
 		
 	}
 	
 	@RequestMapping("/trip/delete/{tripId}")
-	public String DoDeletePage(@PathVariable String tripId){
+	public String doDeletePage(@PathVariable String tripId){
 	
 		boolean isSuccess = tripService.removeTrip(tripId);
 		
@@ -165,19 +178,89 @@ public class TripController {
 		
 	}
 	
-	@RequestMapping(value="/trip/likeCountPlus",method=RequestMethod.POST)
-	@ResponseBody
-	public String DolikeCountPlus(HttpServletRequest request){
-
-		String tripId = request.getParameter("tripId");
-		boolean isSuccess = tripService.tripLikeCountPlus(tripId);
+	
+	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.GET)
+	public ModelAndView viewUpdatePage(@PathVariable String tripId){
+		ModelAndView view = new ModelAndView();
+		
 		TripVO tripVO = tripService.selectOneTrip(tripId);
 		
-		Map<String,Object> map = new HashMap<String,Object>();
+		view.setViewName("/trip/update");
+		view.addObject("tripVO",tripVO);
 		
+		return view;
+		
+	}
+	
+	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.POST)
+	public String doUpdatePage(TripVO tripVO,@PathVariable String tripId, HttpSession session){
+		
+		UserVO user = (UserVO) session.getAttribute("_USER_");
+		
+		tripVO.setUserId(user.getUserId());
+		tripVO.setTripId(tripId);
+		
+		List<TripPartVO> tripPartList = tripVO.getTripPartVO();
+		
+		// 파일 수정 부분 파일 setting..
+		for ( TripPartVO tripPartVO : tripPartList ){
+			if ( ! tripPartVO.getFile().isEmpty() 
+					|| tripPartVO.getFile().getSize() > 0 ){
+				
+				String fileName = tripPartVO.getFile().getOriginalFilename();
+				
+				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				File newFile = new File(filePath);
+				
+				try {
+					tripPartVO.getFile().transferTo(newFile);
+					ExtensionFilter filter = ExtensionFilterFactory.getFilter(ExtFilter.APACHE_TIKA);
+					boolean isImage = filter.doFilter(newFile.getAbsolutePath(), "image/gif" , "image/jpeg", "image/png", "image/bmp" );
+					
+					if(!isImage){
+						newFile.delete();
+						tripPartVO.setRealFileName("");
+					}
+					else {
+						tripPartVO.setRealFileName(fileName);
+				
+					}
+				} catch (IllegalStateException e) {
+					throw new RuntimeException(e.getMessage(),e);
+				}catch (IOException e) {
+					throw new RuntimeException(e.getMessage(),e);
+				}
+			}
+		}
+		
+		boolean isSuccess = tripService.modifyOneTrip(tripVO);
+		
+		if ( isSuccess ){
+			return "redirect:/trip/detail/"+tripVO.getTripId();
+		}
+		else {
+			return "redirect:/trip/update/"+tripVO.getTripId();
+		}
+		
+	}
+	
+	@RequestMapping(value="/trip/likeCountPlus",method=RequestMethod.POST)
+	@ResponseBody
+	public String dolikeCountPlus(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		String userId= userVO.getUserId();
+		
+		String tripId = request.getParameter("tripId");
+		boolean isSuccess = tripService.tripLikeCountPlus(tripId,userId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		int likeCount = tripService.selectOneTrip(tripId).getLikeCount();
 		if( isSuccess ) {
 			map.put("status", "success");
-			map.put("trip", tripVO);
+			map.put("likeCount", likeCount);
 		}
 		else { 
 			map.put("status", "fail");
@@ -188,4 +271,30 @@ public class TripController {
 		return json;
 	}
 	
+	@RequestMapping(value="/trip/likeCountMinus",method=RequestMethod.POST)
+	@ResponseBody
+	public String dolikeCountMinus(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		String userId= userVO.getUserId();
+		
+		String tripId = request.getParameter("tripId");
+		boolean isSuccess = tripService.tripLikeCountMinus(tripId, userId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		int likeCount = tripService.selectOneTrip(tripId).getLikeCount();
+		if( isSuccess ) {
+			map.put("status", "success");
+			map.put("likeCount", likeCount);
+		}
+		else { 
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+	
+		return json;
+	}
 }

@@ -1,4 +1,11 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=f80d25d610c9a7fdfefc404b2cb640b53140a6df
 eclipse.preferences.version=1
+encoding//src/main/java/com/yolo/common/utilities/SHA256Util.java=UTF-8
 encoding//src/main/java/com/yolo/common/web/ClassicPageExplorer.java=UTF-8
 encoding//src/main/java/com/yolo/common/web/DownloadUtil.java=UTF-8
+encoding//src/main/java/com/yolo/trip/service/TripServiceImpl.java=UTF-8
 encoding//src/main/java/com/yolo/trip/web/TripController.java=UTF-8
+encoding//src/main/webapp/WEB-INF/view/user/loginByKaKao.jsp=UTF-8
+encoding/<project>=UTF-8

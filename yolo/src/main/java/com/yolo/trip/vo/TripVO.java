@@ -11,11 +11,11 @@ public class TripVO {
 	private String tripId;
 	private String title;
 	private String createDate;
+	private String updateDate;
 	private String userId;
 	private int likeCount;
 	private String overAll;
-	private TripPartListVO tripPartListVO;
-	private List<TripPartVO> tripPartList;
+	private List<TripPartVO> tripPartVO;
 	
 	public String getTripId() {
 		return tripId;
@@ -35,6 +35,12 @@ public class TripVO {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+	public String getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -53,19 +59,14 @@ public class TripVO {
 	public void setOverAll(String overAll) {
 		this.overAll = overAll;
 	}
-	public TripPartListVO getTripPartListVO() {
-		return tripPartListVO;
+	public List<TripPartVO> getTripPartVO() {
+		return tripPartVO;
 	}
-	public void setTripPartListVO(TripPartListVO tripPartListVO) {
-		this.tripPartListVO = tripPartListVO;
-	}
-	public List<TripPartVO> getTripPartList() {
-		return tripPartList;
-	}
-	public void setTripPartList(List<TripPartVO> tripPartList) {
-		this.tripPartList = tripPartList;
+	public void setTripPartVO(List<TripPartVO> tripPartVO) {
+		this.tripPartVO = tripPartVO;
 	}
 
+	
 
 
 }

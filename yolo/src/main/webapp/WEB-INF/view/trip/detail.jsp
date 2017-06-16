@@ -14,12 +14,11 @@
 
 	$().ready(function(){
 		
-		var param = "<c:out value="${param.tripId}"/>";
-		
-	 	console.log(param);
 	 	
-		$("#likeBtn").click(function(){
-			$.ajax({
+		$(".likeBtn").click(function(){
+			var likeVal = $("#like").val();
+			if( likeVal == "false" ){
+				$.ajax({
 				url : "<c:url value="/trip/likeCountPlus"/>",
 				dataType : "json",
 				type : "post",
@@ -28,16 +27,40 @@
 				}, 
 				success: function(response) {
 					if( response.status == "success"){
-						$("#likeBtn").val("♥");
-						$("#likeCount").text(response.trip.likeCount);
+						$(".likeBtn").val("♥");
+						$("#likeCount").html(response.likeCount);
+						$("#like").val("true")
+						console.log(response.likeCount)
 					}
 			    },
 			    error:function(request,status,error){
 			        alert("code:"+request.status+"\n"+"error:"+error);
 			    }
 			 
-			});
-			
+				});
+			}
+			else {
+				$.ajax({
+				url : "<c:url value="/trip/likeCountMinus"/>",
+				dataType : "json",
+				type : "post",
+				data : {
+					"tripId" : $("#tripId").val()
+				}, 
+				success: function(response) {
+					if( response.status == "success"){
+						$(".likeBtn").val("♡");
+						$("#likeCount").html(response.likeCount);
+						$("#like").val("false")
+						console.log(response.likeCount)
+					}
+			    },
+			    error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"error:"+error);
+			    }
+			 
+				});
+			}
 
 		});
 
@@ -45,6 +68,7 @@
 </script>
 </head>
 <body>
+	<input type="hidden" id="like" value="${like}"/>
 	<input type="hidden" id="tripId" value="${tripVO.tripId}"/>
 	<c:forEach items="${tripPartList}" var="tripPart">
 		<div>
@@ -58,9 +82,24 @@
 		</div><br>
 	</c:forEach>
 	
-	좋아요 : <p id="likeCount"> ${tripVO.likeCount}</p>
-	<input type="button" id="likeBtn" value="♡ "/>
-	<a href="<c:url value="/trip/delete/${tripVO.tripId}"/>">삭제하기</a>
+	
+	좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
+	<c:if test="${!empty sessionScope._USER_.userId}">
+		<c:if test="${!like}">
+		<input type="button" class="likeBtn" value="♡"/>
+		</c:if>
+		
+		<c:if test="${like}">
+		<input type="button" class="likeBtn" value="♥"/>
+		</c:if>
+		
+	</c:if>
+	<br/>
+	
+	<c:if test="${sessionScope._USER_.userId eq tripVO.userId}">
+		<a href="<c:url value="/trip/delete/${tripVO.tripId}"/>">삭제하기</a>
+		<a href="<c:url value="/trip/update/${tripVO.tripId}"/>">수정하기</a>
+	</c:if>
 	
 </body>
 </html>
