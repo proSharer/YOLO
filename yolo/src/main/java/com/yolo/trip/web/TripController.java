@@ -201,7 +201,7 @@ public class TripController {
 	
 	@RequestMapping(value="/trip/update/{tripId}",method=RequestMethod.POST)
 	public String doUpdatePage(TripVO tripVO,@PathVariable String tripId, HttpSession session){
-		
+		System.out.println("dafasdfasdff");
 		UserVO user = (UserVO) session.getAttribute("_USER_");
 		
 		tripVO.setUserId(user.getUserId());

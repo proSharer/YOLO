@@ -103,6 +103,7 @@
 		});
 		
 		$(".input-group-btn .dropdown-menu li a").click(function(){
+			$("#keyword").val("");
 			var selText = $(this).html();
 			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
 			
@@ -168,7 +169,7 @@
 						<ul class="dropdown-menu">
 							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
 							</li>
-							<li><a href='#list' class="page-scroll" id="tripBtn">Trip</a>
+							<li><a href='<c:url value="trip/list"/>' class="page-scroll" id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
@@ -196,9 +197,11 @@
 	</nav>
 
 	<header id="header"> </header>
+
 	<form id="searchForm" style="text-align: center;"
 		class="navbar-form navbar-search" role="search">
 		<section id="list">
+	
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 text-center">
@@ -207,7 +210,7 @@
 						<h3 class="section-subheading text-muted">- New -</h3>
 					</div>
 				</div>
-
+		
 				<div class="row">
 					<div class="input-group">
 						<input type="hidden" id="searchType" name="searchType" />
@@ -261,9 +264,9 @@
 								onclick="movePage(0)" value="&#10140;" />
 						</div>
 						<div class="input-group-btn">
-							<input type="button" class="btn btn-search btn-default"
-								onclick="location.href=‘<c:url value="/trip/list/init"/>‘"
+		<input type="button" class="btn btn-search btn-default" onclick="location.href=<c:url value="/trip/list/init"/>"
 								value="초기화" />
+					
 						</div>
 					</div>
 				</div>
@@ -271,6 +274,7 @@
 				<br />
 				<br />
 				<br />
+				<a href="<c:url value="/trip/write"/>">글쓰기</a>
 				<div class="row" style="text-align: center;">
 					<c:forEach items="${tripList.tripList}" var="trip">
 						<div class="col-md-4 col-sm-6">
@@ -302,9 +306,10 @@
 				<div class="row">
 					${pager}
 					<c:if test="${!empty sessionScope._USER_}">
-						<a href="<c:url value="/trip/write"/>">글쓰기</a>
+						
 					</c:if>
 				</div>
+				
 			</div>
 		</section>
 	</form>

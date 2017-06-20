@@ -124,7 +124,7 @@ public class DailyController {
            
         }
 
-		return "daily/write";
+		return "redirect:daily/list";
 	}
 	
 	

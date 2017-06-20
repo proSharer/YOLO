@@ -96,20 +96,16 @@
 <script type="text/javascript">
 
 	$().ready(function(){
-		
 		$('.blah').hide();
-		{
 		var options = {
-		   map: ".map_canvas",
-		   location: "방배역"
+			   map: ".map_canvas",
+			   location: "방배역"
 		};
-		        
+			        
 		$("#geocomplete0").geocomplete(options);
-		
 		var i=0;
-		
-		$("#addBtn").click(function(){
 			
+		$("#addBtn").click(function(){
 			i++;
 
 			var appendPart = "<div class='part'>" +"<input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간'><br/>"+
@@ -118,67 +114,64 @@
 			+"<input id='geocomplete"+i+"' class='contorls' type='text' name='tripPartVO["+i+"].map'"+
 				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' />"+
 			"<div class='map_canvas'></div>"+
-			"<select name='tripPartVO["+i+"].timeControl'>"+
-			    "<option value=''>시간구분</option>"+
-			    "<option value='오전'>오전</option>"+
-			    "<option value='오후'>오후</option>"+
-			"</select>"+ "<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
-			"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
-			"</div> </div>";
-			
+				"<select name='tripPartVO["+i+"].timeControl'>"+
+				    "<option value=''>시간구분</option>"+
+				    "<option value='오전'>오전</option>"+
+				    "<option value='오후'>오후</option>"+
+				"</select>"+ "<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
+				"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
+				"</div> </div>";
+				
 			var blah = "blah"+ i;
-			
+				
 			$(".tripPart").append(appendPart);
 			$(".tripPart").find('#'+blah).hide();
-			
+				
 			var imgInp = "imgInp" + i;
-			
+				
 			var geocomplete = "geocomplete" + i;
 
 			$("#"+geocomplete).geocomplete(options); 
-			
-	        $(".tripPart").on("change","#"+imgInp ,function(){
-	            readtoURL(this);
-	        
-				function readtoURL(input) {
-						if (input.files && input.files[0]) {
-							var reader = new FileReader();
-							reader.onload = function (e) {
-								$('#'+blah).attr('src', e.target.result);
-								$('#'+blah).show();
-			            	}
-			          reader.readAsDataURL(input.files[0]);
-			        	}
-				}
-		   	});
-			
-	        
-	        
-	    });
+				
+		    $(".tripPart").on("change","#"+imgInp ,function(){
+		            readtoURL(this);
+		        
+					function readtoURL(input) {
+							if (input.files && input.files[0]) {
+								var reader = new FileReader();
+								reader.onload = function (e) {
+									$('#'+blah).attr('src', e.target.result);
+									$('#'+blah).show();
+				            	}
+				          reader.readAsDataURL(input.files[0]);
+				        	}
+					}
+			   	});
+				
+			});
+		
+		   $("#imgInp0").on('change', function(){
+	            readURL(this);
+	        });
 	   
-		
-        $("#imgInp0").on('change', function(){
-            readURL(this);
-        });
-   
 
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#blah0').attr('src', e.target.result);
-					$('#blah0').show();
-            	}
-          reader.readAsDataURL(input.files[0]);
-        	}
-   		}
-		
-		$("#writeBtn").click(function(){
-			$("#writeForm").attr({
-				"action" : "<c:url value="/trip/write"/>",
-				"method" : "post"
-			}).submit();
-		});
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						$('#blah0').attr('src', e.target.result);
+						$('#blah0').show();
+	            	}
+	          reader.readAsDataURL(input.files[0]);
+	        	}
+	   		}
+			
+			$("#writeBtn").click(function(){
+				$("#writeForm").attr({
+					"action" : "<c:url value="/trip/write"/>",
+					"method" : "post"
+				}).submit();
+			});
 	});
 </script>
 
