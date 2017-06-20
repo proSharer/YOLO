@@ -7,4 +7,5 @@
 		<property name="messageBiz" ref="messageBizImpl"></property>
 	</bean>
 
+
 </beans>

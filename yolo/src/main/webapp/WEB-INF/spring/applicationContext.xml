@@ -48,7 +48,7 @@
 		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	
-	<bean id="naverController"  class="com.yolo.user.web.NaverController"></bean>
+ 	<bean id="naverController"  class="com.yolo.user.web.NaverController"></bean> 
 	
 
 </beans>
