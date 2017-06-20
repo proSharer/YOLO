@@ -11,7 +11,14 @@ import java.nio.channels.WritableByteChannel;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 파일 다운로드를 유용하게 함.
+ * Internet Explorer, Mozilia 모두 호환
+ * @author Minchang Jang (mc.jang@hucloud.co.kr)
+ *
+ */
 public class DownloadUtil {
+
 	private String uploadPath;
 	
 	/**
