@@ -66,16 +66,16 @@ public class UserController {
 		return view;
 	}
 
-	/*
-	 * @RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
-	 * ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
-	 * 
-	 * view.setViewName("user/signIn");
-	 * 
-	 * return view; }
-	 */
+	
+	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
+	ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
 
-	@RequestMapping(value = "/user/loginTotal", method = RequestMethod.POST)
+		view.setViewName("user/signIn");
+
+		return view; 
+	}
+
+	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
 	public void doSignInAction(@RequestParam("userId") String userId, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
 		
 		if (userId == "" || password == "") {

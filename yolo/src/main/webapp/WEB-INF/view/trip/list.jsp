@@ -6,34 +6,43 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
-<script type="text/javascript">
-	$().ready(function(){
-		$("#regionSearch").hide();
-		
-		$("#searchType").change(function(){
-			$("#keyword").val("");
-			if ($("#searchType").val() == '5'){
- 				$("#regionSearch").show();
- 				$("#keyword").hide();
- 				$("#keyword").val($("#searchType").val());
-			} 
-			else if ($("#searchType").val() != '5'){
- 				$("#regionSearch").hide();
- 				$("#keyword").show();
- 				
-			}
-		});
-
-	});
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<title>Insert title here</title>
 
+<!-- Bootstrap Core CSS -->
+<link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="<c:url value="/static/css/font-awesome.min.css"/>"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+<link
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
+	rel="stylesheet">
+<!-- Theme CSS -->
+<link href="<c:url value="/static/css/agency.min.css"/>"
+	rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
+    <![endif]-->
+    
 <title>Yolo : Trip List</title>
 
 <style type="text/css">
@@ -73,71 +82,12 @@
 	opacity: 1;
 }
 
-#searchText:focus {
-	
-<<<<<<< HEAD
-	<form id="searchForm">
-		${pager}<br/>
- 		<select id="searchType" name="searchType">
-			<option value="1">제목+총평</option>
-			<option value="2">제목</option>
-			<option value="3">총평</option>
-			<option value="4">세부내용</option>
-			<option value="5">지역</option>
-		</select>
-		
-		
-		<select id="regionSearch" name="regionSearch">
-			<c:forEach items="${regionList}" var="region">
-				<option value="${region.regionId}">${region.regionName}</option>
-			</c:forEach>
-		</select>
-		
-		<input type="text" id="keyword" name="keyword" value="${sessionScope._SEARCH_.keyword}"/>
-		<input type="button" value="search" onclick="movePage(0)" />
-		<input type="button" value="검색 초기화" onclick="location.href='<c:url value="/trip/list/init"/>'"/>
-=======
-}
-
 </style>
 
-<!-- Bootstrap Core CSS -->
-<link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="<c:url value="/static/css/font-awesome.min.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
-<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
-	rel='stylesheet' type='text/css'>
-<link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
-	rel="stylesheet">
-<!-- Theme CSS -->
-<link href="<c:url value="/static/css/agency.min.css"/>"
-	rel="stylesheet">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
-    <![endif]-->
-
-</head>
-
-<script type="text/javascript"
-	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
-	$().ready(function() {
-
+	$().ready(function(){
+		
 		var maxHeight = 0;
 		var maxWidth = 0;
 		$('.img').each(function() {
@@ -159,17 +109,34 @@
 			var option = $(this).find("span").data("option");
 			
 			$("#searchType").val(option);
+			
+			if ($("#searchType").val() == '5'){
+ 				$("#regionOptionBtn").show();
+ 				$("#keyword").hide();
+ 				$("#keyword").val($("#searchType").val());
+			} 
+			else if ($("#searchType").val() != '5'){
+ 				$("#regionOptionBtn").hide();
+ 				$("#keyword").show();
+ 				
+			}
 		});
 		
-		$("#searchText").keypress(function(event){
+		$("#keyword").keypress(function(event){
 			if(event.which == 13){
 				$("#searchBtn").click();
 				return false;
 			}
 		});
-
+		
+		$("#regionOptionBtn").hide();
+		
 	});
+
 </script>
+
+</head>
+
 
 <body id="page-top" class="index">
 
@@ -244,10 +211,11 @@
 				<div class="row">
 					<div class="input-group">
 						<input type="hidden" id="searchType" name="searchType" />
+						<input type="hidden" id="regionType" name="regionType" />
 						<div class="input-group-btn">
 							<button type="button"
 								class="btn btn-search btn-default dropdown-toggle"
-								data-toggle="dropdown" value="1">
+								data-toggle="dropdown" value="1" id="searchOptionBtn">
 								<span class="label-icon">Search</span> <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu pull-left" role="menu">
@@ -263,10 +231,29 @@
 								<li><a href="#" class="selectOption"> <span
 										class="label-icon" data-option="4">세부내용</span>
 								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="5">지역</span>
+								</a></li>
+							</ul>
+							
+						</div>
+						
+						<div class="input-group-btn">
+							<button type="button"
+								class="btn btn-search btn-default dropdown-toggle"
+								data-toggle="dropdown" value="1" id="regionOptionBtn">
+								<span class="label-icon">Location</span> <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu pull-left" role="menu">
+								<c:forEach items="${regionList}" var="region">
+								<li><a href="#" class="selectOption"> 
+								<span class="label-icon" data-option="${region.regionId}">${region.regionName}</span>
+								</a></li>								
+								</c:forEach>
 							</ul>
 						</div>
 
-						<input id="searchText" name="keyword" type="text"
+						<input id="keyword" name="keyword" type="text"
 							class="form-control" value="${sessionScope._SEARCH_.keyword}">
 
 						<div class="input-group-btn">
@@ -288,8 +275,11 @@
 					<c:forEach items="${tripList.tripList}" var="trip">
 						<div class="col-md-4 col-sm-6">
 							<div class="imgDiv portfolio-item">
-								<a href="#portfolioModal1" class="portfolio-link"
-									data-toggle="modal">
+								<a href="<c:url value="/trip/detail/${trip.tripId}"/>">
+								
+								<%-- <a href="#portfolioModal1" class="portfolio-link"
+									data-toggle="modal" href="<c:url value="/trip/detail/${trip.tripId}"/>"> --%>
+									
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
 									</div> <img class="img"
@@ -317,7 +307,6 @@
 				</div>
 			</div>
 		</section>
->>>>>>> lizzy
 	</form>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
