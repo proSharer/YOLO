@@ -23,10 +23,10 @@ public class ListPageExplorer implements PageExplorer {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("<script>");
 		buffer.append("function movePage(pageNo) {");
-		buffer.append("document.getElementById('" + formId + "')." + link + ".value=pageNo;");
-		buffer.append("document.getElementById('" + formId + "').action='';");
-		buffer.append("document.getElementById('" + formId + "').method='post';");
-		buffer.append("document.getElementById('" + formId + "').submit();");
+		buffer.append("$(\"#"+link+"\").val(pageNo);");
+		buffer.append("$(\"#"+formId+"\").attr('action', '');");
+		buffer.append("$(\"#"+formId+"\").attr('method', 'post');");
+		buffer.append("$(\"#"+formId+"\").submit();");
 		buffer.append("}");
 		buffer.append("</script>");
 		
@@ -45,15 +45,15 @@ public class ListPageExplorer implements PageExplorer {
 		
 		if ( endPageNumber - startPageNumber < pager.printPage ) {
 			startPageNumber = startPageNumber - (pager.printPage - (endPageNumber - startPageNumber));
-			if ( startPageNumber < 0 ) {
+			if (startPageNumber < 0){
 				startPageNumber = 0;
 			}
 		}
 		
 		String pageNumber = "";
-		buffer.append("<ul class='pagination'>");
+		
 		if ( startPageNumber > 0 ) {
-			buffer.append("<li><a aria-label='Previous' href=\"javascript:movePage('" + (pager.pageNo - 1) + "')\"><span aria-hidden='true'>" + prev + "</span></a></li>");
+			buffer.append("<a href=\"javascript:movePage('" + (pager.pageNo - 1) + "')\">" + prev + "</a>");
 		}
 		
 		for (int i = startPageNumber; i < endPageNumber; i++) {
@@ -62,13 +62,14 @@ public class ListPageExplorer implements PageExplorer {
 				pageNumber = "<b>" + pageNumber + "</b>";
 			}
 			
-			buffer.append("<li><a class='page' href=\"javascript:movePage('" + i + "')\">" + pageNumber + "</a></li>");
+			buffer.append("<a class='page' href=\"javascript:movePage('" + i + "')\">" + pageNumber + "</a>");
 		}
 		
 		if ( pager.pageNo < endPageNumber-1 ) {
-			buffer.append("<li><a aria-label='Next' href=\"javascript:movePage('" + (pager.pageNo + 1) + "')\"><span aria-hidden='true'>" + next + "</span></a></li>");
+			buffer.append("<a href=\"javascript:movePage('" + (pager.pageNo + 1) + "')\">" + next + "</a>");
 		}
 
 		return buffer.toString();
 	}
+	
 }

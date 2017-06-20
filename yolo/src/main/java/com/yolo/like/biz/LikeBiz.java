@@ -9,14 +9,14 @@ import com.yolo.user.vo.UserVO;
 
 public interface LikeBiz {
 	
-	public LikeVO getOneLikeByDailyId(UserVO userVO, DailyVO dailyVO);
-	public LikeVO getOneLikeByTripId(UserVO userVO, TripVO tripVO);
+	public LikeVO getOneLikeByDailyId(LikeVO likeVO);
+	public LikeVO getOneLikeByTripId(LikeVO likeVO);
 	
 	public List<LikeVO> getAllLikesByUserID(UserVO userVO);
 	
 	public boolean addOneLike(LikeVO likeVO);
 	
-	public boolean removeOneLikeByDailyId(UserVO userVO, DailyVO dailyVO);
-	public boolean removeOneLikeByTripId(UserVO userVO, TripVO tripVO);
+	public boolean removeOneLikeByDailyId(LikeVO likeVO);
+	public boolean removeOneLikeByTripId(LikeVO likeVO);
 
 }
