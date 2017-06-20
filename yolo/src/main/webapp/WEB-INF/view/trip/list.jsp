@@ -9,6 +9,22 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function(){
+		$("#regionSearch").hide();
+		
+		$("#searchType").change(function(){
+			$("#keyword").val("");
+			if ($("#searchType").val() == '5'){
+ 				$("#regionSearch").show();
+ 				$("#keyword").hide();
+ 				$("#keyword").val($("#searchType").val());
+			} 
+			else if ($("#searchType").val() != '5'){
+ 				$("#regionSearch").hide();
+ 				$("#keyword").show();
+ 				
+			}
+		});
+
 	});
 
 </script>
@@ -35,14 +51,22 @@
 	
 	<form id="searchForm">
 		${pager}<br/>
- 		<select name="searchType">
+ 		<select id="searchType" name="searchType">
 			<option value="1">제목+총평</option>
 			<option value="2">제목</option>
 			<option value="3">총평</option>
 			<option value="4">세부내용</option>
+			<option value="5">지역</option>
 		</select>
 		
-		<input type="text" name="keyword" value="${sessionScope._SEARCH_.keyword}"/>
+		
+		<select id="regionSearch" name="regionSearch">
+			<c:forEach items="${regionList}" var="region">
+				<option value="${region.regionId}">${region.regionName}</option>
+			</c:forEach>
+		</select>
+		
+		<input type="text" id="keyword" name="keyword" value="${sessionScope._SEARCH_.keyword}"/>
 		<input type="button" value="search" onclick="movePage(0)" />
 		<input type="button" value="검색 초기화" onclick="location.href='<c:url value="/trip/list/init"/>'"/>
 	</form>

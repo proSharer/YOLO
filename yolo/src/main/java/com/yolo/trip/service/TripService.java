@@ -5,13 +5,14 @@ import java.util.Map;
 import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
+import com.yolo.tripreply.vo.TripReplyVO;
 import com.yolo.user.vo.UserVO;
 
 public interface TripService {
 
 	public boolean addNewOneTrip(TripVO tripVO);
 	
-	public TripListVO selectAllTrips(TripSearchVO tripSearchVO);
+	public Map<String,Object> selectAllTrips(TripSearchVO tripSearchVO);
 	
 	public Map<String,Object> selectTripPartByTripId(String tripId, UserVO userVO);
 	
@@ -24,4 +25,6 @@ public interface TripService {
 	public boolean tripLikeCountMinus(String tripId, String userId);
 	
 	public boolean modifyOneTrip(TripVO tripVO);
+	
+	public boolean tripAddNewReply(TripReplyVO tripReplyVO);
 }

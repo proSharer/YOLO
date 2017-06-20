@@ -16,6 +16,7 @@ public class TripVO {
 	private int likeCount;
 	private String overAll;
 	private List<TripPartVO> tripPartVO;
+	private String regionId;
 	
 	public String getTripId() {
 		return tripId;
@@ -65,8 +66,11 @@ public class TripVO {
 	public void setTripPartVO(List<TripPartVO> tripPartVO) {
 		this.tripPartVO = tripPartVO;
 	}
-
-	
-
+	public String getRegionId() {
+		return regionId;
+	}
+	public void setRegionId(String regionId) {
+		this.regionId = regionId;
+	}
 
 }

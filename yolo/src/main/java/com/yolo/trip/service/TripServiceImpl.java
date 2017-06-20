@@ -6,12 +6,16 @@ import java.util.Map;
 
 import com.yolo.like.biz.LikeBiz;
 import com.yolo.like.vo.LikeVO;
+import com.yolo.region.biz.RegionBiz;
+import com.yolo.region.vo.RegionVO;
 import com.yolo.trip.biz.TripBiz;
 import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.biz.TripPartBiz;
 import com.yolo.trippart.vo.TripPartVO;
+import com.yolo.tripreply.biz.TripReplyBiz;
+import com.yolo.tripreply.vo.TripReplyVO;
 import com.yolo.user.vo.UserVO;
 
 public class TripServiceImpl implements TripService{
@@ -19,6 +23,8 @@ public class TripServiceImpl implements TripService{
 	private TripBiz tripBiz;
 	private TripPartBiz tripPartBiz;
 	private LikeBiz likeBiz;
+	private TripReplyBiz tripReplyBiz;
+	private RegionBiz regionBiz;
 	
 	public void setTripBiz(TripBiz tripBiz) {
 		this.tripBiz = tripBiz;
@@ -28,6 +34,12 @@ public class TripServiceImpl implements TripService{
 	}
 	public void setLikeBiz(LikeBiz likeBiz) {
 		this.likeBiz = likeBiz;
+	}
+	public void setTripReplyBiz(TripReplyBiz tripReplyBiz) {
+		this.tripReplyBiz = tripReplyBiz;
+	}
+	public void setRegionBiz(RegionBiz regionBiz) {
+		this.regionBiz = regionBiz;
 	}
 	@Override
 	public boolean addNewOneTrip(TripVO tripVO) {
@@ -43,13 +55,23 @@ public class TripServiceImpl implements TripService{
 		return tripPartBiz.addOneTripPart(tripPartListVO);
 	}
 	@Override
-	public TripListVO selectAllTrips(TripSearchVO tripSearchVO) {
-		return tripBiz.selectAllTrips(tripSearchVO);
+	public Map<String,Object> selectAllTrips(TripSearchVO tripSearchVO) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		
+		TripListVO tripList = tripBiz.selectAllTrips(tripSearchVO);
+		List<RegionVO> regionList = regionBiz.getAllRegion();
+		
+		map.put("tripList", tripList);
+		map.put("regionList", regionList);
+		
+		return map;
 	}
 	@Override
 	public Map<String, Object> selectTripPartByTripId(String tripId, UserVO userVO) {
-		LikeVO likeVO = new LikeVO();
+		Map<String, Object> map = new HashMap<String,Object>();
 		
+		LikeVO likeVO = new LikeVO();
+		List<TripReplyVO> tripReplyVO = tripReplyBiz.getAllReplies(tripId);
 		if( userVO == null ){
 			likeVO.setUserId("");
 		}
@@ -57,20 +79,20 @@ public class TripServiceImpl implements TripService{
 			likeVO.setUserId(userVO.getUserId());
 		}
 		likeVO.setTripId(tripId);
-		
-		
-		Map<String, Object> map = new HashMap<String,Object>();
+	
 		
 		LikeVO like = likeBiz.getOneLikeByTripId(likeVO);
-		List<TripPartVO> tripPartList =  tripPartBiz.selectTripPartByTripId(tripId);
+	
+/*		List<TripPartVO> tripPartList =  tripPartBiz.selectTripPartByTripId(tripId);
 		
-		map.put("tripPartList", tripPartList);
+		map.put("tripPartList", tripPartList);*/
 		if( like != null ){
 			map.put("like", true);
 		}
 		else {
 			map.put("like", false);
 		}
+		map.put("tripReplyVO", tripReplyVO);
 		
 		return map;
 	}
@@ -85,6 +107,7 @@ public class TripServiceImpl implements TripService{
 		
 		List<TripPartVO> tripPartList = tripPartBiz.selectTripPartByTripId(tripId);
 		tripVO.setTripPartVO(tripPartList);
+		
 		
 		return tripVO;
 	}
@@ -137,5 +160,9 @@ public class TripServiceImpl implements TripService{
 		tripBiz.modifyOneTrip(tripVO);
 		
 		return tripBiz.modifyOneTrip(tripVO);
+	}
+	@Override
+	public boolean tripAddNewReply(TripReplyVO tripReplyVO) {
+		return tripReplyBiz.addNewOneReply(tripReplyVO);
 	}
 }

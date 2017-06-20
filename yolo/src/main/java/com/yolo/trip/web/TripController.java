@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,11 +24,13 @@ import com.yolo.common.web.PageExplorer;
 import com.yolo.common.web.checker.ExtFilter;
 import com.yolo.common.web.checker.ExtensionFilter;
 import com.yolo.common.web.checker.ExtensionFilterFactory;
+import com.yolo.region.vo.RegionVO;
 import com.yolo.trip.service.TripService;
 import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.vo.TripPartVO;
+import com.yolo.tripreply.vo.TripReplyVO;
 import com.yolo.user.vo.UserVO;
 
 @Controller
@@ -64,7 +65,9 @@ public class TripController {
 		}
 		
 		
-		TripListVO tripList = tripService.selectAllTrips(tripSearchVO);
+		Map<String, Object> map  = tripService.selectAllTrips(tripSearchVO);
+		TripListVO tripList = (TripListVO) map.get("tripList");
+		List<RegionVO> regionList = (List<RegionVO>) map.get("regionList");
 		
 		session.setAttribute("_SEARCH_", tripSearchVO);
 		session.getAttribute("_USER_");
@@ -75,6 +78,7 @@ public class TripController {
 		
 		view.setViewName("trip/list");
 		view.addObject("tripList",tripList);
+		view.addObject("regionList",regionList);
 		view.addObject("pager",pager);
 		
 		return view;
@@ -154,12 +158,14 @@ public class TripController {
 		Map<String,Object> map = tripService.selectTripPartByTripId(tripId,userVO);
 		
 		boolean like = (boolean) map.get("like");
-		List<TripPartVO> tripPartList = (List<TripPartVO>) map.get("tripPartList");
-				
+		List<TripReplyVO> tripReply = (List<TripReplyVO>) map.get("tripReplyVO");
+
+		
 		view.setViewName("/trip/detail");
-		view.addObject("tripPartList",tripPartList);
 		view.addObject("like",like);
 		view.addObject("tripVO",tripVO);
+		view.addObject("tripReply",tripReply);
+		
 		return view;
 		
 	}
@@ -288,6 +294,47 @@ public class TripController {
 		if( isSuccess ) {
 			map.put("status", "success");
 			map.put("likeCount", likeCount);
+		}
+		else { 
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+	
+		return json;
+	}
+	
+	@RequestMapping(value="/trip/reply/write",method=RequestMethod.POST)
+	@ResponseBody
+	public String doAddNewOneReply(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		String userId= userVO.getUserId();
+		
+		String content = request.getParameter("content");
+		String tripId = request.getParameter("tripId");
+		String parentReplyId = request.getParameter("parentReplyId");
+		
+		TripReplyVO tripReplyVO = new TripReplyVO();
+		tripReplyVO.setContent(content);
+		tripReplyVO.setUserId(userId);
+		tripReplyVO.setTripId(tripId);
+		
+		if(parentReplyId == "") {
+			tripReplyVO.setParentReplyId("");
+		}
+		else {
+			tripReplyVO.setParentReplyId(parentReplyId);
+		}
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		boolean isSuccess = tripService.tripAddNewReply(tripReplyVO);
+		System.out.println(isSuccess);
+		if( isSuccess ) {
+			map.put("status", "success");
 		}
 		else { 
 			map.put("status", "fail");

@@ -16,6 +16,9 @@
 <script type="text/javascript">
 
 	$().ready(function(){
+		
+		$('.blah').hide();
+		
 	    var options = {
 		   map: ".map_canvas",
 		   location: "방배역"
@@ -39,17 +42,20 @@
 			    "<option value=''>시간구분</option>"+
 			    "<option value='오전'>오전</option>"+
 			    "<option value='오후'>오후</option>"+
-			"</select>"+ "<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img id='blah"+ i +"' src='#' /> <br/>" + 
+			"</select>"+ "<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
 			"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
 			"</div> </div>";
 			
-			$(".tripPart").append(appendPart);
-			
-			var imgInp = "imgInp" + i;
 			var blah = "blah"+ i;
 			
-/* 			console.log(geocomplete);
-			$(geocomplete).geocomplete(options); */
+			$(".tripPart").append(appendPart);
+			$(".tripPart").find('#'+blah).hide();
+			
+			var imgInp = "imgInp" + i;
+			
+			var geocomplete = "geocomplete" + i;
+
+			$("#"+geocomplete).geocomplete(options); 
 			
 	        $(".tripPart").on("change","#"+imgInp ,function(){
 	            readtoURL(this);
@@ -59,6 +65,7 @@
 							var reader = new FileReader();
 							reader.onload = function (e) {
 								$('#'+blah).attr('src', e.target.result);
+								$('#'+blah).show();
 			            	}
 			          reader.readAsDataURL(input.files[0]);
 			        	}
@@ -69,8 +76,6 @@
 	        
 	    });
 	   
-
-
 		
         $("#imgInp0").on('change', function(){
             readURL(this);
@@ -82,6 +87,7 @@
 				var reader = new FileReader();
 				reader.onload = function (e) {
 					$('#blah0').attr('src', e.target.result);
+					$('#blah0').show();
             	}
           reader.readAsDataURL(input.files[0]);
         	}
@@ -124,7 +130,7 @@
 				
 					
 		        <input type="file" name="tripPartVO[0].file" id="imgInp0"><br/>
-		        <img id="blah0" src="#" /><br/>
+		        <img class="blah" id="blah0" src="#" /><br/>
 
 				<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
 			</div>
