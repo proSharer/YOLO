@@ -14,5 +14,6 @@
 	<bean id="userServiceImpl" class="com.yolo.user.service.UserServiceImpl">
 		<property name="userBiz" ref="userBizImpl" />
 	</bean>
+	
 
 </beans>

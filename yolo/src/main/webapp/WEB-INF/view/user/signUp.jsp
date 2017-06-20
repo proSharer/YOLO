@@ -12,8 +12,8 @@
 		$("#signUpForm").find("input[type=button]").click(function () {
 			$.post("<c:url value="/user/signUp"/>", $("#signUpForm").serialize(), function(data){
 				if(data == "OK") {
-					alert("회원가입이 완료 되었습니다.!");
-					window.location.href="<c:url value="/user/signIn"/>";
+					alert("회원가입이 완료 되었습니다. 로그인 하십시요.");
+					window.location.href="<c:url value="/user/login"/>";
 				}
 				else if(data=="FAIL") {
 					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");
@@ -29,7 +29,7 @@
 			<input type="text" name="userId" placeholder="아이디를 입력하세요" /><br/>
 			<input type="text" name="password" placeholder="비번을 입력하세요" /><br/>
 			<input type="text" name="userName" placeholder="이름을 입력하세요" /><br/>
-			<input type="button" id="signUpButton" value="Submit" />			
+			<input type="button" id="signUpButton" value="가입하기" />			
 		</div>
 	</form>
 </body>

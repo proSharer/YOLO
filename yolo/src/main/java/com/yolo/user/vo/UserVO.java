@@ -3,17 +3,56 @@ package com.yolo.user.vo;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class UserVO {
-	
-	@NotEmpty(message="아이디를 입력하세요.")
+
+	// SNS 상태 설정
+	private static String DEFAULT = "";
+	private static String NAVER = "NVR";
+	private static String KAKAO = "KKO";
+
+	private String loginType;
+
+	// @NotEmpty(message="아이디를 입력하세요.")
 	private String userId;
-	@NotEmpty(message="이름을 입력하세요.")
+	// @NotEmpty(message="이름을 입력하세요.")
 	private String userName;
-	@NotEmpty(message="비밀번호를 입력하세요.")
+	// @NotEmpty(message="비밀번호를 입력하세요.")
 	private String password;
 	private String joinDate;
 	private String authId;
 
 	private String salt;
+
+	public static String getDefault() {
+		return DEFAULT;
+	}
+
+	public static void setDefault(String default1) {
+		DEFAULT = default1;
+	}
+
+	public static String getNaver() {
+		return NAVER;
+	}
+
+	public static void setNaver(String naver) {
+		NAVER = naver;
+	}
+
+	public static String getKakao() {
+		return KAKAO;
+	}
+
+	public static void setKakao(String kakao) {
+		KAKAO = kakao;
+	}
+
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
 
 	public String getUserId() {
 		return userId;

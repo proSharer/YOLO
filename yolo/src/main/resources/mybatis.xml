@@ -12,6 +12,7 @@
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
 		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
 		<typeAlias type="com.yolo.message.vo.MessageVO" alias="MessageVO"/>
+		<typeAlias type="com.yolo.user.vo.NaverVO" alias="NaverVO"/>
 	</typeAliases>
 	
 	<mappers>
