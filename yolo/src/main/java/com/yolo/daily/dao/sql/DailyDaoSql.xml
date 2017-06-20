@@ -10,35 +10,88 @@
 								, ED_TM
 								, TM_CTR
 								, PLACE
+								<if test="dailyFile != null"> 
 								, DL_FILE
+								</if>   
 								, CONT
 								, MAP
 							)
 		VALUES ( 				
 						'DP-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(DL_PART_ID_SEQ.NEXTVAL, 6, '0')  
-						, 'dailyId'       
+						, #{dailyId}     
 						, #{startTime}     
 						, #{endTime}       
 						, #{timeController}
-						, #{place}         
-						, 'test'    
+						, #{place} 
+						<if test="dailyFile != null">        
+							, #{dailyFile} 
+						</if>  
 						, #{content}       
 						, 'map'           
 				)				
 							
-		
-		
-		
-		
-		
 
-	
-	
-	
 	</insert>
-
-
-
-
+	
+	
+	
+	
+	
+	<resultMap type="DailyVO" id="DailyPartMap">
+		<id column="DL_PART_ID" property="dailyPartId"/>
+		<result column="DL_ID" property="dailyId"/>
+		<result column="ST_TM" property="startTime"/>
+		<result column="ED_TM" property="endTime"/>
+		<result column="TM_CTR" property="timeController"/>
+		<result column="PLACE" property="place"/>
+		<result column="DL_FILE" property="dailyFile"/>
+		<result column="CONT" property="content"/>
+		<result column="Map" property="map"/>
+	
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="getDailyPartsByDLID" parameterType="string" resultMap="DailyPartMap">
+		SELECT 				DL_PART_ID
+								, DL_ID
+								, ST_TM
+								, ED_TM
+								, TM_CTR
+								, PLACE
+								, DL_FILE
+								, CONT
+								, MAP
+		FROM 				DL_PART
+		WHERE				DL_ID = #{dailyId}
+		ORDER BY 			ST_TM
+	
+	
+	</select>
+	
+	<select id="getOneDailyPart" parameterType="string" resultType="DailyVO">
+		
+		SELECT 				DL_PART_ID dailyPartId
+									, DL_ID dailyId
+									, ST_TM startTime
+									, ED_TM endTime
+									, TM_CTR timeController
+									, PLACE place
+									, DL_FILE dailyFile
+									, CONT content
+									, MAP map
+			FROM 				DL_PART
+			WHERE				DL_PART_ID = #{dailyPartId}
+		
+		
+	
+	</select>
 
 </mapper>

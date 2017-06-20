@@ -18,5 +18,6 @@ public class MainServiceImpl implements MainService {
 	public List<MessageVO> getMessageList(UserVO user) {
 		return messageBiz.getAllMessagesByReceiver(user);
 	}
+	
 
 }

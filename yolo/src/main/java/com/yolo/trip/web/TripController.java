@@ -70,7 +70,7 @@ public class TripController {
 		List<RegionVO> regionList = (List<RegionVO>) map.get("regionList");
 		
 		session.setAttribute("_SEARCH_", tripSearchVO);
-		session.getAttribute("_USER_");
+		UserVO user = (UserVO)session.getAttribute("_USER_");
 		ModelAndView view = new ModelAndView();
 		
 		PageExplorer pageExplorer = new ListPageExplorer(tripList.getPager());
@@ -80,6 +80,7 @@ public class TripController {
 		view.addObject("tripList",tripList);
 		view.addObject("regionList",regionList);
 		view.addObject("pager",pager);
+		view.addObject("user", user);
 		
 		return view;
 		

@@ -9,11 +9,11 @@ public class Test {
 		pager.setTotalArticleCount(220);
 		
 		PageExplorer pageExplorer1 = new ListPageExplorer(pager);
-		String page1 = pageExplorer1.getPagingList("pageNo", "[@]", "이전", "다음", "form");
+		String page1 = pageExplorer1.getPagingList("pageNo", "[@]", "<", ">", "form");
 		System.out.println(page1);
 		
 		PageExplorer pageExplorer2 = new ClassicPageExplorer(pager);
-		String page2 = pageExplorer2.getPagingList("pageNo", "[@]", "이전", "다음", "form");
+		String page2 = pageExplorer2.getPagingList("pageNo", "[@]", "<", ">", "form");
 		System.out.println(page2);
 		
 	}

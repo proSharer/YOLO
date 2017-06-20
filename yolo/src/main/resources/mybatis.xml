@@ -10,11 +10,16 @@
 		<typeAlias type="com.yolo.trippart.vo.TripPartVO" alias="TripPartVO"/>
 		<typeAlias type="com.yolo.trippart.vo.TripPartListVO" alias="TripPartListVO"/>
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
+
 		<typeAlias type="com.yolo.user.vo.UserVO" alias="UserVO"/>
 		<typeAlias type="com.yolo.message.vo.MessageVO" alias="MessageVO"/>
+		<typeAlias type="com.yolo.user.vo.NaverVO" alias="NaverVO"/>
 		<typeAlias type="com.yolo.like.vo.LikeVO" alias="LikeVO"/>
 		<typeAlias type="com.yolo.tripreply.vo.TripReplyVO" alias="TripReplyVO"/>
 		<typeAlias type="com.yolo.region.vo.RegionVO" alias="RegionVO"/>
+
+		<typeAlias type="com.yolo.dailyMain.vo.DailyMainVO" alias="DailyMainVO"/>
+		<typeAlias type="com.yolo.dailyMain.vo.DailyMainSearchVO" alias="DailyMainSearchVO"/>
 	</typeAliases>
 	
 	<mappers>
@@ -27,6 +32,7 @@
 		<mapper resource="com/yolo/like/dao/sql/likeDaoSql.xml"/>
 		<mapper resource="com/yolo/tripreply/dao/sql/tripReplyDaoSql.xml"/>
 		<mapper resource="com/yolo/region/dao/sql/regionDaoSql.xml"/>
+		<mapper resource="com/yolo/dailyMain/dao/sql/DailyMainDaoSql.xml"/>
 	</mappers>
 
 </configuration>

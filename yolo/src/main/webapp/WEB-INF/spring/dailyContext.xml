@@ -2,17 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<bean id="dailyDaoImpl" class="com.yolo.daily.dao.DailyDaoImpl">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
-	</bean>
 
-	<bean id="dailyBizImpl" class="com.yolo.daily.biz.DailyBizImpl">
-		<property name="dailyDao" ref="dailyDaoImpl"></property>
-	</bean>
+<bean id="dailyDaoImpl" class="com.yolo.daily.dao.DailyDaoImpl" >
+	<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+</bean>
 
-	<bean id="dailyServiceImpl" class="com.yolo.daily.service.DailyServiceImpl">
-		<property name="dailyBiz" ref="dailyBizImpl"></property>
-	</bean>
+<bean id ="dailyBizImpl" class="com.yolo.daily.biz.DailyBizImpl">
+	<property name="dailyDao" ref="dailyDaoImpl"></property>
+</bean>
+
+<bean id ="dailyServiceImpl" class="com.yolo.daily.service.DailyServiceImpl">
+	<property name="dailyBiz" ref="dailyBizImpl"></property>
+	<property name="dailyMainBiz" ref="dailyMainBizImpl"></property>
+</bean>
 
 </beans>

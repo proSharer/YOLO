@@ -8,16 +8,23 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 <<<<<<< HEAD
-		<config>src/main/webapp/WEB-INF/spring/dailyContext.xml</config>
-<<<<<<< HEAD
-		<config>src/main/webapp/WEB-INF/spring/mainContext.xml</config>
-=======
-=======
-		<config>src/main/webapp/WEB-INF/spring/userContext.xml</config>
->>>>>>> James
->>>>>>> c8882cea89da8f3b5549d5ef0d880caf043fbd59
 	</configs>
 	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/spring/trippartContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/dailyContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/messageContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/userContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/tripContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/mainContext.xml</config>
+=======
+		<config>src/main/webapp/WEB-INF/spring/dailyContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/dailyMainContext.xml</config>
+	</configs>
+	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/spring/applicationContext.xml</config>
+>>>>>>> JM
+		<config>src/main/webapp/WEB-INF/spring/rootContext.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
