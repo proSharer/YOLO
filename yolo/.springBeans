@@ -7,6 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
+<<<<<<< HEAD
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring/trippartContext.xml</config>
@@ -16,6 +17,13 @@
 		<config>src/main/webapp/WEB-INF/spring/tripContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/applicationContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/mainContext.xml</config>
+=======
+		<config>src/main/webapp/WEB-INF/spring/dailyContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/dailyMainContext.xml</config>
+	</configs>
+	<autoconfigs>
+		<config>src/main/webapp/WEB-INF/spring/applicationContext.xml</config>
+>>>>>>> JM
 		<config>src/main/webapp/WEB-INF/spring/rootContext.xml</config>
 	</autoconfigs>
 	<configSets>

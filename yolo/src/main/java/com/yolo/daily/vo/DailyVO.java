@@ -3,13 +3,16 @@ package com.yolo.daily.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DailyVO {
 
 	
+	
 	private String dailyPartId;
 	private String dailyId;
-	private int    startTime;
-	private int    endTime;
+	private int	startTime;
+	private int	endTime;
 	private String timeController;
 	private String place;
 	private String dailyFile;
@@ -19,10 +22,17 @@ public class DailyVO {
 	
 	private String startString;
 	private String endString;
+	private MultipartFile file;
 	
 	
 
-	 public String getStartString() {
+	 public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	public String getStartString() {
 		return startString;
 	}
 	public void setStartString(String startString) {
@@ -86,6 +96,9 @@ public class DailyVO {
 		this.place = place;
 	}
 	public String getDailyFile() {
+		if(dailyFile == null){
+			dailyFile="nophoto.jpg";
+		}
 		return dailyFile;
 	}
 	public void setDailyFile(String dailyFile) {
