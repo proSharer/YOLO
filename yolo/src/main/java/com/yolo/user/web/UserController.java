@@ -157,12 +157,24 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/user/signout")
+	@RequestMapping("/user/signOut")
 	public String doSignOutAction(HttpSession session) {
 
 		session.invalidate();
-
-		return "redirect:/yolo/home";
+		
+		return "redirect:/home";
+	}
+	
+	@RequestMapping("/user/mypage")
+	public ModelAndView viewMyPage(HttpSession session) {
+		ModelAndView view = new ModelAndView();
+		
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
+		view.addObject("user", user);
+		view.setViewName("/user/myPage");
+		
+		return view;
 	}
 
 	public boolean verify(String password) {

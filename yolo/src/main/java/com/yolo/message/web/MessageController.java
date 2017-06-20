@@ -32,9 +32,9 @@ public class MessageController {
 	public ModelAndView receivedMessageListView(HttpSession session) {
 		ModelAndView view = new ModelAndView();
 		
-		//UserVO user = (UserVO)session.getAttribute("_USER_");
-		UserVO user = new UserVO();
-		user.setUserId("test");
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		/*UserVO user = new UserVO();
+		user.setUserId("test");*/
 		List<MessageVO> messageList = messageService.getAllMessagesByReceiver(user);
 		
 		view.addObject("messageList", messageList);
@@ -55,6 +55,7 @@ public class MessageController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
+		System.out.println(user.getUserId());
 		List<MessageVO> messageList = messageService.getAllMessagesBySender(user);
 		
 		view.addObject("messageList", messageList);
@@ -75,7 +76,7 @@ public class MessageController {
 		return view;
 	}
 	
-	@RequestMapping(value="/message/alarm/{messageId}")
+	/*@RequestMapping(value="/message/alarm/{messageId}")
 	public ModelAndView messageAlarmView(@PathVariable String messageId) {
 		ModelAndView view = new ModelAndView();
 		
@@ -85,11 +86,14 @@ public class MessageController {
 		view.setViewName("message/alarm");
 		
 		return view;
-	}
+	}*/
 	
 	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
 	public String messageWriteView(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
 		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
+		
+		/*UserVO loginUser = new UserVO();
+		loginUser.setUserId("test");*/
 		
 		request.setAttribute("userId", userId);
 		request.setAttribute("loginUser", loginUser);
