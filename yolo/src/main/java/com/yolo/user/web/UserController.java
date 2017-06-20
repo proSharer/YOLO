@@ -77,8 +77,9 @@ public class UserController {
 
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
 	public void doSignInAction(@RequestParam("userId") String userId, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
-		
+		System.out.println("asdfasdfasdf");
 		if (userId == "" || password == "") {
+			System.out.println("test2");
 			try {
 				PrintWriter write = response.getWriter();
 				write.append("FAIL");
@@ -96,12 +97,14 @@ public class UserController {
 		UserVO login = userService.selectOneUser(user);
 		if (login != null) {
 			try {
+				HttpSession session = request.getSession();
+				session.setAttribute("_USER_", login);
+				
 				PrintWriter write = response.getWriter();
 				write.append("OK");
 				write.flush();
 				write.close();
-				HttpSession session = request.getSession();
-				session.setAttribute("_USER_", login);
+				
 			} catch (IOException e) {
 				throw new RuntimeException(e.getMessage(), e);
 			}
@@ -175,6 +178,39 @@ public class UserController {
 		view.setViewName("/user/myPage");
 		
 		return view;
+	}
+	
+	@RequestMapping(value="/user/mypage/profile", method=RequestMethod.POST)
+	public String doMyPage(UserVO userVO, HttpServletResponse response){
+		
+		try {
+			boolean isValidPassword = verify(userVO.getPassword());
+			if (isValidPassword) {
+				try {
+					userService.modifyOneUser(userVO);
+					PrintWriter writer = response.getWriter();
+					writer.append("OK");
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e.getMessage(), e);
+				}
+
+			} else {
+				try {
+					PrintWriter writer = response.getWriter();
+					writer.append("FAIL");
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e.getMessage(), e);
+				}
+			}
+		} catch (RuntimeException e) {
+			throw new RuntimeException("�뿉�윭�뿉�윭�뿉�윭", e);
+		}
+		
+		return "redirect:/home";
 	}
 
 	public boolean verify(String password) {

@@ -4944,8 +4944,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus,
 	.navbar-default .navbar-nav>.open>a:hover {
-	color: #555;
-	background-color: #e7e7e7
+	color: #fed136;
+	background-color: transparent;
 }
 
 @media ( max-width :767px) {

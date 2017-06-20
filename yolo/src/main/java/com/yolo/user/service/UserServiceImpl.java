@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
 
 		return userBiz.insertOneUser(userVO);
 	}
+	
+	@Override
+	public boolean modifyOneUser(UserVO userVO) {
+		return userBiz.modifyOneUser(userVO);
+	}
 
 	@Override
 	public UserVO selectOneUser(UserVO userVO) {

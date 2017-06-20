@@ -8,4 +8,6 @@ public interface UserService {
 	
 	public UserVO selectOneUser(UserVO userVO);
 	
+	public boolean modifyOneUser(UserVO userVO);
+	
 }

@@ -48,11 +48,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
     <![endif]-->
     <style type="text/css">
-		    #login-dp{
-		    min-width: 250px;
-		    padding: 14px 14px 0;
-		    overflow:hidden;
-		    background-color:rgba(255,255,255,.8);
+	    #login-dp{
+	    min-width: 250px;
+	    padding: 14px 14px 0;
+	    overflow:hidden;
+	    background-color:rgba(255,255,255,.8);
 		}
 		#login-dp .help-block{
 		    font-size:12px    
@@ -108,7 +108,20 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-
+		$("#signInForm").find("input[type=button]").click( function() {
+			$.post(
+				"<c:url value="/user/signIn" />",
+				$("#signInForm").serialize(),
+				function(data) {
+					if (data == "OK") {
+						alert("성공");
+						window.location.href = "<c:url value="/home"/>";
+					} else if (data == "FAIL") {
+						alert("로그인 실패");
+						location.reload();
+					}
+			});
+		});
 	});
 </script>
 
@@ -152,18 +165,17 @@
 						
 						 <ul class="nav navbar-nav navbar-right">
 					        <li class="dropdown">
-					          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
 								<ul id="login-dp" class="dropdown-menu">
 									<li>
 										 <div class="row">
 												<div class="col-md-12">
-													Login via
 													<div class="social-buttons">
-													<a href="#" onclick=" window.open('<c:url value="/user/loginNaver"/>','window팝업','width=300, height=300, menubar=no, status=no, toolbar=no' );">
-														<img src="<c:url value="/static/img/naver.png"/>" width="240" height="43"></a>
-														
+														<a href="#" onclick=" window.open('<c:url value="/user/loginNaver"/>','window팝업','width=300, height=300, menubar=no, status=no, toolbar=no' );">
+															<img src="<c:url value="/static/img/naver.png"/>" width="100" height="auto">
+														</a>
 														<a id="custom-login-btn" href="javascript:loginWithKakao()">
-															<img src="<c:url value="/static/img/kakao.png"/>"width="240" height="43">
+															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
 														</a>
 														
 														<script type='text/javascript'>
@@ -182,32 +194,22 @@
 																});
 															};
 														</script>
-														<!-- <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> NAVER</a> -->
-														<!-- <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> KAKAO</a> -->
 													</div>
-					                                or
-													 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+													 <form id="signInForm" style="width: 194px;">
 															<div class="form-group">
-																 <label class="sr-only" for="exampleInputEmail2">Email address</label>
-																 <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+																 <input style="height:30px" type="text" id="userId" placeholder="ID">
 															</div>
 															<div class="form-group">
-																 <label class="sr-only" for="exampleInputPassword2">Password</label>
-																 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+																 <input style="height:30px" type="text" id="password" placeholder="Password">
 					                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
 															</div>
 															<div class="form-group">
-																 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-															</div>
-															<div class="checkbox">
-																 <label>
-																 <input type="checkbox"> keep me logged-in
-																 </label>
+																 <button type="submit" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
 															</div>
 													 </form>
 												</div>
 												<div class="bottom text-center">
-													New here ? <a href="#"><b>Join Us</b></a>
+													New here ? <a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
 												</div>
 										 </div>
 									</li>
