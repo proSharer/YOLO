@@ -66,19 +66,20 @@ public class UserController {
 		return view;
 	}
 
-	/*
-	 * @RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
-	 * ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
-	 * 
-	 * view.setViewName("user/signIn");
-	 * 
-	 * return view; }
-	 */
+	
+	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
+	ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
 
-	@RequestMapping(value = "/user/loginTotal", method = RequestMethod.POST)
+		view.setViewName("user/signIn");
+
+		return view; 
+	}
+
+	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
 	public void doSignInAction(@RequestParam("userId") String userId, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
-		
+		System.out.println("asdfasdfasdf");
 		if (userId == "" || password == "") {
+			System.out.println("test2");
 			try {
 				PrintWriter write = response.getWriter();
 				write.append("FAIL");
@@ -96,12 +97,14 @@ public class UserController {
 		UserVO login = userService.selectOneUser(user);
 		if (login != null) {
 			try {
+				HttpSession session = request.getSession();
+				session.setAttribute("_USER_", login);
+				
 				PrintWriter write = response.getWriter();
 				write.append("OK");
 				write.flush();
 				write.close();
-				HttpSession session = request.getSession();
-				session.setAttribute("_USER_", login);
+				
 			} catch (IOException e) {
 				throw new RuntimeException(e.getMessage(), e);
 			}
@@ -157,12 +160,57 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/user/signout")
+	@RequestMapping("/user/signOut")
 	public String doSignOutAction(HttpSession session) {
 
 		session.invalidate();
+		
+		return "redirect:/home";
+	}
+	
+	@RequestMapping("/user/mypage")
+	public ModelAndView viewMyPage(HttpSession session) {
+		ModelAndView view = new ModelAndView();
+		
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
+		view.addObject("user", user);
+		view.setViewName("/user/myPage");
+		
+		return view;
+	}
+	
+	@RequestMapping(value="/user/mypage/profile", method=RequestMethod.POST)
+	public String doMyPage(UserVO userVO, HttpServletResponse response){
+		
+		try {
+			boolean isValidPassword = verify(userVO.getPassword());
+			if (isValidPassword) {
+				try {
+					userService.modifyOneUser(userVO);
+					PrintWriter writer = response.getWriter();
+					writer.append("OK");
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e.getMessage(), e);
+				}
 
-		return "redirect:/yolo/home";
+			} else {
+				try {
+					PrintWriter writer = response.getWriter();
+					writer.append("FAIL");
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e.getMessage(), e);
+				}
+			}
+		} catch (RuntimeException e) {
+			throw new RuntimeException("�뿉�윭�뿉�윭�뿉�윭", e);
+		}
+		
+		return "redirect:/home";
 	}
 
 	public boolean verify(String password) {

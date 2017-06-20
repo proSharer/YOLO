@@ -6,6 +6,8 @@ public interface UserBiz {
 	
 	public boolean insertOneUser(UserVO userVO);
 	
+	public boolean modifyOneUser(UserVO userVO);
+
 	public UserVO selectOneUser(UserVO userVO);
 	
 	public String getSalt(String userId);
@@ -19,5 +21,7 @@ public interface UserBiz {
 	public boolean updateClearLoginFailCount(String userId);
 	
 	public boolean updateClearRockCount(String userId);
+	
+	
 	
 }

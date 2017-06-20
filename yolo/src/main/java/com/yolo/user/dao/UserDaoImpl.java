@@ -46,4 +46,8 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 		return getSqlSession().update( UD + ".updateClearLockCount", userId);
 	}
 
+	@Override
+	public int modifyOneUser(UserVO userVO) {
+		return getSqlSession().update( UD + ".modifyOneUser", userVO);
+	}
 }

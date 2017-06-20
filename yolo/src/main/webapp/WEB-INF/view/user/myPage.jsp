@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Yolo : Sign Up</title>
+<title>Yolo : My Page</title>
 
 <style type="text/css">
 
@@ -25,165 +25,6 @@
 	margin-left: 5px;
 }
 
-* /
-
-.wrap {
-	width: 100%;
-	height: 100%;
-	min-height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 99;
-}
-
-p.form-title {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 20px;
-	font-weight: 600;
-	text-align: center;
-	color: #7f7f7f;
-	margin-top: 5%;
-	text-transform: uppercase;
-	letter-spacing: 4px;
-}
-
-form {
-	width: 250px;
-	margin: 0 auto;
-}
-
-form.login input[type="text"], form.login input[type="password"] {
-	width: 100%;
-	margin: 0;
-	padding: 5px 10px;
-	background: 0;
-	border: 0;
-	border-bottom: 1px solid #ccc;
-	outline: 0;
-	font-style: italic;
-	font-size: 12px;
-	font-weight: 400;
-	letter-spacing: 1px;
-	margin-bottom: 5px;
-	color: #ccc;
-	outline: 0;
-}
-
-form.login input[type="submit"] {
-	width: 100%;
-	font-size: 14px;
-	text-transform: uppercase;
-	font-weight: 500;
-	margin-top: 16px;
-	outline: 0;
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
-form.login input[type="submit"]:hover {
-	transition: background-color 0.5s ease;
-}
-
-form.login .remember-forgot {
-	float: left;
-	width: 100%;
-	margin: 10px 0 0 0;
-}
-
-form.login .forgot-pass-content {
-	min-height: 20px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-form.login label, form.login a {
-	font-size: 12px;
-	font-weight: 400;
-	color: #FFFFFF;
-}
-
-form.login a {
-	transition: color 0.5s ease;
-}
-
-form.login a:hover {
-	color: #d66f11;
-}
-
-.pr-wrap {
-	width: 100%;
-	height: 100%;
-	min-height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 999;
-	display: none;
-}
-
-.show-pass-reset {
-	display: block !important;
-}
-
-.pass-reset {
-	margin: 0 auto;
-	width: 250px;
-	position: relative;
-	margin-top: 22%;
-	z-index: 999;
-	background: #FFFFFF;
-	padding: 20px 15px;
-}
-
-.pass-reset label {
-	font-size: 12px;
-	font-weight: 400;
-	margin-bottom: 15px;
-}
-
-.pass-reset input[type="email"] {
-	width: 100%;
-	margin: 5px 0 0 0;
-	padding: 5px 10px;
-	background: 0;
-	border: 0;
-	border-bottom: 1px solid #000000;
-	outline: 0;
-	font-style: italic;
-	font-size: 12px;
-	font-weight: 400;
-	letter-spacing: 1px;
-	margin-bottom: 5px;
-	color: #000000;
-	outline: 0;
-}
-
-.pass-reset input[type="submit"] {
-	width: 100%;
-	border: 0;
-	font-size: 14px;
-	text-transform: uppercase;
-	font-weight: 500;
-	margin-top: 10px;
-	outline: 0;
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
-.pass-reset input[type="submit"]:hover {
-	transition: background-color 0.5s ease;
-}
-
-.posted-by {
-	position: absolute;
-	bottom: 26px;
-	margin: 0 auto;
-	color: #FFF;
-	background-color: rgba(0, 0, 0, 0.66);
-	padding: 10px;
-	left: 45%;
-}
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -223,25 +64,6 @@ form.login a:hover {
 <script type="text/javascript">
 	$().ready(function () {
 		
-		$('.forgot-pass').click(function(event) {
-			$(".pr-wrap").toggleClass("show-pass-reset");
-		}); 
-			
-		$('.pass-reset-submit').click(function(event) {
-			$(".pr-wrap").removeClass("show-pass-reset");
-		}); 
-
-		$("#signUpForm").find("input[type=button]").click(function () {
-			$.post("<c:url value="/user/signUp"/>", $("#signUpForm").serialize(), function(data){
-				if(data == "OK") {
-					alert("회원가입이 완료 되었습니다. 로그인 하십시요.");
-					window.location.href="<c:url value="/user/signIn"/>";
-				}
-				else if(data=="FAIL") {
-					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");
-				}
-			});
-		});
 	});
 </script>
 
@@ -283,12 +105,12 @@ form.login a:hover {
 						<c:when test="${user eq null}">
 							<li><a class="page-scroll"
 								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
-							<li><a class="page-scroll" href="#signUp" id="joinBtn">Join</a>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
 							</li>
 						</c:when>
 						<c:otherwise>
 							<li><a class="page-scroll"
-								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
+								href="#myPage" id="mypageBtn">MyPage</a>
 							</li>
 							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
 							</li>
@@ -303,21 +125,21 @@ form.login a:hover {
 	</nav>
 
 	<header id="header"> </header>
-	<section id="list">
+	<section id="myPage">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="wrap">
-						<p class="form-title" style="margin-bottom: 45px;">Sign Up</p>
-						<form id="signUpForm" class="login">
-							<input type="text" name="userId" placeholder="아이디를 입력하세요" style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
-							<input type="text" name="password" placeholder="비번을 입력하세요" style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
-							<input type="text" name="userName" placeholder="이름을 입력하세요" style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
-							<input type="button" id="signUpButton" class="btn btn-success btn-sm" value="Submit" 
-								style=" width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;"/>			
-						</form>
+			<div class="row" style="margin: auto;">
+				<div style="display:inline-block; float:left; width: 25%; height: 640px;">
+					<div style="border-top position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;">
+<!-- 					<div style="border:1px solid; position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;"> -->
+						<a href="">My Profile</a><br/>
+						<a href="">My Post/Reply/Msg</a>
 					</div>
 				</div>
+				<div style="display:inline-block; float:left; width: 40%; height: auto;">
+					<div style="background-color: green; height:320px;"></div>
+					<div style="background-color: orange; height:320px;"></div>
+				</div>
+				<div style="background-color: red; display:inline-block; float:left; width: 35%; height: 640px"></div>
 			</div>
 		</div>
 	</section>

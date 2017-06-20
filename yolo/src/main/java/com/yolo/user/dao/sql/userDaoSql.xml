@@ -94,5 +94,12 @@
 		SET		LOCK_COUNT = 0
 		WHERE	USR_ID = #{userId}
 	</update>
+	
+	<update id="modifyOneUser" parameterType="UserVO">
+		UPDATE	USR
+		SET		USR_NM = #{userName}
+				, PWS = #{password}
+		WHERE	USR_ID = #{userId}
+	</update>
 
 </mapper>

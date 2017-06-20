@@ -108,7 +108,7 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$("#signInForm").find("input[type=button]").click( function() {
+		$("#loginBtn").click( function() {
 			$.post(
 				"<c:url value="/user/signIn" />",
 				$("#signInForm").serialize(),
@@ -125,9 +125,8 @@
 	});
 </script>
 
-
 <body id="page-top" class="index">
-
+	
 	<!-- Navigation -->
 	<nav id="mainNav"
 		class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -197,14 +196,14 @@
 													</div>
 													 <form id="signInForm" style="width: 194px;">
 															<div class="form-group">
-																 <input style="height:30px" type="text" id="userId" placeholder="ID">
+																 <input style="height:30px" type="text" name="userId" placeholder="ID">
 															</div>
 															<div class="form-group">
-																 <input style="height:30px" type="text" id="password" placeholder="Password">
+																 <input style="height:30px" type="password" name="password" placeholder="Password">
 					                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
 															</div>
 															<div class="form-group">
-																 <button type="submit" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+																 <button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
 															</div>
 													 </form>
 												</div>
@@ -229,14 +228,14 @@
 								
 								
 								
-							<li><a class="page-scroll" href="#signUp" id="joinBtn">Join</a>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
 							</li>
 						</c:when>
 						<c:otherwise>
 							<li><a class="page-scroll"
 								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
 							</li>
-							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
+							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -520,6 +519,14 @@
 			</div>
 		</div>
 	</div>
+	<div><c:import url="http://192.168.201.29:3000"/></div>
+	<div>
+		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
+		<input id="receiver" type="hidden" name="receiver" value="This is not a asdf">
+		<input id="content" type="hidden" name="content" value="">
+	</div>
+	
+	<%-- <div><c:import url="http://localhost:3000"/></div> --%>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>

@@ -10,6 +10,11 @@ public class UserBizImpl implements UserBiz{
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	
+	@Override
+	public boolean modifyOneUser(UserVO userVO) {
+		return userDao.modifyOneUser(userVO) > 0;
+	}
 
 	@Override
 	public boolean insertOneUser(UserVO userVO) {
