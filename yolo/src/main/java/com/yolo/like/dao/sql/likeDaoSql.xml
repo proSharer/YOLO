@@ -6,22 +6,22 @@
 
 <mapper namespace="LikeDao">
 
-	<select id="selectOneLikeByDailyId" parameterType="hashmap" resultType="LikeVO">
-		SELECT	LK_ID
-				, USR_ID
-				, DL_ID
+	<select id="selectOneLikeByDailyId" parameterType="LikeVO" resultType="LikeVO">
+		SELECT	LK_ID likeId
+				, USR_ID userId
+				, DL_ID dailyId
 		FROM	LK
-		WHERE	USR_ID = #{userVO.userId}
-		AND		DL_ID = #{dailyVO.dailyId}
+		WHERE	USR_ID = #{userId}
+		AND		DL_ID = #{dailyId}
 	</select>
 	
-	<select id="selectOneLikeByTripId" parameterType="hashmap" resultType="LikeVO">
-		SELECT	LK_ID
-				, USR_ID
-				, TR_ID
+	<select id="selectOneLikeByTripId" parameterType="LikeVO" resultType="LikeVO">
+		SELECT	LK_ID likeId
+				, USR_ID userId
+				, TR_ID tripId
 		FROM	LK
-		WHERE	USR_ID = #{userVO.userId}
-		AND		TR_ID = #{tripVO.tripId}
+		WHERE	USR_ID = #{userId}
+		AND		TR_ID = #{tripId}
 	</select>
 
 	<select id="selectAllLikesByUserID" parameterType="UserVO" resultType="LikeVO">
@@ -35,7 +35,7 @@
 	</select>
 	
 	<insert id="insertOneLike" parameterType="LikeVO">
-		INSERT	INTO	LIKE	(
+		INSERT	INTO	LK	(
 									LK_ID
 									, USR_ID
 									, DL_ID
@@ -49,18 +49,18 @@
 								)
 	</insert>
 	
-	<delete id="deleteOneLikeByDailyId" parameterType="hashmap">
+	<delete id="deleteOneLikeByDailyId" parameterType="LikeVO">
 		DELETE	
 		FROM	LK
-		WHERE	USR_ID = #{userVO.userId}
-		AND		DL_ID = #{dailyVO.dailyId}
+		WHERE	USR_ID = #{userId}
+		AND		DL_ID = #{dailyId}
 	</delete>
 
-	<delete id="deleteOneLikeByTripId" parameterType="hashmap">
+	<delete id="deleteOneLikeByTripId" parameterType="LikeVO">
 		DELETE	
 		FROM	LK
-		WHERE	USR_ID = #{userVO.userId}
-		AND		TR_ID = #{tripVO.tripId}
+		WHERE	USR_ID = #{userId}
+		AND		TR_ID = #{tripId}
 	</delete>
 
 </mapper>

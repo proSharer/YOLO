@@ -16,4 +16,7 @@ public interface TripBiz {
 	
 	public boolean tripLikeCountPlus(String tripId);
 	
+	public boolean tripLikeCountMinus(String tripId);
+	
+	public boolean modifyOneTrip(TripVO tripVO);
 }

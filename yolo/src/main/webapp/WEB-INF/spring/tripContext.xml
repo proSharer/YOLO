@@ -15,6 +15,9 @@
 	<bean id="tripServiceImpl" class="com.yolo.trip.service.TripServiceImpl">
 		<property name="tripBiz" ref="tripBizImpl"/>
 		<property name="tripPartBiz" ref="tripPartBizImpl"/>
+		<property name="likeBiz" ref="likeBizImpl"/>
+		<property name="tripReplyBiz" ref="tripReplyBizImpl"/>
+		<property name="regionBiz" ref="regionBizImpl"></property>
 	</bean>
 	
 </beans>

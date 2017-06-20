@@ -16,19 +16,82 @@
 <script type="text/javascript">
 
 	$().ready(function(){
+		
+		$('.blah').hide();
+		
 	    var options = {
 		   map: ".map_canvas",
 		   location: "방배역"
 		};
 		        
-		$(".geocomplete").geocomplete(options);
-
+		$("#geocomplete0").geocomplete(options);
+		
+		var i=0;
+		
 		$("#addBtn").click(function(){
-			var appendPart = $(".part").html(); 
+			
+			i++;
 
+			var appendPart = "<div class='part'>" +"<input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간'><br/>"+
+			"<input type='text' name='tripPartVO["+i+"].endTime' placeholder='끝나는시간'><br/>"+
+			"<input type='text' name='tripPartVO["+i+"].place' placeholder='장소를 입력해주세요'><br/>"
+			+"<input id='geocomplete"+i+"' class='contorls' type='text' name='tripPartVO["+i+"].map'"+
+				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' />"+
+			"<div class='map_canvas'></div>"+
+			"<select name='tripPartVO["+i+"].timeControl'>"+
+			    "<option value=''>시간구분</option>"+
+			    "<option value='오전'>오전</option>"+
+			    "<option value='오후'>오후</option>"+
+			"</select>"+ "<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
+			"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
+			"</div> </div>";
+			
+			var blah = "blah"+ i;
+			
 			$(".tripPart").append(appendPart);
-			$(".geocomplete").geocomplete(options);
-		});
+			$(".tripPart").find('#'+blah).hide();
+			
+			var imgInp = "imgInp" + i;
+			
+			var geocomplete = "geocomplete" + i;
+
+			$("#"+geocomplete).geocomplete(options); 
+			
+	        $(".tripPart").on("change","#"+imgInp ,function(){
+	            readtoURL(this);
+	        
+				function readtoURL(input) {
+						if (input.files && input.files[0]) {
+							var reader = new FileReader();
+							reader.onload = function (e) {
+								$('#'+blah).attr('src', e.target.result);
+								$('#'+blah).show();
+			            	}
+			          reader.readAsDataURL(input.files[0]);
+			        	}
+				}
+		   	});
+			
+	        
+	        
+	    });
+	   
+		
+        $("#imgInp0").on('change', function(){
+            readURL(this);
+        });
+   
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#blah0').attr('src', e.target.result);
+					$('#blah0').show();
+            	}
+          reader.readAsDataURL(input.files[0]);
+        	}
+   		}
 		
 		$("#writeBtn").click(function(){
 			$("#writeForm").attr({
@@ -36,6 +99,10 @@
 				"method" : "post"
 			}).submit();
 		});
+		
+
+
+	
 	});
 </script>
 </head>
@@ -43,27 +110,29 @@
 
 	<form:form id="writeForm" commandName="writeFrm" enctype="multipart/form-data">
 		<input type="text" name="title" placeholder="제목">
-		<input type="text" name="userId" placeholder="userId">
 		<div class="tripPart">
 			<div class="part">
-				<input type="text" name="tripPartListVO.startTime" placeholder="시작시간"><br/>
-				<input type="text" name="tripPartListVO.endTime" placeholder="끝나는시간"><br/>
-				<input type="text" name="tripPartListVO.place" placeholder="장소를 입력해주세요"><br/>
+				<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간"><br/>
+				<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"><br/>
+				<input type="text" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
 			
-					<input class="geocomplete" class="contorls" type="text" name="tripPartListVO.map" 
+					<input id="geocomplete0" class="contorls" type="text" name="tripPartVO[0].map" 
 					placeholder="상세주소를 입력해주세요." size="90" onClick="value=''" />
 	
 				<div class="map_canvas"></div>
 				
 				
-				<select name="tripPartListVO.timeControl">
+				<select name="tripPartVO[0].timeControl">
 				    <option value="">시간구분</option>
 				    <option value="오전">오전</option>
 				    <option value="오후">오후</option>
 				</select>
 				
-				<input type="file" name="tripPartListVO.file"><br/>
-				<textarea name="tripPartListVO.content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
+					
+		        <input type="file" name="tripPartVO[0].file" id="imgInp0"><br/>
+		        <img class="blah" id="blah0" src="#" /><br/>
+
+				<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
 			</div>
 		</div>
 		<input type="button" id="addBtn" value="+">

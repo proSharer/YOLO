@@ -17,13 +17,13 @@ public class LikeBizImpl implements LikeBiz {
 	}
 
 	@Override
-	public LikeVO getOneLikeByDailyId(UserVO userVO, DailyVO dailyVO) {
-		return likeDao.selectOneLikeByDailyId(userVO, dailyVO);
+	public LikeVO getOneLikeByDailyId(LikeVO likeVO) {
+		return likeDao.selectOneLikeByDailyId(likeVO);
 	}
 
 	@Override
-	public LikeVO getOneLikeByTripId(UserVO userVO, TripVO tripVO) {
-		return likeDao.selectOneLikeByTripId(userVO, tripVO);
+	public LikeVO getOneLikeByTripId(LikeVO likeVO) {
+		return likeDao.selectOneLikeByTripId(likeVO);
 	}
 
 	@Override
@@ -37,13 +37,13 @@ public class LikeBizImpl implements LikeBiz {
 	}
 
 	@Override
-	public boolean removeOneLikeByDailyId(UserVO userVO, DailyVO dailyVO) {
-		return likeDao.deleteOneLikeByDailyId(userVO, dailyVO) > 0;
+	public boolean removeOneLikeByDailyId(LikeVO likeVO) {
+		return likeDao.deleteOneLikeByDailyId(likeVO) > 0;
 	}
 
 	@Override
-	public boolean removeOneLikeByTripId(UserVO userVO, TripVO tripVO) {
-		return likeDao.deleteOneLikeByTripId(userVO, tripVO) > 0;
+	public boolean removeOneLikeByTripId(LikeVO likeVO) {
+		return likeDao.deleteOneLikeByTripId(likeVO) > 0;
 	}
 
 }

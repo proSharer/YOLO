@@ -13,21 +13,13 @@ import com.yolo.user.vo.UserVO;
 public class LikeDaoImpl extends SqlSessionDaoSupport implements LikeDao {
 	
 	@Override
-	public LikeVO selectOneLikeByDailyId(UserVO userVO, DailyVO dailyVO) {
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("userVO", userVO);
-		map.put("dailyVO", dailyVO);
-		
-		return getSqlSession().selectOne("LikeDao.selectOneLikeByDailyId", map);
+	public LikeVO selectOneLikeByDailyId(LikeVO likeVO) {
+		return getSqlSession().selectOne("LikeDao.selectOneLikeByDailyId", likeVO);
 	}
 
 	@Override
-	public LikeVO selectOneLikeByTripId(UserVO userVO, TripVO tripVO) {
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("userVO", userVO);
-		map.put("tripVO", tripVO);
-		
-		return getSqlSession().selectOne("LikeDao.selectOneLikeByTripId", map);
+	public LikeVO selectOneLikeByTripId(LikeVO likeVO) {
+		return getSqlSession().selectOne("LikeDao.selectOneLikeByTripId", likeVO);
 	}
 
 	@Override
@@ -41,21 +33,13 @@ public class LikeDaoImpl extends SqlSessionDaoSupport implements LikeDao {
 	}
 
 	@Override
-	public int deleteOneLikeByDailyId(UserVO userVO, DailyVO dailyVO) {
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("userVO", userVO);
-		map.put("dailyVO", dailyVO);
-		
-		return getSqlSession().delete("LikeDao.deleteOneLikeByDailyId", map);
+	public int deleteOneLikeByDailyId(LikeVO likeVO) {
+		return getSqlSession().delete("LikeDao.deleteOneLikeByDailyId", likeVO);
 	}
 
 	@Override
-	public int deleteOneLikeByTripId(UserVO userVO, TripVO tripVO) {
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("userVO", userVO);
-		map.put("tripVO", tripVO);
-		
-		return getSqlSession().delete("LikeDao.deleteOneLikeByTripId", map);
+	public int deleteOneLikeByTripId(LikeVO likeVO) {
+		return getSqlSession().delete("LikeDao.deleteOneLikeByTripId", likeVO);
 	}
 
 }
