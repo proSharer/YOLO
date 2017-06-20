@@ -55,7 +55,7 @@
 </script>
 
 <body id="page-top" class="index">
-
+	
 	<!-- Navigation -->
 	<nav id="mainNav"
 		class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -382,6 +382,14 @@
 			</div>
 		</div>
 	</div>
+	<div><c:import url="http://192.168.201.29:3000"/></div>
+	<div>
+		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
+		<input id="receiver" type="hidden" name="receiver" value="This is not a asdf">
+		<input id="content" type="hidden" name="content" value="">
+	</div>
+	
+	<%-- <div><c:import url="http://localhost:3000"/></div> --%>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>

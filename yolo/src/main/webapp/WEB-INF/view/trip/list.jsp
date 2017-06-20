@@ -116,6 +116,13 @@
 			
 			$("#searchType").val(option);
 		});
+		
+		$("#searchText").keypress(function(event){
+			if(event.which == 13){
+				$("#searchBtn").click();
+				return false;
+			}
+		});
 
 	});
 </script>
@@ -219,7 +226,7 @@
 							class="form-control" value="${sessionScope._SEARCH_.keyword}">
 
 						<div class="input-group-btn">
-							<input type="button" class="btn btn-search btn-default"
+							<input id="searchBtn" type="button" class="btn btn-search btn-default"
 								onclick="movePage(0)" value="&#10140;" />
 						</div>
 						<div class="input-group-btn">

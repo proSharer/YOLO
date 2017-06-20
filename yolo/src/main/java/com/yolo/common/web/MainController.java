@@ -30,4 +30,16 @@ public class MainController {
 		return view;
 	}
 	
+	@RequestMapping(value="/test")
+	public ModelAndView testView(HttpSession session) {
+		ModelAndView view = new ModelAndView();
+		
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
+		view.addObject("user", user);
+		view.setViewName("common/mainFrame");
+		
+		return view;
+	}
+	
 }

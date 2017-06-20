@@ -123,6 +123,18 @@ public class UserController {
 
 		return "redirect:/home";
 	}
+	
+	@RequestMapping("/user/mypage")
+	public ModelAndView viewMyPage(HttpSession session) {
+		ModelAndView view = new ModelAndView();
+		
+		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
+		view.addObject("user", user);
+		view.setViewName("/user/myPage");
+		
+		return view;
+	}
 
 	public boolean verify(String password) {
 		String passwordPolicy = "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,})";
