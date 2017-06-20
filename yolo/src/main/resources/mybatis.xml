@@ -6,10 +6,13 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.yolo.daily.vo.DailyVO" alias="DailyVO"/>
+		<typeAlias type="com.yolo.dailyMain.vo.DailyMainVO" alias="DailyMainVO"/>
+		<typeAlias type="com.yolo.dailyMain.vo.DailyMainSearchVO" alias="DailyMainSearchVO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="com/yolo/daily/dao/sql/DailyDaoSql.xml"/>
+		<mapper resource="com/yolo/dailyMain/dao/sql/DailyMainDaoSql.xml"/>
 	</mappers>
 
 </configuration>

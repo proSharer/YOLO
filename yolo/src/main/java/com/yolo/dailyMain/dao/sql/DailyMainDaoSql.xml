@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DailyMainDao">
+	<select id="selectDailyId" resultType="string">
+		SELECT 'DL-'|| TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(DL_ID_SEQ.NEXTVAL, 6, '0')  
+		FROM 	DUAL
+	
+	
+	</select>
+
+	<insert id="insertDailyMain" parameterType="DailyMainVO">
+		INSERT INTO DAILY( 
+					DL_ID , TITLE , CRT_DT
+					,USR_ID, LIKE_CNT, OVER_ALL
+					)
+		VALUES (
+					#{dailyId}, #{title}, SYSDATE
+					,'SJM', '0', #{overAll}
+				)
+	
+	</insert>
+	
+	<resultMap type="DailyMainVO" id="DailyMainMap">
+		<id column="DL_ID" property="dailyId" />
+		<result column="TITLE" property="title" />
+		<result column="CRT_DT" property="createDate"/>
+		<result column="USR_ID" property="userId"/>
+		<result column="LIKE_CNT" property="likeCount"/>
+		<result column="OVER_ALL" property="overAll"/>
+		
+		<collection 	select="DailyDao.getDailyPartsByDLID"
+						property="dailyVOs"
+						column="DL_ID"
+						javaType="java.util.ArrayList"
+						ofType="DailyVO">
+		</collection>
+	</resultMap>
+	
+
+	<select id="selectAllDailyMain" parameterType="DailyMainSearchVO"
+	resultMap="DailyMainMap">
+		SELECT 		D.DL_ID , D.TITLE , D.CRT_DT
+					,D.USR_ID, D.LIKE_CNT, D.OVER_ALL
+		FROM 		DAILY D
+	</select>
+	
+	
+	<delete id="deleteDailyMain" parameterType="string">
+		DELETE
+		FROM 	DAILY D
+		WHERE 	D.DL_ID = #{dailyId}
+	</delete>
+		
+
+
+</mapper>
