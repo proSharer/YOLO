@@ -14,7 +14,9 @@
 
 <title>Yolo : Share Your Life!</title>
 <!-- SignIn CSS -->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+	rel="stylesheet">
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>"
@@ -39,7 +41,7 @@
 <!-- Theme CSS -->
 <link href="<c:url value="/static/css/agency.min.css"/>"
 	rel="stylesheet">
-	
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,86 +49,106 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
     <![endif]-->
-    <style type="text/css">
-	    #login-dp{
-	    min-width: 250px;
-	    padding: 14px 14px 0;
-	    overflow:hidden;
-	    background-color:rgba(255,255,255,.8);
-		}
-		#login-dp .help-block{
-		    font-size:12px    
-		}
-		#login-dp .bottom{
-		    background-color:rgba(255,255,255,.8);
-		    border-top:1px solid #ddd;
-		    clear:both;
-		    padding:14px;
-		}
-		#login-dp .social-buttons{
-		    margin:12px 0    
-		}
-		#login-dp .social-buttons a{
-		    width: 49%;
-		}
-		#login-dp .form-group {
-		    margin-bottom: 10px;
-		}
-		.btn-fb{
-		    color: #fff;
-		    background-color:#3b5998;
-		}
-		.btn-fb:hover{
-		    color: #fff;
-		    background-color:#496ebc 
-		}
-		.btn-tw{
-		    color: #fff;
-		    background-color:#55acee;
-		}
-		.btn-tw:hover{
-		    color: #fff;
-		    background-color:#59b5fa;
-		}
-		@media(max-width:768px){
-		    #login-dp{
-		        background-color: inherit;
-		        color: #fff;
-		    }
-		    #login-dp .bottom{
-		        background-color: inherit;
-		        border-top:0 none;
-		    }
-		}
-    </style>
+<style type="text/css">
+#login-dp {
+	min-width: 250px;
+	padding: 14px 14px 0;
+	overflow: hidden;
+	background-color: rgba(255, 255, 255, .8);
+}
+
+#login-dp .help-block {
+	font-size: 12px
+}
+
+#login-dp .bottom {
+	background-color: rgba(255, 255, 255, .8);
+	border-top: 1px solid #ddd;
+	clear: both;
+	padding: 14px;
+}
+
+#login-dp .social-buttons {
+	margin: 12px 0
+}
+
+#login-dp .social-buttons a {
+	width: 49%;
+}
+
+#login-dp .form-group {
+	margin-bottom: 10px;
+}
+
+.btn-fb {
+	color: #fff;
+	background-color: #3b5998;
+}
+
+.btn-fb:hover {
+	color: #fff;
+	background-color: #496ebc
+}
+
+.btn-tw {
+	color: #fff;
+	background-color: #55acee;
+}
+
+.btn-tw:hover {
+	color: #fff;
+	background-color: #59b5fa;
+}
+
+@media ( max-width :768px) {
+	#login-dp {
+		background-color: inherit;
+		color: #fff;
+	}
+	#login-dp .bottom {
+		background-color: inherit;
+		border-top: 0 none;
+	}
+}
+</style>
 
 </head>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
-	$().ready(function() {
-		$("#loginBtn").click( function() {
-			$.post(
-				"<c:url value="/user/signIn" />",
-				$("#signInForm").serialize(),
-				function(data) {
-					if (data == "OK") {
-						alert("성공");
-						window.location.href = "<c:url value="/home"/>";
-					} else if (data == "FAIL") {
-						alert("로그인 실패");
-						location.reload();
-					}
-			});
-		});
-	});
+	$()
+			.ready(
+					function() {
+						$("#loginBtn")
+								.click(
+										function() {
+											$
+													.post(
+															"<c:url value="/user/signIn" />",
+															$("#signInForm")
+																	.serialize(),
+															function(data) {
+																if (data == "OK") {
+																	alert("성공");
+																	window.location.href = "<c:url value="/home"/>";
+																} else if (data == "FAIL") {
+																	alert("로그인 실패");
+																	location
+																			.reload();
+																}
+															});
+										});
+					});
 </script>
 
 <body id="page-top" class="index">
-	
+
 	<!-- Navigation -->
 	<nav id="mainNav"
 		class="navbar navbar-default navbar-custom navbar-fixed-top">
@@ -161,82 +183,86 @@
 
 					<c:choose>
 						<c:when test="${user eq null}">
-						
-						 <ul class="nav navbar-nav navbar-right">
-					        <li class="dropdown">
-					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
-								<ul id="login-dp" class="dropdown-menu">
-									<li>
-										 <div class="row">
+
+							<ul class="nav navbar-nav navbar-right">
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown">Login</a>
+									<ul id="login-dp" class="dropdown-menu">
+										<li>
+											<div class="row">
 												<div class="col-md-12">
 													<div class="social-buttons">
-														<a href="#" onclick=" window.open('<c:url value="/user/loginNaver"/>','window팝업','width=300, height=300, menubar=no, status=no, toolbar=no' );">
-															<img src="<c:url value="/static/img/naver.png"/>" width="100" height="auto">
+														<a href="#"
+															onclick=" window.open('<c:url value="/user/loginNaver"/>','window팝업','width=300, height=300, menubar=no, status=no, toolbar=no' );">
+															<img src="<c:url value="/static/img/naver.png"/>"
+															width="100" height="auto">
+														</a> <a id="custom-login-btn"
+															href="javascript:loginWithKakao()"> <img
+															src="<c:url value="/static/img/kakao.png"/>" width="100"
+															height="auto">
 														</a>
-														<a id="custom-login-btn" href="javascript:loginWithKakao()">
-															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
-														</a>
-														
+
 														<script type='text/javascript'>
-															Kakao.init('0f781a605b819e1f04c6b923541b8eb9');
+															Kakao
+																	.init('0f781a605b819e1f04c6b923541b8eb9');
 															function loginWithKakao() {
-															// 로그인 창을 띄웁니다.
-																Kakao.Auth.login({
-																	success: function(authObj) 
-																	{
-																		alert(JSON.stringify(authObj));
-																	},
-																		fail: function(err) 
-																	{
-																		alert(JSON.stringify(err));
-																	}
-																});
+																// 로그인 창을 띄웁니다.
+																Kakao.Auth
+																		.login({
+																			success : function(
+																					authObj) {
+																				alert(JSON
+																						.stringify(authObj));
+																			},
+																			fail : function(
+																					err) {
+																				alert(JSON
+																						.stringify(err));
+																			}
+																		});
 															};
 														</script>
 													</div>
-													 <form id="signInForm" style="width: 194px;">
-															<div class="form-group">
-																 <input style="height:30px" type="text" name="userId" placeholder="ID">
+													<form id="signInForm" style="width: 194px;">
+														<div class="form-group">
+															<input style="height: 30px" type="text" name="userId"
+																placeholder="ID">
+														</div>
+														<div class="form-group">
+															<input style="height: 30px" type="password"
+																name="password" placeholder="Password">
+															<div class="help-block text-right">
+																<a href="">Forget the password ?</a>
 															</div>
-															<div class="form-group">
-																 <input style="height:30px" type="password" name="password" placeholder="Password">
-					                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-															</div>
-															<div class="form-group">
-																 <button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
-															</div>
-													 </form>
+														</div>
+														<div class="form-group">
+															<button type="submit" id="loginBtn"
+																class="btn btn-primary btn-block"
+																style="height: 30px; padding-top: 5px;">Sign in</button>
+														</div>
+													</form>
 												</div>
 												<div class="bottom text-center">
-													New here ? <a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+													New here ? <a href="<c:url value="/user/signUp"/>"><b>Join
+															Us</b></a>
 												</div>
-										 </div>
-									</li>
-								</ul>
-					        </li>
-					      </ul>
-						
-						
-						
-						
-						
-						
-							<%-- <li><a class="page-scroll"
-								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li> --%>
-								
-								
-								
-								
-								
-							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
-							</li>
+											</div>
+										</li>
+									</ul></li>
+							</ul>
+
+							<li><a class="page-scroll"
+								href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a class="page-scroll"
 								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
 							</li>
-							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a>
+							<li><a class="page-scroll"
+								href="<c:url value="/user/mypage" />" id="chatBtn">Chat</a>
 							</li>
+							<li><a class="page-scroll"
+								href="<c:url value="/user/signOut" />">Logout</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -265,7 +291,8 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<h2 class="section-heading"
-						style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">New Post</h2>
+						style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">New
+						Post</h2>
 					<br /> <br />
 					<h3 class="section-subheading text-muted">- Daily Life -</h3>
 				</div>
@@ -282,7 +309,9 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round
+							Icons</h4>
 						<p class="text-muted">Graphic Design</p>
 					</div>
 				</div>
@@ -297,7 +326,9 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup
+							Framework</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -312,7 +343,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -327,7 +359,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -342,7 +375,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -357,7 +391,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -383,7 +418,9 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round
+							Icons</h4>
 						<p class="text-muted">Graphic Design</p>
 					</div>
 				</div>
@@ -398,7 +435,9 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup
+							Framework</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -413,7 +452,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -428,7 +468,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -443,7 +484,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -456,7 +498,8 @@
 						class="img-responsive" alt="">
 					</a>
 					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
+						<h4
+							style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
 						<p class="text-muted">Website Design</p>
 					</div>
 				</div>
@@ -519,14 +562,15 @@
 			</div>
 		</div>
 	</div>
-	<div><c:import url="http://192.168.201.29:3000"/></div>
 	<div>
-		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
-		<input id="receiver" type="hidden" name="receiver" value="This is not a asdf">
-		<input id="content" type="hidden" name="content" value="">
+		<c:import url="http://192.168.201.29:3000" />
 	</div>
-	
-	<%-- <div><c:import url="http://localhost:3000"/></div> --%>
+	<div>
+		<input id="loginUserId" type="hidden" name="sender"
+			value="${user.userId}"> <input id="receiver" type="hidden"
+			name="receiver" value="This is not a asdf"> <input
+			id="content" type="hidden" name="content" value="">
+	</div>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>

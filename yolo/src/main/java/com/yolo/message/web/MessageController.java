@@ -1,5 +1,7 @@
 package com.yolo.message.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +35,7 @@ public class MessageController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
-		/*UserVO user = new UserVO();
-		user.setUserId("test");*/
+
 		List<MessageVO> messageList = messageService.getAllMessagesByReceiver(user);
 		
 		view.addObject("messageList", messageList);
@@ -42,13 +43,6 @@ public class MessageController {
 		
 		return view;
 	}
-	
-	/*@RequestMapping(value="/message/list/received", method=RequestMethod.POST)
-	public void receivedMessageListAction(@RequestBody List<MessageVO> messageList, ModelMap map) {
-		System.out.println("messageList : " + messageList);
-		
-		return;
-	}*/
 	
 	@RequestMapping(value="/message/list/sent")
 	public ModelAndView sentMessageListView(HttpSession session) {
@@ -76,24 +70,9 @@ public class MessageController {
 		return view;
 	}
 	
-	/*@RequestMapping(value="/message/alarm/{messageId}")
-	public ModelAndView messageAlarmView(@PathVariable String messageId) {
-		ModelAndView view = new ModelAndView();
-		
-		MessageVO messageVO = messageService.getOneMessage(messageId);
-		
-		view.addObject("message", messageVO);
-		view.setViewName("message/alarm");
-		
-		return view;
-	}*/
-	
 	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
 	public String messageWriteView(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
 		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
-		
-		/*UserVO loginUser = new UserVO();
-		loginUser.setUserId("test");*/
 		
 		request.setAttribute("userId", userId);
 		request.setAttribute("loginUser", loginUser);
@@ -110,6 +89,7 @@ public class MessageController {
 			return "<html><script type='text/javascript'></script><body>Your message has been successfully sent!<br/><a href='#' onclick='javascript:self.close()'>close</a></body></html>"; 
 		}
 		else {
+			System.out.println("fail");
 			return "message/write";
 		}
 	}

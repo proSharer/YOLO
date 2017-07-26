@@ -1,7 +1,8 @@
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<p>Message to ${userId}</p>
 	
 	<form:form id="messageForm" commandName="MessageVO" name="dataform">
-		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
+		<input id="loginUserId" type="hidden" name="sender" value="${loginUser.userId}">
 		<!-- <input id="receiver" type="hidden" name="receiver" value="${userId}"> -->
 		<input id="receiver" type="hidden" name="receiver" value="test">
 		<textarea id="content" name="content"></textarea><br/>
