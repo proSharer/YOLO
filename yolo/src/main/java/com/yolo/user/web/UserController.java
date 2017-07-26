@@ -181,11 +181,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/mypage/profile", method=RequestMethod.POST)
-	public String doMyPage(UserVO userVO, HttpServletResponse response){
+	public void doMyPage(UserVO userVO, HttpServletResponse response){
 		
-		try {
-			boolean isValidPassword = verify(userVO.getPassword());
-			if (isValidPassword) {
+	String pw = userVO.getPassword();
+			if (!pw.equals("")) {
 				try {
 					userService.modifyOneUser(userVO);
 					PrintWriter writer = response.getWriter();
@@ -206,11 +205,8 @@ public class UserController {
 					throw new RuntimeException(e.getMessage(), e);
 				}
 			}
-		} catch (RuntimeException e) {
-			throw new RuntimeException("�뿉�윭�뿉�윭�뿉�윭", e);
-		}
 		
-		return "redirect:/home";
+		
 	}
 
 	public boolean verify(String password) {

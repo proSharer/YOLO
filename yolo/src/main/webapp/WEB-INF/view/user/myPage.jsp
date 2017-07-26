@@ -63,6 +63,27 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function () {
+		$("#profileDivBtn").click(function() {
+			$("#change1Div").css({"display" : "none"});
+			$("#change2Div").css({"display" : "block"});
+		});
+		
+		$("#postDivBtn").click(function() {
+			$("#change1Div").css({"display" : "block"});
+			$("#change2Div").css({"display" : "none"});
+		});
+		
+		$("#modifyBtn").click(function () {
+			$.post("<c:url value="/user/mypage/profile"/>", $("#userModifyForm").serialize(), function(data){
+				if(data == "OK") {
+					alert("수정이 완료 되었습니다.");
+					window.location.href="<c:url value="/home"/>";
+				}
+				else if(data=="FAIL") {
+					alert("수정이 실패 하였습니다.");
+				}
+			});
+		});
 		
 	});
 </script>
@@ -131,15 +152,29 @@
 				<div style="display:inline-block; float:left; width: 25%; height: 640px;">
 					<div style="border-top position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;">
 <!-- 					<div style="border:1px solid; position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;"> -->
-						<a href="">My Profile</a><br/>
-						<a href="">My Post/Reply/Msg</a>
+						<a href="#" id="profileDivBtn">My Profile</a><br/>
+						<a href="#" id="postDivBtn">My Post/Reply/Msg</a>
 					</div>
 				</div>
-				<div style="display:inline-block; float:left; width: 40%; height: auto;">
-					<div style="background-color: green; height:320px;"></div>
-					<div style="background-color: orange; height:320px;"></div>
+				<div id="change1Div" style="display:block;">
+					<div style="display:inline-block; float:left; width: 40%; height: auto;">
+						<div style="background-color: green; height:320px;"></div>
+						<div style="background-color: orange; height:320px;"></div>
+					</div>
+					<div style="background-color: red; display:inline-block; float:left; width: 35%; height: 640px"></div>
 				</div>
-				<div style="background-color: red; display:inline-block; float:left; width: 35%; height: 640px"></div>
+				<div id="change2Div" style="display:none;">
+					<%-- <jsp:include page="/WEB-INF/view/user/myPageProfile.jsp"></jsp:include> --%>
+					<form id="userModifyForm" class="modify" >
+						<input type="hidden" name="userId" value="${user.userId}"/>
+						ID : ${user.userId}<br/>
+						PW : <input type="text" name="password" value="${user.password}"><br/>
+						NAME : <input type="text" name="userName" value="${user.userName}"><br/>
+						Grade : ${user.authId}<br/>
+						Join Date : ${user.joinDate}<br/>
+						<input type="button" id="modifyBtn" value="submit">
+					</form>
+				</div>
 			</div>
 		</div>
 	</section>

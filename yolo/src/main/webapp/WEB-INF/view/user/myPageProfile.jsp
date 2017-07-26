@@ -7,7 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
-$("#userModifyForm").find("input[type=button]").click(function () {
+$("#modifyBtn").click(function () {
+	alert("test");
 	$.post("<c:url value="/user/mypage"/>", $("#userModifyForm").serialize(), function(data){
 		if(data == "OK") {
 			alert("수정이 완료 되었습니다.");
