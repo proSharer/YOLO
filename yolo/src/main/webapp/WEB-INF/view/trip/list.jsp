@@ -87,7 +87,7 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function(){
-		
+		$("#keyword").val("");
 		var maxHeight = 0;
 		var maxWidth = 0;
 		$('.img').each(function() {
