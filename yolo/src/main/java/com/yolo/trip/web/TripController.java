@@ -96,6 +96,8 @@ public class TripController {
 	@RequestMapping(value="/trip/write",method=RequestMethod.POST)
 	public String insertNewTripPart(HttpServletRequest request, TripVO tripVO){
 		
+		System.out.println(tripVO.getTripPartVO().get(0).getX());
+		System.out.println(tripVO.getTripPartVO().get(0).getY());
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("_USER_");
 		
@@ -166,6 +168,7 @@ public class TripController {
 		view.addObject("like",like);
 		view.addObject("tripVO",tripVO);
 		view.addObject("tripReply",tripReply);
+		view.addObject("tripPartSize",tripVO.getTripPartVO().size());
 		
 		return view;
 		

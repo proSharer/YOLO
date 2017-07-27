@@ -66,7 +66,14 @@ public class TripPartBizImpl implements TripPartBiz {
 					|| tripPartVO.getContent().length() < 0 ){
 				tripPartVO.setContent(tripPart.getContent());
 			}
-			
+			if ( tripPartVO.getX().isEmpty() 
+					|| tripPartVO.getX().length() < 0 ){
+				tripPartVO.setContent(tripPart.getX());
+			}
+			if ( tripPartVO.getY().isEmpty() 
+					|| tripPartVO.getY().length() < 0 ){
+				tripPartVO.setContent(tripPart.getY());
+			}
 			isSuccess = tripPartDao.updateOneTripPart(tripPartVO) > 0;
 		}
 		

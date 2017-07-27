@@ -85,7 +85,7 @@
 </style>
 
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=133ba8bc69d70d5c725419e305fa20ef&libraries=services"></script>
 <script type="text/javascript">
 
 	$().ready(function(){
@@ -258,11 +258,15 @@
 					장소 : ${tripPart.place}<br/>
 					주소 : ${tripPart.map}<br/><br/>
 					${tripPart.content}<br/>
+					<div class="x" style="display:none">${tripPart.x}</div>
+					<div class="y"style="display:none">${tripPart.y}</div>
 					</div><br>
 				</c:forEach>
-				${tripVO.overAll}
-				<br/><br/>
+				${tripVO.overAll}<br/>
 				
+				<div id="detailMap" style="width:700px;height:500px;"></div>
+				<br/><br/>
+
 			
 				좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
 				<c:if test="${!empty sessionScope._USER_.userId}">
@@ -328,6 +332,55 @@
 				</div>
 		</div>
 	</section>
+
+<script>
+
+
+	var mapX = "${tripVO.tripPartVO[0].x}";
+	var mapY = "${tripVO.tripPartVO[0].y}";
+	var map = "${tripVO.tripPartVO[0].map}";
+	var place = "${tripVO.tripPartVO[0].place}";
+	var tripPartSize = "${tripPartSize}";
+	
+
+
+	
+	
+	mapX *= 1;
+	mapY *= 1;
+	var mapContainer = document.getElementById('detailMap'), // 지도를 표시할 div  
+	    mapOption = { 
+	        center: new daum.maps.LatLng(mapX, mapY), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+	
+	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	addMarker(map,1,place);
+	
+	var addMarker = function (position, idx, title) {
+		console.log(position);
+		console.log(idx);
+		console.log(title);
+		
+	    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', 
+	        imgOptions =  {
+	            spriteSize : new daum.maps.Size(36, 691), // 스프라이트 이미지의 크기
+	            spriteOrigin : new daum.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+	            offset: new daum.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+	        },
+	        markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+	            marker = new daum.maps.Marker({
+	            position: position, // 마커의 위치
+	            image: markerImage 
+	        });
+	
+	    marker.setMap(map); // 지도 위에 마커를 표출합니다
+	    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+	
+	    return marker;
+	} 
+	
+</script>
 		<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 
 	<!-- Bootstrap Core JavaScript -->

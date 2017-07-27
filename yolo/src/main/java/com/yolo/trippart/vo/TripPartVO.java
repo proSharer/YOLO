@@ -9,12 +9,13 @@ public class TripPartVO {
 	private int startTime;
 	private int endTime;
 	private String timeControl;
-	private String place;
+	private String place; // 장소 - 키워드
 	private MultipartFile file;
 	private String content;
-	private String map;
+	private String map; // 상세주소
 	private String realFileName;
-	
+	private String x;
+	private String y;
 	
 	public String getTripPartId() {
 		return tripPartId;
@@ -76,8 +77,17 @@ public class TripPartVO {
 	public void setRealFileName(String realFileName) {
 		this.realFileName = realFileName;
 	}
+	public String getX() {
+		return x;
+	}
+	public void setX(String x) {
+		this.x = x;
+	}
+	public String getY() {
+		return y;
+	}
+	public void setY(String y) {
+		this.y = y;
+	}
 	
-	
-
-
 }

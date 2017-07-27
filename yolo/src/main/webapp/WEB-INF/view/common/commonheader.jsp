@@ -82,9 +82,9 @@
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list#list" />'
+							<li><a href='<c:url value="/daily/list" />'
 								id="dailyBtn">Daily</a></li>
-							<li><a href='<c:url value="/trip/list#list" />' id="tripBtn">Trip</a>
+							<li><a href="<c:url value="/trip/list"/>" id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
