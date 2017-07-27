@@ -1,5 +1,7 @@
 package com.yolo.user.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.yolo.user.vo.UserVO;
@@ -49,5 +51,10 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 	@Override
 	public int modifyOneUser(UserVO userVO) {
 		return getSqlSession().update( UD + ".modifyOneUser", userVO);
+	}
+
+	@Override
+	public UserVO findUserById(String userId) {
+		return getSqlSession().selectOne(UD + ".findUserById", userId);
 	}
 }

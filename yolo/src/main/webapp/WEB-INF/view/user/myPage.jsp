@@ -62,46 +62,39 @@
 <script type="text/javascript"
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
-	$()
-			.ready(
-					function() {
-						$("#profileDivBtn").click(function() {
-							$("#change1Div").css({
-								"display" : "none"
-							});
-							$("#change2Div").css({
-								"display" : "block"
-							});
-						});
+	$().ready( function() {
+		$("#profileDivBtn").click(function() {
+			$("#change1Div").css({
+				"display" : "none"
+			});
+			$("#change2Div").css({
+				"display" : "block"
+			});
+		});
 
-						$("#postDivBtn").click(function() {
-							$("#change1Div").css({
-								"display" : "block"
-							});
-							$("#change2Div").css({
-								"display" : "none"
-							});
-						});
+		$("#postDivBtn").click(function() {
+			$("#change1Div").css({
+				"display" : "block"
+			});
+			$("#change2Div").css({
+				"display" : "none"
+			});
+		});
 
-						$("#modifyBtn")
-								.click(
-										function() {
-											$
-													.post(
-															"<c:url value="/user/mypage/profile"/>",
-															$("#userModifyForm")
-																	.serialize(),
-															function(data) {
-																if (data == "OK") {
-																	alert("수정이 완료 되었습니다.");
-																	window.location.href = "<c:url value="/home"/>";
-																} else if (data == "FAIL") {
-																	alert("수정이 실패 하였습니다.");
-																}
-															});
-										});
-
-					});
+		$("#modifyBtn").click(function() {
+			$.post(
+				"<c:url value="/user/mypage/profile"/>",
+				$("#userModifyForm").serialize(),
+				function(data) {
+					if (data == "OK") {
+						alert("수정이 완료 되었습니다.");
+						window.location.href = "<c:url value="/home"/>";
+					} else if (data == "FAIL") {
+						alert("수정이 실패 하였습니다.");
+					}
+			});
+		});
+	});
 </script>
 
 <body id="page-top" class="index">
@@ -148,7 +141,7 @@
 						<c:otherwise>
 							<li><a class="page-scroll" href="#myPage" id="mypageBtn">MyPage</a>
 							</li>
-							<li><a class="page-scroll" href="#myPage" id="chatBtn">Chat</a>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a>
 							</li>
 							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
 							</li>
@@ -166,33 +159,36 @@
 	<section id="myPage">
 		<div class="container">
 			<div class="row" style="margin: auto;">
-				<div
-					style="display: inline-block; float: left; width: 25%; height: 640px;">
-					<div
-						style="border-top position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;">
-						<!-- 					<div style="border:1px solid; position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;"> -->
-						<a href="#" id="profileDivBtn">My Profile</a><br /> <a href="#"
-							id="postDivBtn">My Post/Reply/Msg</a>
+				<div style="display: inline-block; float: left; width: 25%; height: 640px;">
+					<div style="border-top position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;">
+						<a href="#" id="profileDivBtn">My Profile</a><br /> 
+						<a href="#" id="postDivBtn">My Post/Reply/Msg</a>
 					</div>
 				</div>
 				<div id="change1Div" style="display: block;">
-					<div
-						style="display: inline-block; float: left; width: 40%; height: auto;">
-						<div style="background-color: green; height: 320px;"></div>
-						<div style="background-color: orange; height: 320px;"></div>
+					<div style="display: inline-block; float: left; width: 40%; height: auto;">
+						<div style="margin-bottom: 3px; vertical-align:middle; height: 40px; font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif; padding-top: 7px;">
+							<div style="font-size: 15px; display: inline-block; color: #b2b2b2; padding-right: 76%;">
+							Message
+							</div>
+							<input id="writeMessageBtn" type="button" value="+" style="border: 1px solid #b2b2b2; font-weight: bold; color: #b2b2b2; background-color: transparent;"
+								onclick="window.open('/yolo/message/write','window', 'width=400,height=400')"/>
+						</div>
+						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%"></div>
+						<div style="background-color: #e5e5e5; height: 290px; width: 96%"></div>
 					</div>
-					<div
-						style="background-color: red; display: inline-block; float: left; width: 35%; height: 640px"></div>
+					<div style="background-color: red; display: inline-block; float: left; width: 35%; height: 640px"></div>
 				</div>
 				<div id="change2Div" style="display: none;">
 					<%-- <jsp:include page="/WEB-INF/view/user/myPageProfile.jsp"></jsp:include> --%>
 					<form id="userModifyForm" class="modify">
-						<input type="hidden" name="userId" value="${user.userId}" /> ID :
-						${user.userId}<br /> PW : <input type="text" name="password"
-							value="${user.password}"><br /> NAME : <input type="text"
-							name="userName" value="${user.userName}"><br /> Grade :
-						${user.authId}<br /> Join Date : ${user.joinDate}<br /> <input
-							type="button" id="modifyBtn" value="submit">
+						<input type="hidden" name="userId" value="${user.userId}" /> 
+						ID : ${user.userId}<br /> 
+						PW : <input type="text" name="password" value="${user.password}"><br /> NAME : <input type="text"
+								name="userName" value="${user.userName}"><br /> 
+						Grade : ${user.authId}<br /> 
+						Join Date : ${user.joinDate}<br /> 
+						<input type="button" id="modifyBtn" value="submit">
 					</form>
 				</div>
 			</div>

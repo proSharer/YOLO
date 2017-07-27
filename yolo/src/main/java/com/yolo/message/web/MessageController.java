@@ -2,9 +2,12 @@ package com.yolo.message.web;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -70,27 +73,51 @@ public class MessageController {
 		return view;
 	}
 	
-	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
-	public String messageWriteView(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value="/message/write", method=RequestMethod.GET)
+	public String messageWriteView(HttpServletRequest request, HttpSession session) {
 		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
 		
-		request.setAttribute("userId", userId);
 		request.setAttribute("loginUser", loginUser);
+		
+		return "message/write";
+	}
+	
+	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
+	public String messageWriteView2(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
+		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
+		
+		request.setAttribute("loginUser", loginUser);
+		request.setAttribute("receiverUserId", userId);
 		
 		return "message/write";
 	}
 	
 	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.POST)
 	@ResponseBody
-	public String messageWriteAction(MessageVO messageVO) {
+	public void messageWriteAction(MessageVO messageVO, HttpServletResponse response) {
 		boolean isSuccess = messageService.addOneMessage(messageVO);
 		
 		if (isSuccess) {
-			return "<html><script type='text/javascript'></script><body>Your message has been successfully sent!<br/><a href='#' onclick='javascript:self.close()'>close</a></body></html>"; 
+			try {
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.append("OK");
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 		}
 		else {
-			System.out.println("fail");
-			return "message/write";
+			try {
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.append("FAIL");
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 		}
 	}
 

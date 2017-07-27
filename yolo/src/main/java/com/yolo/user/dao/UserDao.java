@@ -1,5 +1,7 @@
 package com.yolo.user.dao;
 
+import java.util.List;
+
 import com.yolo.user.vo.UserVO;
 
 public interface UserDao {
@@ -23,5 +25,7 @@ public interface UserDao {
 	public int updateClearLockCount(String userId);
 	
 	public int modifyOneUser(UserVO userVO);
+	
+	public UserVO findUserById(String userId);
 
 }

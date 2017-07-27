@@ -119,8 +119,8 @@
 <script type="text/javascript"
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript"
-	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<%-- <script type="text/javascript"
+	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script> --%>
 <script type="text/javascript">
 	$()
 			.ready(

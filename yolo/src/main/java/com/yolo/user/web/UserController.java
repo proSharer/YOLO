@@ -3,6 +3,9 @@ package com.yolo.user.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yolo.user.service.UserService;
@@ -77,7 +80,6 @@ public class UserController {
 
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
 	public void doSignInAction(@RequestParam("userId") String userId, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("asdfasdfasdf");
 		if (userId == "" || password == "") {
 			System.out.println("test2");
 			try {
@@ -207,6 +209,30 @@ public class UserController {
 			}
 		
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/user/findById/{userId}", method=RequestMethod.POST)
+	public Object doFindUserById(@PathVariable String userId, HttpServletResponse response) {
+		UserVO user = userService.findUserById(userId);
+		
+		boolean isSuccess = false;	
+		
+		if (user != null) {
+			isSuccess = true;
+		}
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		if (isSuccess) {
+			data.put("userId", user.getUserId());
+			data.put("userName", user.getUserName());
+			data.put("code", "OK");
+		}
+		else {
+			data.put("code", "FAIL");
+		}
+		
+		return data;
 	}
 
 	public boolean verify(String password) {

@@ -101,5 +101,12 @@
 				, PWS = #{password}
 		WHERE	USR_ID = #{userId}
 	</update>
+	
+	<select id="findUserById" parameterType="string" resultType="UserVO">
+		SELECT	USR_ID userId,
+				USR_NM userName
+		FROM	USR
+		WHERE	USR_ID = #{userId}
+	</select>
 
 </mapper>
