@@ -22,10 +22,22 @@
 		<property name="prefix" value="/WEB-INF/view/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="104857600"/>
 		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+	
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory"> 
+		<constructor-arg value="818893027331-8mr60fmgvebefi7k66n79o1oaesqftjg.apps.googleusercontent.com" />
+		<constructor-arg value="BEkW1d3uG_5KEHffj3Pr44x3" /> 
+	</bean>
+	
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters"> 
+		<!-- <property name="scope" value="https://www.googleapis.com/auth/plus.me"/> --> 
+		<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+		<property name="redirectUri" value="http://localhost:8080/yolo/user/google/account"/> 
 	</bean>
 	
 	<bean id="tripController" class="com.yolo.trip.web.TripController">
@@ -48,7 +60,14 @@
 		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	
- 	<bean id="naverController"  class="com.yolo.user.web.NaverController"></bean> 
-	
+ 	<bean id="naverController"  class="com.yolo.user.web.NaverController"></bean>
+ 	
+ 	<bean id="kakaoController" class="com.yolo.user.web.KakaoController"></bean>
+ 	
+ 	<bean id="googleController" class="com.yolo.user.web.GoogleController">
+ 		<property name="googleConnectionFactory" ref="googleConnectionFactory" />
+		<property name="googleOAuth2Parameters" ref="googleOAuth2Parameters" />
+ 	</bean>
+ 	
 
 </beans>
