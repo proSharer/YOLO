@@ -1,6 +1,6 @@
 package com.yolo.user.vo;
 
-public class KakaoVO extends UserVO{
+public class NaverUserVO extends UserVO {
 
 	private String accessToken;
 
@@ -11,5 +11,5 @@ public class KakaoVO extends UserVO{
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
-
+	
 }

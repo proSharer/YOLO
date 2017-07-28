@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta name="google-signin-client_id" content="818893027331-ss8am5r339qu1uespfmobqt23i0hgj41.apps.googleusercontent.com">
 
 <title>Yolo : Share Your Life!</title>
 <!-- SignIn CSS -->
@@ -21,38 +22,27 @@
 	rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="<c:url value="/static/css/font-awesome.min.css"/>"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
-<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
-	rel='stylesheet' type='text/css'>
-<link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
-	rel="stylesheet">
+<link href="<c:url value="/static/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel" rel="stylesheet">
 <!-- Theme CSS -->
-<link href="<c:url value="/static/css/agency.min.css"/>"
-	rel="stylesheet">
-	
+<link href="<c:url value="/static/css/agency.min.css"/>" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
-    <![endif]-->
-    <style type="text/css">
-	    #login-dp{
-	    min-width: 250px;
-	    padding: 14px 14px 0;
-	    overflow:hidden;
-	    background-color:rgba(255,255,255,.8);
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" integrity="sha384-0s5Pv64cNZJieYFkXYOTId2HMA2Lfb6q2nAcx2n0RTLUnCAoTTsS0nKEO27XyKcY" crossorigin="anonymous"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
+	<![endif]-->
+	<style type="text/css">
+		#login-dp{
+		min-width: 250px;
+		padding: 14px 14px 0;
+		overflow:hidden;
+		background-color:rgba(255,255,255,.8);
 		}
 		#login-dp .help-block{
 		    font-size:12px    
@@ -81,16 +71,16 @@
 		    background-color:#496ebc 
 		}
 		.btn-tw{
-		    color: #fff;
-		    background-color:#55acee;
+			color: #fff;
+			background-color:#55acee;
 		}
 		.btn-tw:hover{
-		    color: #fff;
-		    background-color:#59b5fa;
+			color: #fff;
+			background-color:#59b5fa;
 		}
 		@media(max-width:768px){
-		    #login-dp{
-		        background-color: inherit;
+			#login-dp{
+				background-color: inherit;
 		        color: #fff;
 		    }
 		    #login-dp .bottom{
@@ -123,6 +113,52 @@
 			});
 		});
 	});
+	
+	//네이버 로그인 
+	function loginWithNaver() {
+		if (token != null) {
+			if (resultCode == "00") {
+				var userId = response.id;
+				var email = response.email;
+				var userName = response.name;
+				var profile_image = response.profile_image;
+				var enc_id = response.enc_id;
+				var age = response.age;
+				var gender = response.gender;
+				var name = response.nickname;
+				var birthday = response.birthday;
+				var user = {
+					userId : userId
+					, email : email
+					, userName : userName
+					, profile_image : profile_image
+					, enc_id : enc_id
+					, age : age
+					, gender : gender
+					, name : name
+					, birthday : birthday
+				};
+				
+				$.post("<c:url value="/user/naver/userInfo"/>", {
+					"userId" : userId
+					, "email" : email
+					, "userName" : userName
+					, "profile_image" : profile_image
+					, "enc_id" : enc_id
+					, "age" : age
+					, "gender" : gender
+					, "name" : name
+					, "birthday" : birthday
+				}, function(response){
+					alert("user.userName = " + user.userName);
+				});
+			} 
+			else {
+				console.log(JSON.stringify(message));
+			}
+		}
+		
+	}
 </script>
 
 <body id="page-top" class="index">
@@ -160,38 +196,95 @@
 						</ul></li>
 
 					<c:choose>
-						<c:when test="${user eq null}">
+						<c:when test="${ sessionScope._USER_.loginType eq '' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a></li>
+						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'nvr' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
+						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
+						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/kakao/logout" />">Logout</a></li>
+						</c:when>
 						
-						 <ul class="nav navbar-nav navbar-right">
-					        <li class="dropdown">
-					          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+						<c:otherwise>
+							<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
 								<ul id="login-dp" class="dropdown-menu">
 									<li>
 										 <div class="row">
 												<div class="col-md-12">
 													<div class="social-buttons">
-														<a href="#" onclick=" window.open('<c:url value="/user/loginNaver"/>','window팝업','width=300, height=300, menubar=no, status=no, toolbar=no' );">
-															<img src="<c:url value="/static/img/naver.png"/>" width="100" height="auto">
-														</a>
+														<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+															<script type="text/javascript">
+																/* id 쓰고 콜백주소 쓴다. */
+																var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+																var state = naver_id_login.getUniqState();
+																naver_id_login.setButton("green", 3,50);
+																naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+																naver_id_login.setState(state);
+																naver_id_login.setPopup();
+																naver_id_login.init_naver_id_login();
+															</script>
+														</form>
 														<a id="custom-login-btn" href="javascript:loginWithKakao()">
 															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
 														</a>
+														<a href="<c:url value="/user/google" /> ">
+															<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+														</a>
 														
 														<script type='text/javascript'>
-															Kakao.init('0f781a605b819e1f04c6b923541b8eb9');
+															Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
 															function loginWithKakao() {
 															// 로그인 창을 띄웁니다.
 																Kakao.Auth.login({
-																	success: function(authObj) 
-																	{
-																		alert(JSON.stringify(authObj));
+																	success: function(authObj) {
+																		var accessToken = authObj.access_token;
+																		var refreshToken = authObj.refresh_token;
+																		
+																		$.post("<c:url value="/user/kakao/savetoken"/>", {
+																			"accessToken" : accessToken
+																			, "refreshToken" : refreshToken
+																		}, function() {});
+																		
+																		//alert(JSON.stringify(authObj)); 
+																		
+																		Kakao.API.request({
+																			url: '/v1/user/me',
+																			success: function(res) {
+																				var id = res.id;
+																				var nickName = res.properties.nickname;
+																				var email = res.kaccount_email;
+																				
+																				$.post("<c:url value="/user/kakao/signin"/>", {
+																					"id" : id
+																					, "nickName" : nickName
+																					, "email" : email
+																				}, function(){});
+																				
+																				//alert(JSON.stringify(res));
+																		},
+
+																			fail: function (error) {
+																				alert(JSON.stringify(error));
+																			}
+																		});
+																		
+																		
 																	},
-																		fail: function(err) 
-																	{
+																		fail: function(err) {
 																		alert(JSON.stringify(err));
 																	}
 																});
-															};
+															}
 														</script>
 													</div>
 													 <form id="signInForm" style="width: 194px;">
@@ -199,11 +292,11 @@
 																 <input style="height:30px" type="text" name="userId" placeholder="ID">
 															</div>
 															<div class="form-group">
-																 <input style="height:30px" type="password" name="password" placeholder="Password">
-					                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+																<input style="height:30px" type="password" name="password" placeholder="Password">
+																<div class="help-block text-right"><a href="">Forget the password ?</a></div>
 															</div>
 															<div class="form-group">
-																 <button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+																<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
 															</div>
 													 </form>
 												</div>
@@ -213,30 +306,12 @@
 										 </div>
 									</li>
 								</ul>
-					        </li>
-					      </ul>
-						
-						
-						
-						
-						
-						
-							<%-- <li><a class="page-scroll"
-								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li> --%>
-								
-								
-								
-								
-								
-							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
 							</li>
-						</c:when>
-						<c:otherwise>
-							<li><a class="page-scroll"
-								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
-							</li>
-							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a>
-							</li>
+						</ul>
+						<%-- <li><a class="page-scroll"
+							href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li> --%>
+						<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
+						</li>
 						</c:otherwise>
 					</c:choose>
 
@@ -519,7 +594,7 @@
 			</div>
 		</div>
 	</div>
-	<div><c:import url="http://192.168.201.29:3000"/></div>
+	<%-- <div><c:import url="http://192.168.201.29:3000"/></div> --%>
 	<div>
 		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
 		<input id="receiver" type="hidden" name="receiver" value="This is not a asdf">
