@@ -18,6 +18,33 @@ public class UserVO {
 	private String password;
 	private String joinDate;
 	private String authId;
+	private String googleId;
+	private String kakaoId;
+	private String naverId;
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
+
+	public String getKakaoId() {
+		return kakaoId;
+	}
+
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+
+	public String getNaverId() {
+		return naverId;
+	}
+
+	public void setNaverId(String naverId) {
+		this.naverId = naverId;
+	}
 
 	private String salt;
 

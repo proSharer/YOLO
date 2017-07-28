@@ -102,11 +102,11 @@
 		WHERE	USR_ID = #{userId}
 	</update>
 	
-	<!-- <insert>
+	<insert id="insertSocialAPI">
 		INSERT	INTO		USR	(
 							
 							)
 		
-	</insert> -->
+	</insert>
 
 </mapper>

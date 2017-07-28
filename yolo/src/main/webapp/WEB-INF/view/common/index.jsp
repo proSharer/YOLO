@@ -45,30 +45,30 @@
 		background-color:rgba(255,255,255,.8);
 		}
 		#login-dp .help-block{
-		    font-size:12px    
+			font-size:12px    
 		}
 		#login-dp .bottom{
-		    background-color:rgba(255,255,255,.8);
-		    border-top:1px solid #ddd;
-		    clear:both;
-		    padding:14px;
+			background-color:rgba(255,255,255,.8);
+			border-top:1px solid #ddd;
+			clear:both;
+			padding:14px;
 		}
 		#login-dp .social-buttons{
-		    margin:12px 0    
+			margin:12px 0    
 		}
 		#login-dp .social-buttons a{
-		    width: 49%;
+			width: 49%;
 		}
 		#login-dp .form-group {
-		    margin-bottom: 10px;
+			margin-bottom: 10px;
 		}
 		.btn-fb{
-		    color: #fff;
-		    background-color:#3b5998;
+			color: #fff;
+			background-color:#3b5998;
 		}
 		.btn-fb:hover{
-		    color: #fff;
-		    background-color:#496ebc 
+			color: #fff;
+			background-color:#496ebc 
 		}
 		.btn-tw{
 			color: #fff;
@@ -81,14 +81,14 @@
 		@media(max-width:768px){
 			#login-dp{
 				background-color: inherit;
-		        color: #fff;
-		    }
-		    #login-dp .bottom{
-		        background-color: inherit;
-		        border-top:0 none;
-		    }
+				color: #fff;
+			}
+			#login-dp .bottom{
+				background-color: inherit;
+				border-top:0 none;
+			}
 		}
-    </style>
+	</style>
 
 </head>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -355,7 +355,7 @@
 	</header>
 
 	<!-- Main Grid Section -->
-	<section id="main"">
+	<section id="main">
 		<!-- Daily -->
 		<div class="container">
 			<div class="row">
@@ -622,7 +622,7 @@
 		<input id="content" type="hidden" name="content" value="">
 	</div>
 	
-	<%-- <div><c:import url="http://localhost:3000"/></div> --%>
+	<div><c:import url="http://localhost:3000"/></div>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
