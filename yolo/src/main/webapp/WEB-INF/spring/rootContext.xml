@@ -11,7 +11,8 @@
 	<bean id="dataSource" 	
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
-		<property name="url" value="jdbc:log4jdbc:oracle:thin:@192.168.201.16:1521:XE"/>
+		<!-- <property name="url" value="jdbc:log4jdbc:oracle:thin:@192.168.201.16:1521:XE"/> -->
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
 		<property name="username" value="YOLO"/>
 		<property name="password" value="yolo"/>
 	</bean>
