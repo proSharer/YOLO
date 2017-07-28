@@ -13,7 +13,7 @@ public class TripPartVO {
 	private MultipartFile file;
 	private String content;
 	private String map; // 상세주소
-	private String realFileName;
+	private String fileName;
 	private String x;
 	private String y;
 	
@@ -71,11 +71,11 @@ public class TripPartVO {
 	public void setMap(String map) {
 		this.map = map;
 	}
-	public String getRealFileName() {
-		return realFileName;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setRealFileName(String realFileName) {
-		this.realFileName = realFileName;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getX() {
 		return x;

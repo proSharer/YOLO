@@ -59,7 +59,7 @@ public class TripPartBizImpl implements TripPartBiz {
 			
 			if ( tripPartVO.getFile().isEmpty() 
 					|| tripPartVO.getFile().getSize() < 0 ){
-				tripPartVO.setRealFileName(tripPart.getRealFileName());
+				tripPartVO.setFileName(tripPart.getFileName());
 			}
 			
 			if ( tripPartVO.getContent().isEmpty() 

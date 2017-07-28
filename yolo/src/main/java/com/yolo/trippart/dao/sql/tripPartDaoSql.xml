@@ -22,7 +22,7 @@
 								, PLACE 
 								, CONT
 								, MAP
-								, RL_FL_NM
+								, FILE_NM
 								, MAP_X
 								, MAP_Y
 								 ) 
@@ -36,7 +36,7 @@
 								, #{place}
 								, #{content}
 								, #{map}
-								, #{realFileName}
+								, #{fileName}
 								, #{x}
 								, #{y}
 								 ) 
@@ -53,7 +53,7 @@
 				, PLACE place
 				, CONT content
 				, MAP map
-				, RL_FL_NM realFileName
+				, FILE_NM fileName
 				, MAP_X x
 				, MAP_Y y
 		FROM	TR_PART
@@ -77,7 +77,7 @@
 				MAP  = #{map},
 				MAP_X = #{x},
 				MAP_Y = #{y}
-				RL_FL_NM = #{realFileName}
+				FILE_NM = #{fileName}
 		WHERE	TR_PART_ID = #{tripPartId}
 	</update>
 	
@@ -90,7 +90,7 @@
 				, PLACE place
 				, CONT content
 				, MAP map
-				, RL_FL_NM realFileName
+				, FILE_NM fileName
 				, MAP_X x
 				, MAP_Y y
 		FROM	TR_PART

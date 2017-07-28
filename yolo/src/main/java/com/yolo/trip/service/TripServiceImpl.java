@@ -165,4 +165,9 @@ public class TripServiceImpl implements TripService{
 	public boolean tripAddNewReply(TripReplyVO tripReplyVO) {
 		return tripReplyBiz.addNewOneReply(tripReplyVO);
 	}
+	@Override
+	public TripPartVO selectOneTripPart(String tripPartId) {
+		return tripPartBiz.selectOneTripPart(tripPartId);
+	}
+	
 }

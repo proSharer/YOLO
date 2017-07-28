@@ -131,6 +131,7 @@
 		var i=0;
 			
 		$("#addBtn").click(function(){
+			$("#keyword").attr('value',"");
 			i++;
 
 			var appendPart = "<div class='part'>" +"<input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간'><br/>"+
@@ -169,9 +170,18 @@
 				         	 	reader.readAsDataURL(input.files[0]);
 				        	}
 					}
-			   	});
-				
 			});
+		    
+		    var place = "place"+i;
+			$("#"+place).keypress(function (e) {
+				if (e.which == 13){
+					$("#keyword").attr('value',$(this).val());
+					searchPlaces();// 실행할 이벤트
+					
+			 	}
+			 });
+				
+		});
 		
 		   $("#imgInp0").on('change', function(){
 	            readURL(this);
@@ -184,7 +194,7 @@
 					reader.onload = function (e) {
 						$('#blah0').attr('src', e.target.result);
 						$('#blah0').show();
-	            	}
+				}
 	          reader.readAsDataURL(input.files[0]);
 	        	}
 	   		}
@@ -196,6 +206,14 @@
 				}).submit();
 			});
 			
+			$("#place0").keypress(function (e) {
+				
+				if (e.which == 13){
+					$("#keyword").attr('value',$(this).val());
+					searchPlaces();// 실행할 이벤트
+			 	}
+			 });
+			  
 			$("#submitMap").click(function(){
 				searchPlaces();
 				return false;
@@ -204,10 +222,10 @@
 			var index = 0;
 			$("#placesList").on('click',"h5", function(){
 				index++;
-				var name = $(this).text();
+				var place = $(this).text();
 				var address = $(this).next().text();
 				
-   				addressSearch(name,address,index, function(results) {
+   				addressSearch(place,address,index, function(results) {
    					
    	   				var x = results[0];
    	   				var y = results[1];
@@ -218,13 +236,11 @@
 	   				var xId = "x"+i;
 	   				var yId = "y"+i;
 	   				
-	   				console.log(name);
-	   				console.log(address);
+	   				$("#"+placeId).val(place); 
+	   				$("#"+mapId).val(address);
+	   				$("#"+xId).val(x);
+	   				$("#"+yId).val(y);
 	   				
-	   				$("#"+placeId).attr('value',name); 
-	   				$("#"+mapId).attr('value',address);
-	   				$("#"+xId).attr('value',x);
-	   				$("#"+yId).attr('value',y);
    				});
    				
 			});
@@ -300,7 +316,7 @@
 						<div class="part">
 							<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간"><br/>
 							<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"><br/>
-							<input type="text" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
+							<input type="text" class ="place" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
 							
 								<input id="map0" class="contorls" type="text" name="tripPartVO[0].map" 
 								placeholder="상세주소를 입력해주세요." size="50" onClick="value=''" />
@@ -357,22 +373,15 @@ var markers = [];
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
         center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        level: 5 // 지도의 확대 레벨
     };  
 
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
-var map = new daum.maps.Map(mapContainer, mapOption); 
 
 //장소 검색 객체를 생성합니다
 var ps = new daum.maps.services.Places();  
-var ab = function(){
-	var arr = [];
-	arr.push("aa");
-	arr.push("bb");
-	
-	return arr;
-}
+
 //검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
@@ -381,8 +390,9 @@ var geocoder = new daum.maps.services.Geocoder();
 
 
 // 주소로 좌표를 검색합니다
-var addressSearch = function (name,address,index, cb) {
-		
+var addressSearch = function (place,address,index, cb) {
+		// place : 장소명 (keyword) , address : 주소 , index : 1,2,3...마커순서 , 
+		// cb: 콜백함수 ( 결과값을 반환하기 위해 )
 		var results = [];
 		geocoder.addressSearch(address, function(result, status) {
 	
@@ -416,7 +426,7 @@ var addressSearch = function (name,address,index, cb) {
 	        markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
  	        var infowindow = new daum.maps.InfoWindow({
-	            content: '<div style="padding:5px;">'+name+'</div>'
+	            content: '<div style="padding:5px;">'+place+'</div>'
 	        });
 	        infowindow.open(map, marker); 
 	
