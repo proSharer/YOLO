@@ -76,9 +76,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
-	public void doSignInAction(@RequestParam("userId") String userId, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
+	public void doSignInAction(UserVO userVO, String password, HttpServletRequest request, HttpServletResponse response) {
+		
 		System.out.println("asdfasdfasdf");
-		if (userId == "" || password == "") {
+		if (userVO.getUserId() == "" || userVO.getPassword() == "") {
 			System.out.println("test2");
 			try {
 				PrintWriter write = response.getWriter();
@@ -90,11 +91,9 @@ public class UserController {
 			}
 		}
 		
-		UserVO user = new UserVO();
-		user.setUserId(userId);
-		user.setPassword(password);
+		userVO.setLoginType(UserVO.DEFAULT);
 		
-		UserVO login = userService.selectOneUser(user);
+		UserVO login = userService.selectOneUser(userVO);
 		if (login != null) {
 			try {
 				HttpSession session = request.getSession();

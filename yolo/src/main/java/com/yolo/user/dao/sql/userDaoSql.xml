@@ -101,5 +101,12 @@
 				, PWS = #{password}
 		WHERE	USR_ID = #{userId}
 	</update>
+	
+	<!-- <insert>
+		INSERT	INTO		USR	(
+							
+							)
+		
+	</insert> -->
 
 </mapper>

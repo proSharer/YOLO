@@ -1,13 +1,12 @@
 package com.yolo.user.vo;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class UserVO {
 
 	// SNS 상태 설정
-	private static String DEFAULT = "";
-	private static String NAVER = "NVR";
-	private static String KAKAO = "KKO";
+	public static final String DEFAULT = "";
+	public static final String NAVER = "nvr";
+	public static final String KAKAO = "kko";
+	public static final String GOOGLE = "ggl";
 
 	private String loginType;
 
@@ -21,30 +20,6 @@ public class UserVO {
 	private String authId;
 
 	private String salt;
-
-	public static String getDefault() {
-		return DEFAULT;
-	}
-
-	public static void setDefault(String default1) {
-		DEFAULT = default1;
-	}
-
-	public static String getNaver() {
-		return NAVER;
-	}
-
-	public static void setNaver(String naver) {
-		NAVER = naver;
-	}
-
-	public static String getKakao() {
-		return KAKAO;
-	}
-
-	public static void setKakao(String kakao) {
-		KAKAO = kakao;
-	}
 
 	public String getLoginType() {
 		return loginType;
