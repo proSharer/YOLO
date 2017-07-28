@@ -114,6 +114,54 @@
 		});
 	});
 	
+	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
+	function loginWithKakao() {
+		// 로그인 창을 띄웁니다.
+		Kakao.Auth.login({
+			success: function(authObj) {
+				var accessToken = authObj.access_token;
+				var refreshToken = authObj.refresh_token;
+				
+				$.post("<c:url value="/user/kakao/savetoken"/>", {
+					"accessToken" : accessToken
+					, "refreshToken" : refreshToken
+				}, function() {});
+				
+				//alert(JSON.stringify(authObj)); 
+				
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						var id = res.id;
+						var nickName = res.properties.nickname;
+						var email = res.kaccount_email;
+						
+						$.post("<c:url value="/user/kakao/signin"/>", {
+							"id" : id
+							, "nickName" : nickName
+							, "email" : email
+						}, function(response){
+							if ( response == "ok" ) {
+								location.reload();
+							}
+						});
+						
+						//alert(JSON.stringify(res));
+				},
+
+					fail: function (error) {
+						alert(JSON.stringify(error));
+					}
+				});
+				
+				
+			},
+				fail: function(err) {
+				alert(JSON.stringify(err));
+			}
+		});
+	}
+	
 	//네이버 로그인 
 	function loginWithNaver() {
 		if (token != null) {
@@ -158,6 +206,12 @@
 			}
 		}
 		
+	}
+	
+	function kakaoSignOut() {
+		Kakao.Auth.logout(function() {
+			location.href="<c:url value="/user/kakao/signout"/>"
+		});
 	}
 </script>
 
@@ -210,7 +264,19 @@
 						</c:when>
 						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
-							<li><a class="page-scroll" href="<c:url value="/user/kakao/logout" />">Logout</a></li>
+							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
+							<script type="text/javascript">
+								$().ready(function() {
+									$("#kakaoSignout").click(function() {
+										console.log("aa");
+										Kakao.Auth.logout(function () {
+											location.href="<c:url value="/user/kakao/signout"/>"
+										});
+									});
+								});
+							
+							</script>
+							
 						</c:when>
 						
 						<c:otherwise>
@@ -240,52 +306,7 @@
 														<a href="<c:url value="/user/google" /> ">
 															<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
 														</a>
-														
-														<script type='text/javascript'>
-															Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
-															function loginWithKakao() {
-															// 로그인 창을 띄웁니다.
-																Kakao.Auth.login({
-																	success: function(authObj) {
-																		var accessToken = authObj.access_token;
-																		var refreshToken = authObj.refresh_token;
-																		
-																		$.post("<c:url value="/user/kakao/savetoken"/>", {
-																			"accessToken" : accessToken
-																			, "refreshToken" : refreshToken
-																		}, function() {});
-																		
-																		//alert(JSON.stringify(authObj)); 
-																		
-																		Kakao.API.request({
-																			url: '/v1/user/me',
-																			success: function(res) {
-																				var id = res.id;
-																				var nickName = res.properties.nickname;
-																				var email = res.kaccount_email;
-																				
-																				$.post("<c:url value="/user/kakao/signin"/>", {
-																					"id" : id
-																					, "nickName" : nickName
-																					, "email" : email
-																				}, function(){});
-																				
-																				//alert(JSON.stringify(res));
-																		},
-
-																			fail: function (error) {
-																				alert(JSON.stringify(error));
-																			}
-																		});
-																		
-																		
-																	},
-																		fail: function(err) {
-																		alert(JSON.stringify(err));
-																	}
-																});
-															}
-														</script>
+													
 													</div>
 													 <form id="signInForm" style="width: 194px;">
 															<div class="form-group">

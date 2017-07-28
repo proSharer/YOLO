@@ -1,5 +1,9 @@
 package com.yolo.user.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,11 +22,20 @@ public class KakaoController {
 	private Logger logger = LoggerFactory.getLogger(KakaoController.class);
 
 	@RequestMapping(value = "/user/kakao/signin", method = RequestMethod.POST)
-	public void getToken(@RequestParam String id, @RequestParam String nickName, @RequestParam String email) {
+	public void getToken(@RequestParam String id, @RequestParam String nickName, @RequestParam String email, HttpServletResponse response) {
 		
 		logger.info("id : " + id);
 		logger.info("nickName : " + nickName);
 		logger.info("email : " + email);
+		
+		try {
+			PrintWriter write = response.getWriter();
+			write.write("ok");
+			write.flush();
+			write.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -38,10 +51,12 @@ public class KakaoController {
 		kakaoVO.setLoginType(UserVO.KAKAO);
 		session.setAttribute("_USER_", kakaoVO);
 		
+		
 	}
 	
 	@RequestMapping(value="/user/kakao/signout", method=RequestMethod.GET)
 	public String kakaoLogout(HttpSession session) {
+		
 		session.invalidate();
 		
 		return "redirect:/home";
