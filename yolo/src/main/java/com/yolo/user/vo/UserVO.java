@@ -19,8 +19,18 @@ public class UserVO {
 	private String password;
 	private String joinDate;
 	private String authId;
+	private String extraApiEmail;
 
 	private String salt;
+	
+
+	public String getExtraApiEmail() {
+		return extraApiEmail;
+	}
+
+	public void setExtraApiEmail(String extraApiEmail) {
+		this.extraApiEmail = extraApiEmail;
+	}
 
 	public static String getDefault() {
 		return DEFAULT;
