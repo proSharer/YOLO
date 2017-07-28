@@ -23,5 +23,7 @@ public interface UserDao {
 	public int updateClearLockCount(String userId);
 	
 	public int modifyOneUser(UserVO userVO);
+	
+	public int insertSocialAPI(UserVO userVO);
 
 }

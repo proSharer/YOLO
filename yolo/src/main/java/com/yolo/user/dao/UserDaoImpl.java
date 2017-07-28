@@ -50,4 +50,9 @@ public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 	public int modifyOneUser(UserVO userVO) {
 		return getSqlSession().update( UD + ".modifyOneUser", userVO);
 	}
+
+	@Override
+	public int insertSocialAPI(UserVO userVO) {
+		return 0;
+	}
 }
