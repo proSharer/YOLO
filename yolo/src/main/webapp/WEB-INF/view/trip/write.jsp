@@ -393,7 +393,7 @@
 								<input type="hidden" id="y0" name="tripPartVO[0].y" />
 								
 						        <input type="file" name="tripPartVO[0].file" id="imgInp0" class="form-control"><br/>
-						        <img class="blah" id="blah0" src="#" /><br/>
+						        <img class="blah" id="blah0" src="#" style="width: 300px; height: 300px"/><br/><br/>
 				
 								<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요" class="form-control" style="height:150px;"></textarea><br/><hr/>
 							</div>
