@@ -3,11 +3,13 @@ package com.yolo.trip.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -19,11 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.yolo.common.web.DownloadUtil;
 import com.yolo.common.web.ListPageExplorer;
 import com.yolo.common.web.PageExplorer;
 import com.yolo.common.web.checker.ExtFilter;
 import com.yolo.common.web.checker.ExtensionFilter;
 import com.yolo.common.web.checker.ExtensionFilterFactory;
+import com.yolo.daily.vo.DailyVO;
 import com.yolo.region.vo.RegionVO;
 import com.yolo.trip.service.TripService;
 import com.yolo.trip.vo.TripListVO;
@@ -96,6 +100,8 @@ public class TripController {
 	@RequestMapping(value="/trip/write",method=RequestMethod.POST)
 	public String insertNewTripPart(HttpServletRequest request, TripVO tripVO){
 		
+		System.out.println(tripVO.getTripPartVO().get(0).getX());
+		System.out.println(tripVO.getTripPartVO().get(0).getY());
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("_USER_");
 		
@@ -110,7 +116,7 @@ public class TripController {
 			if(!file.isEmpty() && file.getSize() > 0){
 				String fileName = file.getOriginalFilename();
 				
-				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				String filePath = "D:\\yoloImg\\"+fileName;
 				File newFile = new File(filePath);
 				
 				try {
@@ -120,10 +126,10 @@ public class TripController {
 					
 					if(!isImage){
 						newFile.delete();
-						tripVO.getTripPartVO().get(i).setRealFileName("");
+						tripVO.getTripPartVO().get(i).setFileName("");
 					}
 					else {
-						tripVO.getTripPartVO().get(i).setRealFileName(fileName);
+						tripVO.getTripPartVO().get(i).setFileName(fileName);
 				
 					}
 				} catch (IllegalStateException e) {
@@ -166,6 +172,7 @@ public class TripController {
 		view.addObject("like",like);
 		view.addObject("tripVO",tripVO);
 		view.addObject("tripReply",tripReply);
+		view.addObject("tripPartSize",tripVO.getTripPartVO().size());
 		
 		return view;
 		
@@ -216,7 +223,7 @@ public class TripController {
 				
 				String fileName = tripPartVO.getFile().getOriginalFilename();
 				
-				String filePath = "C:\\Users\\Admin\\Documents\\YOLO\\yolo\\src\\main\\webapp\\WEB-INF\\resources\\img\\"+fileName;
+				String filePath = "D:\\yoloImg\\"+fileName;
 				File newFile = new File(filePath);
 				
 				try {
@@ -226,10 +233,10 @@ public class TripController {
 					
 					if(!isImage){
 						newFile.delete();
-						tripPartVO.setRealFileName("");
+						tripPartVO.setFileName("");
 					}
 					else {
-						tripPartVO.setRealFileName(fileName);
+						tripPartVO.setFileName(fileName);
 				
 					}
 				} catch (IllegalStateException e) {
@@ -345,4 +352,43 @@ public class TripController {
 	
 		return json;
 	}
+	@RequestMapping(value = "/trip/download/{id}")
+	public void downloadListImg(@PathVariable String id, HttpServletRequest request, 
+			HttpServletResponse response){
+		
+		String filePath ="D:\\yoloImg\\";
+		TripPartVO tripPart = (TripPartVO) tripService.selectOneTrip(id).getTripPartVO().get(0);
+		String realFileName = tripPart.getFileName();
+		
+		DownloadUtil downloadUtil = DownloadUtil.getInstance(filePath);
+		
+		try {
+			downloadUtil.download(request, response, realFileName, realFileName);
+			
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
+		
+	}
+	@RequestMapping(value = "/trip/detail/download/{id}")
+	
+	public void downloadDetailImg(@PathVariable String id, HttpServletRequest request, 
+			HttpServletResponse response){
+		
+		String filePath ="D:\\yoloImg\\";
+		TripPartVO tripPart = (TripPartVO) tripService.selectOneTripPart(id);
+		String realFileName = tripPart.getFileName();
+		
+		DownloadUtil downloadUtil = DownloadUtil.getInstance(filePath);
+		
+		try {
+			downloadUtil.download(request, response, realFileName, realFileName);
+			
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
+	}
+	
 }

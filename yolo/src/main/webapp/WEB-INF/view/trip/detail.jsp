@@ -85,10 +85,22 @@
 </style>
 
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=133ba8bc69d70d5c725419e305fa20ef&libraries=services"></script>
 <script type="text/javascript">
 
 	$().ready(function(){
+		var map = "";
+		var place = "";
+		var index = "";
+		<c:forEach items="${tripVO.tripPartVO}" var="item" varStatus="status">
+			place = "${item.place}";
+			map = "${item.map}";
+			index = "${status.count}";
+	
+			addMarker(map,index,place);
+
+		</c:forEach>
+		
 		
 		$(".parentReplyBtn").click(function(){
 			var parentReply = "<ul>└ <input type='text' class='data' placeholder='댓글을 입력해주세요'/> <input type='button' class='parentReply' value='submit'/></ul>";
@@ -130,7 +142,7 @@
 					if( response.status == "success"){
 						$(".likeBtn").val("♥");
 						$("#likeCount").html(response.likeCount);
-						$("#like").val("true")
+						$("#like").val("true");
 						console.log(response.likeCount)
 					}
 			    },
@@ -252,17 +264,21 @@
 				<input type="hidden" id="tripId" value="${tripVO.tripId}"/>
 				<c:forEach items="${tripVO.tripPartVO}" var="tripPart">
 					<div>
-					<img src="<c:url value="/static/img/${tripPart.realFileName}"/>" width="400px" height="300px"/><br/>
+				 	<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}"/>" width="400px" height="300px"/><br/>
 					시작시간 : ${tripPart.startTime}시<br/>
 					끝나는시간 : ${tripPart.endTime}시( ${tripPart.timeControl} )<br/>
 					장소 : ${tripPart.place}<br/>
 					주소 : ${tripPart.map}<br/><br/>
 					${tripPart.content}<br/>
+					<div class="x" style="display:none">${tripPart.x}</div>
+					<div class="y"style="display:none">${tripPart.y}</div>
 					</div><br>
 				</c:forEach>
-				${tripVO.overAll}
-				<br/><br/>
+				${tripVO.overAll}<br/>
 				
+				<div id="detailMap" style="width:700px;height:500px;"></div>
+				<br/><br/>
+
 			
 				좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
 				<c:if test="${!empty sessionScope._USER_.userId}">
@@ -328,6 +344,99 @@
 				</div>
 		</div>
 	</section>
+
+<script>
+	var markers = [];
+
+	var mapX = "${tripVO.tripPartVO[0].x}";
+	var mapY = "${tripVO.tripPartVO[0].y}";
+	
+	mapX *= 1;
+	mapY *= 1;
+	
+	var mapContainer = document.getElementById('detailMap'), // 지도를 표시할 div  
+	    mapOption = { 
+	        center: new daum.maps.LatLng(mapX, mapY), // 지도의 중심좌표
+	        level: 5 // 지도의 확대 레벨
+	    };
+	
+	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	var geocoder = new daum.maps.services.Geocoder();
+	var infowindow = new daum.maps.InfoWindow({zIndex:1});
+	var linePath = [];
+	var addMarker = function (position, index, title) {
+		geocoder.addressSearch(position, function(result, status) {
+			
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === daum.maps.services.Status.OK) {
+		        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+		        
+		        var x = result[0].y;
+		        var y = result[0].x;
+		        linePath.push(new daum.maps.LatLng(x,y));
+		        var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+		        imageSize = new daum.maps.Size(36, 37),  // 마커 이미지의 크기
+		        imgOptions =  {
+		            spriteSize : new daum.maps.Size(36, 691), // 스프라이트 이미지의 크기
+		            spriteOrigin : new daum.maps.Point(0, ((index-1)*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+		            offset: new daum.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+		        },
+		        markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+		            marker = new daum.maps.Marker({
+		            position: coords, // 마커의 위치
+		            image: markerImage
+		            
+		        }); 
+				
+	/* 	        var marker = new daum.maps.Marker({
+		            map: map,
+		            position: coords,
+		            text : name
+		        });  */
+		        marker.setMap(map); // 지도 위에 마커를 표출합니다
+		        markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	 	        var infowindow = new daum.maps.InfoWindow({
+		            content: '<div style="padding:5px;">'+title+'</div>'
+		        });
+		        //infowindow.open(map, marker); 
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+		        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+		    }
+
+		});
+
+	} 
+	
+/* 	// 지도에 표시할 선을 생성합니다
+	var polyline = new daum.maps.Polyline({
+	    path: linePath, // 선을 구성하는 좌표배열 입니다
+	    strokeWeight: 5, // 선의 두께 입니다
+	    strokeColor: '#FFAE00', // 선의 색깔입니다
+	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+	    strokeStyle: 'solid' // 선의 스타일입니다
+	});
+
+	// 지도에 선을 표시합니다 
+	polyline.setMap(map);  
+ */
+	
+	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
+	}
+
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+
+</script>
 		<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 
 	<!-- Bootstrap Core JavaScript -->

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
+import com.yolo.trippart.vo.TripPartVO;
 import com.yolo.tripreply.vo.TripReplyVO;
 import com.yolo.user.vo.UserVO;
 
@@ -27,4 +28,6 @@ public interface TripService {
 	public boolean modifyOneTrip(TripVO tripVO);
 	
 	public boolean tripAddNewReply(TripReplyVO tripReplyVO);
+	
+	public TripPartVO selectOneTripPart(String tripPartId);
 }

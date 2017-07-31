@@ -131,7 +131,9 @@
 		});
 		
 		$("#regionOptionBtn").hide();
-		
+		$("#initBtn").click(function(){
+			location.href="<c:url value="/trip/list/init"/>";
+		});
 	});
 
 </script>
@@ -264,11 +266,10 @@
 								onclick="movePage(0)" value="&#10140;" />
 						</div>
 						<div class="input-group-btn">
-		<input type="button" class="btn btn-search btn-default" onclick="location.href=<c:url value="/trip/list/init"/>"
-								value="초기화" />
+						<input type="button" class="btn btn-search btn-default" id="initBtn" value="초기화"/>
 					
 						</div>
-					</div>
+				</div>
 				</div>
 				<br />
 				<br />
@@ -287,7 +288,7 @@
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
 									</div> <img class="img"
-									src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName }"/>"
+									src="<c:url value="/trip/download/${trip.tripId}"/>"
 									class="img-responsive" alt=""
 									style="width: 360px; height: 260.09px; margin: auto;">
 								</a>

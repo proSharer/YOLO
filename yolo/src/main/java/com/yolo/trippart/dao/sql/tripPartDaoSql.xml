@@ -22,7 +22,9 @@
 								, PLACE 
 								, CONT
 								, MAP
-								, RL_FL_NM
+								, FILE_NM
+								, MAP_X
+								, MAP_Y
 								 ) 
 				 VALUES			
 				 				(	
@@ -34,13 +36,16 @@
 								, #{place}
 								, #{content}
 								, #{map}
-								, #{realFileName}
+								, #{fileName}
+								, #{x}
+								, #{y}
 								 ) 
 
 	</insert> 
 	
 	<select id="getTripPartByTripId" resultType="TripPartVO"  parameterType="string">
-		SELECT	TR_PART_ID tripPartId
+		SELECT	/*[TripPartDao][getTripPartByTripId]*/
+				TR_PART_ID tripPartId
 				, TR_ID tripId
 				, ST_TM startTime
 				, ED_TM endTime
@@ -48,7 +53,9 @@
 				, PLACE place
 				, CONT content
 				, MAP map
-				, RL_FL_NM realFileName
+				, FILE_NM fileName
+				, MAP_X x
+				, MAP_Y y
 		FROM	TR_PART
 		WHERE	TR_ID = #{tripId}
 	</select>
@@ -68,7 +75,9 @@
 				PLACE = #{place},
 				CONT = #{content},
 				MAP  = #{map},
-				RL_FL_NM = #{realFileName}
+				MAP_X = #{x},
+				MAP_Y = #{y}
+				FILE_NM = #{fileName}
 		WHERE	TR_PART_ID = #{tripPartId}
 	</update>
 	
@@ -81,7 +90,9 @@
 				, PLACE place
 				, CONT content
 				, MAP map
-				, RL_FL_NM realFileName
+				, FILE_NM fileName
+				, MAP_X x
+				, MAP_Y y
 		FROM	TR_PART
 		WHERE	TR_PART_ID = #{tripPartId}
 	</select>
