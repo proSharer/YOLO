@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Insert title here</title>
+<title>Trip List</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -82,6 +82,29 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 </style>
 
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
@@ -90,7 +113,7 @@
 		$("#keyword").val("");
 		var maxHeight = 0;
 		var maxWidth = 0;
-		$('.img').each(function() {
+		$('.img-responsive').each(function() {
 			maxHeight = Math.max(maxHeight, $(this).height());
 			maxWidth = Math.max(maxWidth, $(this).width());
 		});
@@ -272,25 +295,25 @@
 				</div>
 				</div>
 				<br />
-				<br />
-				<br />
-				<br />
-				<a href="<c:url value="/trip/write"/>">글쓰기</a>
+				<c:if test="${!empty sessionScope._USER_}">
+					<a href="<c:url value="/trip/write"/>">글쓰기</a>
+				</c:if>
+				<br/>
+				<br/>
+				<br/>
 				<div class="row" style="text-align: center;">
 					<c:forEach items="${tripList.tripList}" var="trip">
 						<div class="col-md-4 col-sm-6">
 							<div class="imgDiv portfolio-item">
-								<a href="<c:url value="/trip/detail/${trip.tripId}"/>">
+								<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
 								
 								<%-- <a href="#portfolioModal1" class="portfolio-link"
 									data-toggle="modal" href="<c:url value="/trip/detail/${trip.tripId}"/>"> --%>
 									
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
-									</div> <img class="img"
-									src="<c:url value="/trip/download/${trip.tripId}"/>"
-									class="img-responsive" alt=""
-									style="width: 360px; height: 260.09px; margin: auto;">
+									</div>
+									<img src="<c:url value="/trip/download/${trip.tripId}"/>" class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
 								</a>
 							</div><br/>
 							<div class="portfolio-caption">

@@ -82,6 +82,28 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
 </style>
 
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
@@ -262,86 +284,104 @@
 			<div class="row" style="margin: auto 0;">
 				<input type="hidden" id="like" value="${like}"/>
 				<input type="hidden" id="tripId" value="${tripVO.tripId}"/>
-				<c:forEach items="${tripVO.tripPartVO}" var="tripPart">
-					<div>
-				 	<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}"/>" width="400px" height="300px"/><br/>
-					시작시간 : ${tripPart.startTime}시<br/>
-					끝나는시간 : ${tripPart.endTime}시( ${tripPart.timeControl} )<br/>
-					장소 : ${tripPart.place}<br/>
-					주소 : ${tripPart.map}<br/><br/>
-					${tripPart.content}<br/>
-					<div class="x" style="display:none">${tripPart.x}</div>
-					<div class="y"style="display:none">${tripPart.y}</div>
-					</div><br>
-				</c:forEach>
-				${tripVO.overAll}<br/>
 				
-				<div id="detailMap" style="width:700px;height:500px;"></div>
+				<div style="text-align: center">
+					<span style="font-size: x-large; color: #777">${tripVO.title}</span>
+				</div>
+				<hr/>
+				<span style="margin-left: 82%; color: #777" >${tripVO.createDate}  /  ${tripVO.userId}</span>
+				<br/>
+				<br/>
+				<br/>
+				<div style="width: 100%; height: 600px">
+					<div style="overflow-y:scroll; display: inline-block; width: 50%; height: 600px; margin: auto 0; padding: 16px; text-align: center" >
+						<c:forEach items="${tripVO.tripPartVO}" var="tripPart">
+							<div>
+						 	<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}"/>" width="400px" height="300px"/><br/>
+							시작시간 : ${tripPart.startTime}시<br/>
+							끝나는시간 : ${tripPart.endTime}시( ${tripPart.timeControl} )<br/>
+							장소 : ${tripPart.place}<br/>
+							주소 : ${tripPart.map}<br/><br/>
+							${tripPart.content}<br/>
+							<div class="x" style="display:none">${tripPart.x}</div>
+							<div class="y"style="display:none">${tripPart.y}</div>
+							</div><br>
+						</c:forEach>
+						<br/><br/>총 평 : ${tripVO.overAll}<br/>
+					</div>
+					<div style="margin: 20px; display: inline-block; width: 49%; height: 600px; margin: auto 0; padding: 16px; text-align: center;">
+						<div id="detailMap" style="width:100%;height:100%;"></div>
+					</div>
+				</div>
+				
 				<br/><br/>
 
-			
-				좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
-				<c:if test="${!empty sessionScope._USER_.userId}">
-					<c:if test="${!like}">
-					<input type="button" class="likeBtn" value="♡"/>
+				<div style="text-align: right; margin-right: 20px">
+					좋아요 : <span id="likeCount"> ${tripVO.likeCount}</span>
+					<c:if test="${!empty sessionScope._USER_.userId}">
+						<c:if test="${!like}">
+						<input style="width: 30px; height: 30px; background-color: transparent; border-color: transparent;" type="button" class="likeBtn" value="♡"/>
+						</c:if>
+						
+						<c:if test="${like}">
+						<input style="width: 30px; height: 30px; background-color: transparent; border-color: transparent;" type="button" class="likeBtn" value="♥"/>
+						</c:if><br/>
+						
 					</c:if>
+					<br/>
 					
-					<c:if test="${like}">
-					<input type="button" class="likeBtn" value="♥"/>
-					</c:if><br/>
-					
-				</c:if>
-				<br/>
-				
-				<c:if test="${sessionScope._USER_.userId eq tripVO.userId}">
-					<a href="<c:url value="/trip/delete/${tripVO.tripId}"/>">삭제하기</a>
-					<a href="<c:url value="/trip/update/${tripVO.tripId}"/>">수정하기</a>
-				</c:if>
-			
+					<c:if test="${sessionScope._USER_.userId eq tripVO.userId}">
+						<a href="<c:url value="/trip/delete/${tripVO.tripId}"/>">삭제하기</a>
+						<a href="<c:url value="/trip/update/${tripVO.tripId}"/>">수정하기</a>
+					</c:if>
+				</div>
 				
 				<!-- 이부분에 댓글이 보여야함. -->
 				<hr/>
-			
-				Comment <br/>
+				<br/>
+				<div style="margin-left: 16px">
+					<span style="font-weight: bold">Comment</span>
+					<br/><br/>
 					<c:set var="depth" value="0"/>
-				<ul>
-				<c:forEach items="${tripReply}" var="reply">
-					<c:if test="${reply.level < prevLevel}">
-						<c:forEach var="i" begin="0" end="${(prevLevel - reply.level)-1}" step="1">
-							<c:set var="depth" value="${depth - 1}"/>
-							</ul>
-						</c:forEach>
-					</c:if>
-				
-					<c:if test="${reply.level > prevLevel}">
-					<c:set var="depth" value="${depth + 1}"/>
-						<ul>
-					</c:if>
-						<li class="replyBox" data-id="${reply.tripReplyId}"> ${reply.userVO.userName}(${reply.userId}) : ${reply.content}
-						<c:if test="${!empty sessionScope._USER_.userId}">
-						<input type="button" class="parentReplyBtn" value="댓글">
+					<ul>
+						<c:forEach items="${tripReply}" var="reply">
+							<c:if test="${reply.level < prevLevel}">
+								<c:forEach var="i" begin="0" end="${(prevLevel - reply.level)-1}" step="1">
+									<c:set var="depth" value="${depth - 1}"/>
+									</ul>
+								</c:forEach>
+							</c:if>
 						
-						</c:if> </li>
-					<c:set var="prevLevel" value="${reply.level}"/>
-				</c:forEach>
-				</ul>
-				<c:if test="${depth > 0}">
-					<c:forEach var="i" begin="0" end="${depth}" step="1">
+							<c:if test="${reply.level > prevLevel}">
+							<c:set var="depth" value="${depth + 1}"/>
+								<ul>
+							</c:if>
+								<li class="replyBox" data-id="${reply.tripReplyId}"> ${reply.userVO.userName}(${reply.userId}) : ${reply.content}
+								<c:if test="${!empty sessionScope._USER_.userId}">
+								<a style="font-size: 12px; margin-left: 9px;" class="parentReplyBtn">Reply</a>
+								
+								</c:if> </li>
+							<c:set var="prevLevel" value="${reply.level}"/>
+						</c:forEach>
 					</ul>
-					</c:forEach>  
-				</c:if> 
-			<%-- 	<c:forEach items="${tripReply}" var="reply">
-					${reply.userVO.userName}(${reply.userId}) : ${reply.content}
-				</c:forEach>
-				 --%>
-				<c:if test="${!empty sessionScope._USER_.userId}">
-			
-				<form id="replyForm">	
-					<input type="text" id="content"> 
-					<input type="button" id="replyBtn" value="submit"/>
-				</form>
-				</c:if>
+					<c:if test="${depth > 0}">
+						<c:forEach var="i" begin="0" end="${depth}" step="1">
+						</ul>
+						</c:forEach>  
+					</c:if> 
+				<%-- 	<c:forEach items="${tripReply}" var="reply">
+						${reply.userVO.userName}(${reply.userId}) : ${reply.content}
+					</c:forEach>
+					 --%>
+					<br/>
+					<c:if test="${!empty sessionScope._USER_.userId}">
+						<form id="replyForm" style="margin-left: 20px">	
+							<input style="width: 90%; height: 80px" type="text" id="content"> 
+							<a id="replyBtn" style="margin-left: 10px">Submit</a>
+						</form>
+					</c:if>
 				</div>
+			</div>
 		</div>
 	</section>
 
@@ -437,7 +477,7 @@
 	}
 
 </script>
-		<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
+	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>

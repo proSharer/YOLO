@@ -24,6 +24,29 @@
 .dropdown-menu .label-icon {
 	margin-left: 5px;
 }
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -172,7 +195,7 @@
 							Message
 							</div>
 							<input id="writeMessageBtn" type="button" value="+" style="border: 1px solid #b2b2b2; font-weight: bold; color: #b2b2b2; background-color: transparent;"
-								onclick="window.open('/yolo/message/write','window', 'width=400,height=300')"/>
+								onclick="window.open('/yolo/message/write','window', 'width=450,height=400')"/>
 						</div>
 						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%"></div>
 						<div style="background-color: #e5e5e5; height: 290px; width: 96%"></div>
