@@ -109,4 +109,11 @@
 		
 	</insert>
 
+	<select id="findUserById" parameterType="string" resultType="UserVO">
+		SELECT	USR_ID userId,
+				USR_NM userName
+		FROM	USR
+		WHERE	USR_ID = #{userId}
+	</select>
+
 </mapper>

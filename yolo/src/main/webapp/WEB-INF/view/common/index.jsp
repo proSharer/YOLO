@@ -104,7 +104,6 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						alert("성공");
 						window.location.href = "<c:url value="/home"/>";
 					} else if (data == "FAIL") {
 						alert("로그인 실패");
@@ -252,18 +251,22 @@
 					<c:choose>
 						<c:when test="${ sessionScope._USER_.loginType eq '' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a></li>
 						</c:when>
 						<c:when test="${ sessionScope._USER_.loginType eq 'nvr' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
 						</c:when>
 						<c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
 						</c:when>
 						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
 							<script type="text/javascript">
 								$().ready(function() {
@@ -293,7 +296,7 @@
 																/* id 쓰고 콜백주소 쓴다. */
 																var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
 																var state = naver_id_login.getUniqState();
-																naver_id_login.setButton("green", 3,50);
+																naver_id_login.setButton("green", 3,20);
 																naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
 																naver_id_login.setState(state);
 																naver_id_login.setPopup();
@@ -304,7 +307,7 @@
 															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
 														</a>
 														<a href="<c:url value="/user/google" /> ">
-															<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+															<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
 														</a>
 													
 													</div>
@@ -314,7 +317,7 @@
 															</div>
 															<div class="form-group">
 																<input style="height:30px" type="password" name="password" placeholder="Password">
-																<div class="help-block text-right"><a href="">Forget the password ?</a></div>
+																<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
 															</div>
 															<div class="form-group">
 																<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
@@ -622,7 +625,7 @@
 		<input id="content" type="hidden" name="content" value="">
 	</div>
 	
-	<div><c:import url="http://localhost:3000"/></div>
+	<div><c:import url="http://192.168.201.29:3000"/></div>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>

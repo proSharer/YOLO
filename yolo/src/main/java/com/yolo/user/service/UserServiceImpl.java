@@ -3,6 +3,9 @@ package com.yolo.user.service;
 import com.yolo.user.biz.UserBiz;
 import com.yolo.user.dao.UserDao;
 import com.yolo.user.vo.UserVO;
+
+import java.util.List;
+
 import com.yolo.common.utilities.SHA256Util;
 
 public class UserServiceImpl implements UserService {
@@ -63,6 +66,11 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return user;
+	}
+
+	@Override
+	public UserVO findUserById(String userId) {
+		return userBiz.findUserById(userId);
 	}
 
 }

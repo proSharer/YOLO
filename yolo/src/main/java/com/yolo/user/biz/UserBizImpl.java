@@ -1,5 +1,7 @@
 package com.yolo.user.biz;
 
+import java.util.List;
+
 import com.yolo.user.dao.UserDao;
 import com.yolo.user.vo.UserVO;
 
@@ -54,6 +56,11 @@ public class UserBizImpl implements UserBiz{
 	@Override
 	public boolean updateClearRockCount(String userId) {
 		return userDao.updateClearLockCount(userId) > 0;
+	}
+
+	@Override
+	public UserVO findUserById(String userId) {
+		return userDao.findUserById(userId);
 	}
 
 	
