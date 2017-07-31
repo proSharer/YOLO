@@ -3,6 +3,7 @@ package com.yolo.user.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yolo.message.vo.MessageVO;
+import com.yolo.trip.vo.TripVO;
+import com.yolo.tripreply.vo.TripReplyVO;
 import com.yolo.user.service.UserService;
 import com.yolo.user.vo.UserVO;
 
@@ -176,9 +180,75 @@ public class UserController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
+		List<MessageVO> MessagesBySender = userService.selectAllMessagesBySender(user);
+		List<MessageVO> MessagesByReceiver = userService.selectAllMessagesByReceiver(user);
+		List<TripVO> tripList = userService.selectAllTripByUserId(user.getUserId());
+		List<TripReplyVO> tripReply = new ArrayList<TripReplyVO>();
+		List<TripReplyVO> tripReplyList = new ArrayList<TripReplyVO>();
+		TripReplyVO replyVO;
+		
+		for ( int i=0; i<tripList.size();i++){
+			String tripId = tripList.get(i).getTripId();
+			tripReply = userService.getAllReplies(tripId);
+			
+			for ( int j = 0; j< tripReply.size(); j++){
+				replyVO = new TripReplyVO();
+				String content = tripReply.get(j).getContent();
+				String userId = tripReply.get(j).getUserId();
+				if ( content.length() >= 40 ){
+					content = content.substring(0, 40)+"...";
+				}
+				replyVO.setTripId(tripId);
+				replyVO.setContent(content);
+				replyVO.setUserId(userId);
+				tripReplyList.add(replyVO);
+			}
+		}
+		for(int i = 0; i < MessagesBySender.size() ; i++){
+			String input = MessagesBySender.get(i).getContent();
+			if(input.length() >= 14){
+			    input = input.substring(0, 14)+"...";
+			    MessagesBySender.get(i).setContent(input);
+			}
+		}
+		
+		for(int i = 0; i < MessagesByReceiver.size() ; i++){
+			String input = MessagesByReceiver.get(i).getContent();
+			if(input.length() >= 14){
+			    input = input.substring(0, 14)+"...";
+			    MessagesByReceiver.get(i).setContent(input);
+			}
+		}
 		
 		view.addObject("user", user);
+		view.addObject("MessagesBySender",MessagesBySender);
+		view.addObject("MessagesByReceiver",MessagesByReceiver);
+		view.addObject("tripList",tripList);
+		view.addObject("tripReplyList",tripReplyList);
 		view.setViewName("/user/myPage");
+		
+		return view;
+	}
+	
+	@RequestMapping("/message/receive/detail/{id}")
+	public ModelAndView viewReceiveMessageDetail(@PathVariable String id) {
+		System.out.println("Test");
+		ModelAndView view = new ModelAndView();
+		
+		MessageVO message = userService.selectOneMessage(id); 
+		view.addObject("message", message);
+		view.setViewName("/message/receiveDetail");
+		
+		return view;
+	}
+	
+	@RequestMapping("/message/send/detail/{id}")
+	public ModelAndView viewMessageDetail(@PathVariable String id) {
+		ModelAndView view = new ModelAndView();
+		
+		MessageVO message = userService.selectOneMessage(id); 
+		view.addObject("message", message);
+		view.setViewName("/message/sendDetail");
 		
 		return view;
 	}

@@ -24,6 +24,17 @@
 .dropdown-menu .label-icon {
 	margin-left: 5px;
 }
+#tripListBtn, #replyListBtn {
+	border: 0px transparent;
+	border-radius: 5px;
+	height: 25px;
+	width: 120px;
+	background-color: #d1d0cf;
+	color: #777;
+	margin-top: 10px;
+	margin-left: 10px;
+
+}
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -92,6 +103,22 @@
 					} else if (data == "FAIL") {
 						alert("수정이 실패 하였습니다.");
 					}
+			});
+		});
+		$("#tripListBtn").click(function(){
+			$("#tripList").css({
+				"display" : "block"
+			});
+			$("#replyList").css({
+				"display" : "none"
+			});
+		});
+		$("#replyListBtn").click(function(){
+			$("#replyList").css({
+				"display" : "block"
+			});
+			$("#tripList").css({
+				"display" : "none"
 			});
 		});
 	});
@@ -174,10 +201,88 @@
 							<input id="writeMessageBtn" type="button" value="+" style="border: 1px solid #b2b2b2; font-weight: bold; color: #b2b2b2; background-color: transparent;"
 								onclick="window.open('/yolo/message/write','window', 'width=400,height=300')"/>
 						</div>
-						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%"></div>
-						<div style="background-color: #e5e5e5; height: 290px; width: 96%"></div>
+						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%">
+							<div style="padding:10px;"> 
+								받은쪽지함<br/><br/>
+								<table>
+									<tr>
+										<th style="width:20%;">Sender</th>
+										<th style="width:30%;">Content</th>
+										<th style="width:40%;">Date</th>
+									</tr>
+									<c:forEach items="${MessagesByReceiver}" var="message">
+										<tr>
+											<td>${message.sender} </td>
+											<td>
+												 <a href="#"><p style="display:inline;" onclick="window.open('/yolo/message/receive/detail/${message.messageId}','window', 'width=500,height=410')"> ${message.content} </p></a>
+											</td> 
+										 	<td>${message.sendTime}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
+						
+						<div style="background-color: #e5e5e5; height: 290px; width: 96%">
+							<div style="padding:10px;"> 
+								보낸쪽지함<br/><br/>
+								<table>
+									<tr>
+										<th style="width:20%;">Receiver</th>
+										<th style="width:30%;">Content</th>
+										<th style="width:40%;">Date</th>
+									</tr>
+									<c:forEach items="${MessagesBySender}" var="message">
+										<tr>
+											<td>${message.receiver} </td>
+											<td>
+												 <a href="#"><p style="display:inline;" onclick="window.open('/yolo/message/send/detail/${message.messageId}','window', 'width=500,height=410')"> ${message.content} </p></a>
+											</td> 
+										 	<td>${message.sendTime}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
 					</div>
-					<div style="background-color: red; display: inline-block; float: left; width: 35%; height: 640px"></div>
+					<div style="background-color: #e5e5e5; display: inline-block; float: left; width: 35%; height: 640px">
+ 						<input type="button" id="tripListBtn" value="내가쓴글">
+ 						<input type="button" id="replyListBtn" value="나에게 달린댓글">
+ 						<div id="tripList" style="padding:10px;"> 
+	 						<table>
+								<tr>
+									<th style="width:60%;">Title</th>
+									<th style="width:40%;">Date</th>
+								</tr>
+								<c:forEach items="${tripList}" var="trip">
+									<tr>
+										<td>
+											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${trip.tripId}';"> ${trip.title}</p></a>
+											
+										</td>
+										<td>${trip.createDate}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+						 <div id="replyList" style="padding:10px; display:none;"> 
+	 						<table>
+								<tr>
+									<th style="width:35%;">Writer</th>
+									<th style="width:65%;">Content</th>
+								</tr>
+								<c:forEach items="${tripReplyList}" var="reply">
+									<tr>
+										<td>${reply.userId}</td>
+										<td>
+											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${reply.tripId}';">${reply.content}</p></a>
+											
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div id="change2Div" style="display: none;">
 					<%-- <jsp:include page="/WEB-INF/view/user/myPageProfile.jsp"></jsp:include> --%>
