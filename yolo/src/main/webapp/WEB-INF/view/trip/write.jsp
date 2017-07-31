@@ -52,6 +52,29 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 #searchText:focus {
 	
 }
@@ -91,6 +114,30 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -134,25 +181,25 @@
 			$("#keyword").attr('value',"");
 			i++;
 
-			var appendPart = "<div class='part'>" +"<input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간'><br/>"+
-			"<input type='text' name='tripPartVO["+i+"].endTime' placeholder='끝나는시간'><br/>"+
-			"<input type='text' id='place"+i+"' name='tripPartVO["+i+"].place' placeholder='장소를 입력해주세요'><br/>"
-			+"<input class='contorls' type='text' id='map"+i+"' name='tripPartVO["+i+"].map'"+
-				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' />"+
-				"<select name='tripPartVO["+i+"].timeControl'>"+
+			var appendPart = "<div class='part'>" +"<div class='row'><div class='col-md-6'><input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간' class='form-control'></div>"+
+			"<div class='col-md-6'><input type='text' name='tripPartVO["+i+"].endTime' placeholder='끝나는시간' class='form-control'></div></div><br/>"+
+			"<div class='row'><div class='col-md-6'><input type='text' id='place"+i+"' name='tripPartVO["+i+"].place' placeholder='장소를 입력해주세요' class='form-control'></div>"
+			+"<div class='col-md-6'><input class='contorls form-control' type='text' id='map"+i+"' name='tripPartVO["+i+"].map'"+
+				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' /> </div></div><br/>"+
+				"<select name='tripPartVO["+i+"].timeControl' class='form-control'>"+
 				    "<option value=''>시간구분</option>"+
 				    "<option value='오전'>오전</option>"+
 				    "<option value='오후'>오후</option>"+
-				"</select>"+ "<input type='hidden' id='x"+i+"' name='tripPartVO["+i+"].x' />"+
+				"</select><br/>"+ "<input type='hidden' id='x"+i+"' name='tripPartVO["+i+"].x' />"+
 				"<input type='hidden' id='y"+i+"' name='tripPartVO["+i+"].y' />" +
-				"<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
-				"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
+				"<input class='form-control' type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
+				"<textarea style='height: 150px;' class='form-control' name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
 				"</div> </div>";
 				
 			var blah = "blah"+ i;
 				
-			$(".tripPart").append(appendPart);
-			$(".tripPart").find('#'+blah).hide();
+			$(".part").append(appendPart);
+			$(".part").find('#'+blah).hide();
 				
 			var imgInp = "imgInp" + i;
 				
@@ -312,55 +359,70 @@
 				<form:form id="writeForm" commandName="writeFrm" enctype="multipart/form-data">
 					
 					<div class="tripPart">
-					<input type="text" name="title" placeholder="제목">
-						<div class="part">
-							<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간"><br/>
-							<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"><br/>
-							<input type="text" class ="place" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
-							
-								<input id="map0" class="contorls" type="text" name="tripPartVO[0].map" 
-								placeholder="상세주소를 입력해주세요." size="50" onClick="value=''" />
-				
-<!-- 							<div class="map_canvas"></div> -->
-							
-							
-							<select name="tripPartVO[0].timeControl">
-							    <option value="">시간구분</option>
-							    <option value="오전">오전</option>
-							    <option value="오후">오후</option>
-							</select>
-							
-							<input type="hidden" id="x0" name="tripPartVO[0].x" />
-							<input type="hidden" id="y0" name="tripPartVO[0].y" />
-							
-					        <input type="file" name="tripPartVO[0].file" id="imgInp0"><br/>
-					        <img class="blah" id="blah0" src="#" /><br/>
-			
-							<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
-						</div>
-					</div>
-					<input type="button" id="addBtn" value="+">
-					
-					<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요"></textarea>
-					
-					<input type="button" id="writeBtn" value="submit"><br/>
-					
-					<div class="map_wrap">
-						    <div id="map" style="width:700px;height:500px;position:relative;overflow:hidden;"></div>
+						<input type="text" name="title" placeholder="제목" class="form-control"><br/>
+						<hr/>
 						
-						    <div id="menu_wrap" class="bg_white">
-						        <div class="option">
-						            <div>
-						                    키워드 : <input type="text" value="" id="keyword" size="15"> 
-						                    <button id="submitMap">검색하기</button> 
-						            </div>
-						        </div>
-						        <hr>
-						        <ul id="placesList"></ul>
-						        <div id="pagination"></div>
-						    </div>
+						<div class="row">
+							<div class="part col-md-6" style="overflow-y:scroll; height: 470px;">
+								<input type="button" id="addBtn" value="+" style="margin-left: 96%;"><br/><br/>
+								<div class="row">
+									<div class="col-md-6">
+										<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간" class="form-control"><br/>
+									</div>
+									<div class="col-md-6">
+										<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"class="form-control"><br/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<input type="text" class ="place form-control" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
+									</div>
+									<div class="col-md-6">
+										<input id="map0" class="contorls form-control" type="text" name="tripPartVO[0].map" 
+											placeholder="상세주소를 입력해주세요." size="50" onClick="value=''" />
+									</div>
+								</div>
+								
+								<select name="tripPartVO[0].timeControl" class="form-control">
+								    <option value="">시간구분</option>
+								    <option value="오전">오전</option>
+								    <option value="오후">오후</option>
+								</select><br/>
+								
+								<input type="hidden" id="x0" name="tripPartVO[0].x" />
+								<input type="hidden" id="y0" name="tripPartVO[0].y" />
+								
+						        <input type="file" name="tripPartVO[0].file" id="imgInp0" class="form-control"><br/>
+						        <img class="blah" id="blah0" src="#" /><br/>
+				
+								<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요" class="form-control" style="height:150px;"></textarea><br/><hr/>
+							</div>
+							
+							<div class="map_wrap col-md-6">
+							<div id="map" style="width: 550px; height: 470px; position: relative; overflow: hidden;"></div>
+		
+								<div id="menu_wrap" class="bg_white" style="width: 230px">
+									<div class="option">
+										<div>
+											키워드 : <input type="text" value="" id="keyword" size="15">
+											<button id="submitMap">검색하기</button>
+										</div>
+									</div>
+									<hr>
+									<ul id="placesList"></ul>
+									<div id="pagination"></div>
+								</div>
+							</div>
 						</div>
-
+						
+					</div>
+					
+					<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요" class="form-control" style="height: 150px;"></textarea>
+					
+					<div class="row" style="text-align: center;">
+						<br/><br/><input type="button" id="writeBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
+					</div>
+					
 				</form:form>
 			</div>
 		</div>
