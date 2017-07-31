@@ -236,7 +236,7 @@ form.login a:hover {
 			$.post("<c:url value="/user/signUp"/>", $("#signUpForm").serialize(), function(data){
 				if(data == "OK") {
 					alert("회원가입이 완료 되었습니다. 로그인 하십시요.");
-					window.location.href="<c:url value="/user/signIn"/>";
+					window.location.href="<c:url value="/home"/>";
 				}
 				else if(data=="FAIL") {
 					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");

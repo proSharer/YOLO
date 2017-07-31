@@ -97,6 +97,7 @@ public class UserController {
 		userVO.setLoginType(UserVO.DEFAULT);
 		
 		UserVO login = userService.selectOneUser(userVO);
+		login.setLoginType(UserVO.DEFAULT);
 		if (login != null) {
 			try {
 				HttpSession session = request.getSession();
