@@ -274,7 +274,7 @@
 						
 						<c:otherwise>
 							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
-							<li><a class="btn btn-lg " data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
+							<li><a class="page-scroll" data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 
