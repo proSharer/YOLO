@@ -104,10 +104,8 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						alert("성공");
 						window.location.href = "<c:url value="/home"/>";
 					} else if (data == "FAIL") {
-						alert("로그인 실패");
 						location.reload();
 					}
 			});
@@ -175,17 +173,6 @@
 				var gender = response.gender;
 				var name = response.nickname;
 				var birthday = response.birthday;
-				var user = {
-					userId : userId
-					, email : email
-					, userName : userName
-					, profile_image : profile_image
-					, enc_id : enc_id
-					, age : age
-					, gender : gender
-					, name : name
-					, birthday : birthday
-				};
 				
 				$.post("<c:url value="/user/naver/userInfo"/>", {
 					"userId" : userId
@@ -198,7 +185,9 @@
 					, "name" : name
 					, "birthday" : birthday
 				}, function(response){
-					alert("user.userName = " + user.userName);
+					if ( response == "success" ) {
+						console.log("aa");
+					}
 				});
 			} 
 			else {
@@ -258,10 +247,10 @@
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
 						</c:when>
-						<c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
-						</c:when>
+						</c:when> --%>
 						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
@@ -280,59 +269,8 @@
 						</c:when>
 						
 						<c:otherwise>
-							<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
-								<ul id="login-dp" class="dropdown-menu">
-									<li>
-										 <div class="row">
-												<div class="col-md-12">
-													<div class="social-buttons">
-														<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
-															<script type="text/javascript">
-																/* id 쓰고 콜백주소 쓴다. */
-																var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
-																var state = naver_id_login.getUniqState();
-																naver_id_login.setButton("green", 3,50);
-																naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
-																naver_id_login.setState(state);
-																naver_id_login.setPopup();
-																naver_id_login.init_naver_id_login();
-															</script>
-														</form>
-														<a id="custom-login-btn" href="javascript:loginWithKakao()">
-															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
-														</a>
-														<a href="<c:url value="/user/google" /> ">
-															<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
-														</a>
-													
-													</div>
-													 <form id="signInForm" style="width: 194px;">
-															<div class="form-group">
-																 <input style="height:30px" type="text" name="userId" placeholder="ID">
-															</div>
-															<div class="form-group">
-																<input style="height:30px" type="password" name="password" placeholder="Password">
-																<div class="help-block text-right"><a href="">Forget the password ?</a></div>
-															</div>
-															<div class="form-group">
-																<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
-															</div>
-													 </form>
-												</div>
-												<div class="bottom text-center">
-													New here ? <a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
-												</div>
-										 </div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<%-- <li><a class="page-scroll"
-							href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li> --%>
-						<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
-						</li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
+							<li><a class="btn btn-lg " data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -642,6 +580,63 @@
 
 	<!-- Theme JavaScript -->
 	<script src="<c:url value="/static/js/agency.min.js"/>"></script>
+	
+	<!-- signIn Modal -->
+	<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 style="text-align: center;" class="modal-title" id="myModalLabel">Login</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="signInForm" style="width: 82%; margin: 0 auto">
+								<div class="form-group">
+									 <input class="form-control" type="text" name="userId" placeholder="ID">
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="password" name="password" placeholder="Password">
+									<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
+								</div>
+								<div class="form-group">
+									<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+								</div>
+							</form>
+							<div class="social-buttons" style="margin-left: 50px">
+								<a id="custom-login-btn" href="javascript:loginWithKakao()">
+									<img src="<c:url value="/static/img/kakao.png"/>"width="231" height="auto">
+								</a>
+								<a id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+									<script type="text/javascript">
+										/* id 쓰고 콜백주소 쓴다. */
+										var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+										var state = naver_id_login.getUniqState();
+										naver_id_login.setButton("green", 3,50);
+										naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+										naver_id_login.setState(state);
+										naver_id_login.setPopup();
+										naver_id_login.init_naver_id_login();
+									</script>
+								</a>
+								<%-- <a href="<c:url value="/user/google" /> ">
+									<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+								</a> --%>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="bottom text-center">
+						New here ? 
+						<a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 

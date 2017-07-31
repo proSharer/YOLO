@@ -102,11 +102,24 @@
 		WHERE	USR_ID = #{userId}
 	</update>
 	
-	<insert id="insertSocialAPI">
+	<!-- <insert id="insertSocialAPI" parameterType="UserVO">
 		INSERT	INTO		USR	(
-							
+							<if test="kakaoId = null">
+							NA_API
+							</if>
+							<if test="naverId = null">
+							KA_API
+							</if>
+							)
+		VALUES				(
+							<if test="kakaoId = null">
+							#{naverId}
+							</if>
+							<if test="naverId = null">
+							#{kakaoId}
+							</if>
 							)
 		
-	</insert>
+	</insert> -->
 
 </mapper>
