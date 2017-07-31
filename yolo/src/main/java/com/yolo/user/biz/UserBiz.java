@@ -1,5 +1,7 @@
 package com.yolo.user.biz;
 
+import java.util.List;
+
 import com.yolo.user.vo.UserVO;
 
 public interface UserBiz {
@@ -22,6 +24,6 @@ public interface UserBiz {
 	
 	public boolean updateClearRockCount(String userId);
 	
-	
+	public UserVO findUserById(String userId);
 	
 }

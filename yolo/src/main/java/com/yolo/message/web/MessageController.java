@@ -1,8 +1,13 @@
 package com.yolo.message.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -33,8 +38,7 @@ public class MessageController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
-		/*UserVO user = new UserVO();
-		user.setUserId("test");*/
+
 		List<MessageVO> messageList = messageService.getAllMessagesByReceiver(user);
 		
 		view.addObject("messageList", messageList);
@@ -42,13 +46,6 @@ public class MessageController {
 		
 		return view;
 	}
-	
-	/*@RequestMapping(value="/message/list/received", method=RequestMethod.POST)
-	public void receivedMessageListAction(@RequestBody List<MessageVO> messageList, ModelMap map) {
-		System.out.println("messageList : " + messageList);
-		
-		return;
-	}*/
 	
 	@RequestMapping(value="/message/list/sent")
 	public ModelAndView sentMessageListView(HttpSession session) {
@@ -76,41 +73,51 @@ public class MessageController {
 		return view;
 	}
 	
-	/*@RequestMapping(value="/message/alarm/{messageId}")
-	public ModelAndView messageAlarmView(@PathVariable String messageId) {
-		ModelAndView view = new ModelAndView();
-		
-		MessageVO messageVO = messageService.getOneMessage(messageId);
-		
-		view.addObject("message", messageVO);
-		view.setViewName("message/alarm");
-		
-		return view;
-	}*/
-	
-	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
-	public String messageWriteView(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value="/message/write", method=RequestMethod.GET)
+	public String messageWriteView(HttpServletRequest request, HttpSession session) {
 		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
 		
-		/*UserVO loginUser = new UserVO();
-		loginUser.setUserId("test");*/
-		
-		request.setAttribute("userId", userId);
 		request.setAttribute("loginUser", loginUser);
+		
+		return "message/write";
+	}
+	
+	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.GET)
+	public String messageWriteView2(@PathVariable String userId, HttpServletRequest request, HttpSession session) {
+		UserVO loginUser = (UserVO)session.getAttribute("_USER_");
+		
+		request.setAttribute("loginUser", loginUser);
+		request.setAttribute("receiverUserId", userId);
 		
 		return "message/write";
 	}
 	
 	@RequestMapping(value="/message/write/{userId}", method=RequestMethod.POST)
 	@ResponseBody
-	public String messageWriteAction(MessageVO messageVO) {
+	public void messageWriteAction(MessageVO messageVO, HttpServletResponse response) {
 		boolean isSuccess = messageService.addOneMessage(messageVO);
 		
 		if (isSuccess) {
-			return "<html><script type='text/javascript'></script><body>Your message has been successfully sent!<br/><a href='#' onclick='javascript:self.close()'>close</a></body></html>"; 
+			try {
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.append("OK");
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 		}
 		else {
-			return "message/write";
+			try {
+				PrintWriter writer;
+				writer = response.getWriter();
+				writer.append("FAIL");
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 		}
 	}
 
