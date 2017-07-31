@@ -79,7 +79,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
-	public void doSignInAction(UserVO userVO, String password, HttpServletRequest request, HttpServletResponse response) {
+	public void doSignInAction(UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("asdfasdfasdf");
 		if (userVO.getUserId() == "" || userVO.getPassword() == "") {
@@ -93,8 +93,6 @@ public class UserController {
 				throw new RuntimeException(e.getMessage(), e);
 			}
 		}
-		
-		userVO.setLoginType(UserVO.DEFAULT);
 		
 		UserVO login = userService.selectOneUser(userVO);
 		login.setLoginType(UserVO.DEFAULT);
