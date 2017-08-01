@@ -1,21 +1,36 @@
 package com.yolo.user.service;
 
-import com.yolo.user.biz.UserBiz;
-import com.yolo.user.dao.UserDao;
-import com.yolo.user.vo.UserVO;
-
 import java.util.List;
 
 import com.yolo.common.utilities.SHA256Util;
+import com.yolo.message.biz.MessageBiz;
+import com.yolo.message.vo.MessageVO;
+import com.yolo.trip.biz.TripBiz;
+import com.yolo.trip.vo.TripVO;
+import com.yolo.tripreply.biz.TripReplyBiz;
+import com.yolo.tripreply.vo.TripReplyVO;
+import com.yolo.user.biz.UserBiz;
+import com.yolo.user.vo.UserVO;
 
 public class UserServiceImpl implements UserService {
 
 	private UserBiz userBiz;
+	private MessageBiz messageBiz;
+	private TripBiz tripBiz;
+	private TripReplyBiz tripReplyBiz; 
 
 	public void setUserBiz(UserBiz userBiz) {
 		this.userBiz = userBiz;
 	}
-
+	public void setMessageBiz(MessageBiz messageBiz) {
+		this.messageBiz = messageBiz;
+	}
+	public void setTripBiz(TripBiz tripBiz) {
+		this.tripBiz = tripBiz;
+	}
+	public void setTripReplyBiz(TripReplyBiz tripReplyBiz) {
+		this.tripReplyBiz = tripReplyBiz;
+	}
 	@Override
 	public boolean insertOneUser(UserVO userVO) {
 
@@ -33,6 +48,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean modifyOneUser(UserVO userVO) {
+		String salt = SHA256Util.generateSalt();
+		System.out.println("salt:"+salt);
+		userVO.setSalt(salt);
+
+		String password = userVO.getPassword();
+		password = SHA256Util.getEncrypt(password, salt);
+		userVO.setPassword(password);
 		return userBiz.modifyOneUser(userVO);
 	}
 
@@ -50,7 +72,7 @@ public class UserServiceImpl implements UserService {
 		String password = userVO.getPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		userVO.setPassword(password);
-		
+		System.out.println("Service Impl pasword:"+password);
 		UserVO user = userBiz.selectOneUser(userVO);
 
 		if (user != null) {
@@ -68,4 +90,25 @@ public class UserServiceImpl implements UserService {
 		return userBiz.findUserById(userId);
 	}
 
+	@Override
+	public List<MessageVO> selectAllMessagesByReceiver(UserVO userVO) {
+		return messageBiz.getAllMessagesByReceiver(userVO);
+	}
+
+	@Override
+	public List<MessageVO> selectAllMessagesBySender(UserVO userVO) {
+		return messageBiz.getAllMessagesBySender(userVO);
+	}
+
+	@Override
+	public MessageVO selectOneMessage(String messageId) {
+		return messageBiz.getOneMessage(messageId);
+	}
+	public List<TripVO> selectAllTripByUserId(String userId){
+		return tripBiz.selectAllTripByUserId(userId);
+	}
+	@Override
+	public List<TripReplyVO> getAllReplies(String tripId) {
+		return tripReplyBiz.getAllReplies(tripId);
+	}
 }

@@ -90,4 +90,9 @@ public class TripBizImpl implements TripBiz {
 		return tripDao.updateOneTrip(tripVO)>0;
 	}
 
+	@Override
+	public List<TripVO> selectAllTripByUserId(String userId) {
+		return tripDao.getAllTripByUserId(userId);
+	}
+
 }
