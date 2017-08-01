@@ -128,7 +128,7 @@
 			width : maxWidth + 'px'
 		});
 		
-		$(".input-group-btn .dropdown-menu li a").click(function(){
+		$("#SearchBox .dropdown-menu li a").click(function(){
 			$("#keyword").val("");
 			var selText = $(this).html();
 			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
@@ -138,15 +138,29 @@
 			$("#searchType").val(option);
 			
 			if ($("#searchType").val() == '5'){
+				console.log($("#searchType").val());
  				$("#regionOptionBtn").show();
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
 			} 
+			
 			else if ($("#searchType").val() != '5'){
+				$("#searchType").val()
  				$("#regionOptionBtn").hide();
  				$("#keyword").show();
  				
 			}
+		});
+		$("#regionBox .dropdown-menu li a").click(function(){
+			$("#keyword").val("");
+			var selText = $(this).html();
+			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
+			
+			var option = $(this).find("span").data("option");
+			
+			$("#searchType").val(option);
+			console.log($("#searchType").val());
+			// 지역 코드 받아옴. TO DO : 이제부터 지역별 검색을 해야함.. 
 		});
 		
 		$("#keyword").keypress(function(event){
@@ -371,7 +385,7 @@
 					<div class="input-group">
 						<input type="hidden" id="searchType" name="searchType" />
 						<input type="hidden" id="regionType" name="regionType" />
-						<div class="input-group-btn">
+						<div id="SearchBox" class="input-group-btn">
 							<button type="button"
 								class="btn btn-search btn-default dropdown-toggle"
 								data-toggle="dropdown" value="1" id="searchOptionBtn">
@@ -397,7 +411,7 @@
 							
 						</div>
 						
-						<div class="input-group-btn">
+						<div id="regionBox" class="input-group-btn">
 							<button type="button"
 								class="btn btn-search btn-default dropdown-toggle"
 								data-toggle="dropdown" value="1" id="regionOptionBtn">

@@ -76,7 +76,7 @@
 				CONT = #{content},
 				MAP  = #{map},
 				MAP_X = #{x},
-				MAP_Y = #{y}
+				MAP_Y = #{y},
 				FILE_NM = #{fileName}
 		WHERE	TR_PART_ID = #{tripPartId}
 	</update>

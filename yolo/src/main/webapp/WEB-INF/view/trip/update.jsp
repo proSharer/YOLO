@@ -90,7 +90,8 @@
 		$(".preview").hide();
 		
 		$(".update").click(function(){
-			var img = $(this).prev().prev();
+			var img = $(this).prev().prev().prev();
+			console.log(img);
 			$(img).hide();
 			$(img).prev().prev().show();
 			$(this).hide();
@@ -114,7 +115,7 @@
 	   	}); 
  		
  		$("#updateBtn").click(function(){
- 			alert("sddssdf");
+ 			
  			$("#updateForm").attr({
  				"action" : "<c:url value="/trip/update/"/>"+$("#tripId").val(),
  				"method" : "post"
@@ -176,6 +177,7 @@
 							</li>
 						</c:otherwise>
 					</c:choose>
+
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -215,7 +217,7 @@
 							</select>
 							
 							<input type="file" name="tripPartVO[${i}].file" class="file" ><br/>
-							<img src="<c:url value="/static/img/${tripPart.realFileName}"/>">
+							<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}"/>" width="400px" height="300px"/><br/>
 							<img src="#" class="preview"  style='display: block;'/>
 							<input type="button" class="update" value="수정하기"/>
 							
