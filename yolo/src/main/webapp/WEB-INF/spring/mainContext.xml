@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="mainServiceImpl" class="com.yolo.common.service.MainServiceImpl">
-		<property name="messageBiz" ref="messageBizImpl"></property>
+		<property name="tripBiz" ref="tripBizImpl"></property>
 	</bean>
 
 

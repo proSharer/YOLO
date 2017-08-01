@@ -52,6 +52,29 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 #searchText:focus {
 	
 }
@@ -91,6 +114,30 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 </style>
 
 <!-- Bootstrap Core CSS -->
@@ -117,6 +164,8 @@
 <link href="<c:url value="/static/css/styles.css"/>" rel="stylesheet">
 
 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrX88apxamUwGdt3GMcN-P3b_C0qFrQBo&libraries=places"></script>
 <script src="<c:url value="/static/js/logger.js"/>"></script>
@@ -134,25 +183,25 @@
 			$("#keyword").attr('value',"");
 			i++;
 
-			var appendPart = "<div class='part'>" +"<input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간'><br/>"+
-			"<input type='text' name='tripPartVO["+i+"].endTime' placeholder='끝나는시간'><br/>"+
-			"<input type='text' id='place"+i+"' name='tripPartVO["+i+"].place' placeholder='장소를 입력해주세요'><br/>"
-			+"<input class='contorls' type='text' id='map"+i+"' name='tripPartVO["+i+"].map'"+
-				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' />"+
-				"<select name='tripPartVO["+i+"].timeControl'>"+
+			var appendPart = "<div class='part'>" +"<div class='row'><div class='col-md-6'><input type='text' name='tripPartVO["+i+"].startTime' placeholder='시작시간' class='form-control'></div>"+
+			"<div class='col-md-6'><input type='text' name='tripPartVO["+i+"].endTime' placeholder='끝나는시간' class='form-control'></div></div><br/>"+
+			"<div class='row'><div class='col-md-6'><input type='text' id='place"+i+"' name='tripPartVO["+i+"].place' placeholder='장소를 입력해주세요' class='form-control'></div>"
+			+"<div class='col-md-6'><input class='contorls form-control' type='text' id='map"+i+"' name='tripPartVO["+i+"].map'"+
+				"placeholder='상세주소를 입력해주세요.' size='90' onClick='value=''' /> </div></div><br/>"+
+				"<select name='tripPartVO["+i+"].timeControl' class='form-control'>"+
 				    "<option value=''>시간구분</option>"+
 				    "<option value='오전'>오전</option>"+
 				    "<option value='오후'>오후</option>"+
-				"</select>"+ "<input type='hidden' id='x"+i+"' name='tripPartVO["+i+"].x' />"+
+				"</select><br/>"+ "<input type='hidden' id='x"+i+"' name='tripPartVO["+i+"].x' />"+
 				"<input type='hidden' id='y"+i+"' name='tripPartVO["+i+"].y' />" +
-				"<input type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' /> <br/>" + 
-				"<textarea name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
+				"<input class='form-control' type='file' name='tripPartVO["+i+"].file' id='imgInp"+ i +"'><br/><img class='blah' id='blah"+ i +"' src='#' style='width:300px; height:300px;'/> <br/>" + 
+				"<textarea style='height: 150px;' class='form-control' name='tripPartVO["+i+"].content' placeholder='내용을 입력해주세요'></textarea><br/><hr/>"+
 				"</div> </div>";
 				
 			var blah = "blah"+ i;
 				
-			$(".tripPart").append(appendPart);
-			$(".tripPart").find('#'+blah).hide();
+			$(".wrapDiv").append(appendPart);
+			$(".wrapDiv").find('#'+blah).hide();
 				
 			var imgInp = "imgInp" + i;
 				
@@ -244,7 +293,111 @@
    				});
    				
 			});
+			
+			$("#loginBtn").click( function() {
+				$.post(
+					"<c:url value="/user/signIn" />",
+					$("#signInForm").serialize(),
+					function(data) {
+						if (data == "OK") {
+							window.location.href = "<c:url value="/home"/>";
+						} else if (data == "FAIL") {
+							location.reload();
+						}
+				});
+			});
 	});
+	
+	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
+	function loginWithKakao() {
+		// 로그인 창을 띄웁니다.
+		Kakao.Auth.login({
+			success: function(authObj) {
+				var accessToken = authObj.access_token;
+				var refreshToken = authObj.refresh_token;
+				
+				$.post("<c:url value="/user/kakao/savetoken"/>", {
+					"accessToken" : accessToken
+					, "refreshToken" : refreshToken
+				}, function() {});
+				
+				//alert(JSON.stringify(authObj)); 
+				
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						var id = res.id;
+						var nickName = res.properties.nickname;
+						var email = res.kaccount_email;
+						
+						$.post("<c:url value="/user/kakao/signin"/>", {
+							"id" : id
+							, "nickName" : nickName
+							, "email" : email
+						}, function(response){
+							if ( response == "ok" ) {
+								location.reload();
+							}
+						});
+						
+						//alert(JSON.stringify(res));
+				},
+
+					fail: function (error) {
+						alert(JSON.stringify(error));
+					}
+				});
+				
+				
+			},
+				fail: function(err) {
+				alert(JSON.stringify(err));
+			}
+		});
+	}
+	
+	//네이버 로그인 
+	function loginWithNaver() {
+		if (token != null) {
+			if (resultCode == "00") {
+				var userId = response.id;
+				var email = response.email;
+				var userName = response.name;
+				var profile_image = response.profile_image;
+				var enc_id = response.enc_id;
+				var age = response.age;
+				var gender = response.gender;
+				var name = response.nickname;
+				var birthday = response.birthday;
+				
+				$.post("<c:url value="/user/naver/userInfo"/>", {
+					"userId" : userId
+					, "email" : email
+					, "userName" : userName
+					, "profile_image" : profile_image
+					, "enc_id" : enc_id
+					, "age" : age
+					, "gender" : gender
+					, "name" : name
+					, "birthday" : birthday
+				}, function(response){
+					if ( response == "success" ) {
+						console.log("aa");
+					}
+				});
+			} 
+			else {
+				console.log(JSON.stringify(message));
+			}
+		}
+		
+	}
+	
+	function kakaoSignOut() {
+		Kakao.Auth.logout(function() {
+			location.href="<c:url value="/user/kakao/signout"/>"
+		});
+	}
 </script>
 </head>
 <body id="page-top" class="index">
@@ -260,7 +413,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i
 						class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="<c:url value="/home"/>">`Solo</a>
+				<a class="navbar-brand page-scroll" href='<c:url value="/home"/>'>`Solo</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -268,32 +421,56 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="<c:url value="/home#main" />"
-						id="mainBtn">Main</a></li>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
+					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
-							</li>
-							<li><a href='<c:url value="/trip/list" />' id="tripBtn">Trip</a>
+							<li><a href='<c:url value="/daily/list"/>'
+								id="dailyBtn">Daily</a></li>
+							<li><a href='<c:url value="/trip/list"/>' id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
 					<c:choose>
-						<c:when test="${user eq null}">
-							<li><a class="page-scroll"
-								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
-							<li><a class="page-scroll" href="#signUp" id="joinBtn">Join</a>
-							</li>
+						<c:when test="${ sessionScope._USER_.loginType eq '' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a></li>
 						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'nvr' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
+						</c:when>
+						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
+						</c:when> --%>
+						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
+							<script type="text/javascript">
+								$().ready(function() {
+									$("#kakaoSignout").click(function() {
+										console.log("aa");
+										Kakao.Auth.logout(function () {
+											location.href="<c:url value="/user/kakao/signout"/>"
+										});
+									});
+								});
+							
+							</script>
+							
+						</c:when>
+						
 						<c:otherwise>
-							<li><a class="page-scroll"
-								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
-							</li>
-							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
-							</li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
+							<li><a class="page-scroll" data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -312,55 +489,71 @@
 				<form:form id="writeForm" commandName="writeFrm" enctype="multipart/form-data">
 					
 					<div class="tripPart">
-					<input type="text" name="title" placeholder="제목">
-						<div class="part">
-							<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간"><br/>
-							<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"><br/>
-							<input type="text" class ="place" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
-							
-								<input id="map0" class="contorls" type="text" name="tripPartVO[0].map" 
-								placeholder="상세주소를 입력해주세요." size="50" onClick="value=''" />
-				
-<!-- 							<div class="map_canvas"></div> -->
-							
-							
-							<select name="tripPartVO[0].timeControl">
-							    <option value="">시간구분</option>
-							    <option value="오전">오전</option>
-							    <option value="오후">오후</option>
-							</select>
-							
-							<input type="hidden" id="x0" name="tripPartVO[0].x" />
-							<input type="hidden" id="y0" name="tripPartVO[0].y" />
-							
-					        <input type="file" name="tripPartVO[0].file" id="imgInp0"><br/>
-					        <img class="blah" id="blah0" src="#" /><br/>
-			
-							<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요"></textarea><br/><hr/>
-						</div>
-					</div>
-					<input type="button" id="addBtn" value="+">
-					
-					<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요"></textarea>
-					
-					<input type="button" id="writeBtn" value="submit"><br/>
-					
-					<div class="map_wrap">
-						    <div id="map" style="width:700px;height:500px;position:relative;overflow:hidden;"></div>
+						<input type="text" name="title" placeholder="제목" class="form-control"><br/>
+						<hr/>
 						
-						    <div id="menu_wrap" class="bg_white">
-						        <div class="option">
-						            <div>
-						                    키워드 : <input type="text" value="" id="keyword" size="15"> 
-						                    <button id="submitMap">검색하기</button> 
-						            </div>
-						        </div>
-						        <hr>
-						        <ul id="placesList"></ul>
-						        <div id="pagination"></div>
-						    </div>
+						<div class="row">
+							<div class="wrapDiv col-md-6" style="overflow-y:scroll; height: 470px;">
+								<input type="button" id="addBtn" value="+" style="margin-left: 96%;"><br/><br/>
+								<div class="part">
+									<div class="row">
+										<div class="col-md-6">
+											<input type="text" name="tripPartVO[0].startTime" placeholder="시작시간" class="form-control"><br/>
+										</div>
+										<div class="col-md-6">
+											<input type="text" name="tripPartVO[0].endTime" placeholder="끝나는시간"class="form-control"><br/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<input type="text" class ="place form-control" id="place0" name="tripPartVO[0].place" placeholder="장소를 입력해주세요"><br/>
+										</div>
+										<div class="col-md-6">
+											<input id="map0" class="contorls form-control" type="text" name="tripPartVO[0].map" 
+												placeholder="상세주소를 입력해주세요." size="50" onClick="value=''" />
+										</div>
+									</div>
+									
+									<select name="tripPartVO[0].timeControl" class="form-control">
+									    <option value="">시간구분</option>
+									    <option value="오전">오전</option>
+									    <option value="오후">오후</option>
+									</select><br/>
+									
+									<input type="hidden" id="x0" name="tripPartVO[0].x" />
+									<input type="hidden" id="y0" name="tripPartVO[0].y" />
+									
+							        <input type="file" name="tripPartVO[0].file" id="imgInp0" class="form-control"><br/>
+							        <img class="blah" id="blah0" src="#" style="width: 300px; height: 300px"/><br/><br/>
+					
+									<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요" class="form-control" style="height:150px;"></textarea><br/><hr/>
+								</div>
+							</div>
+							<div class="map_wrap col-md-6">
+							<div id="map" style="width: 550px; height: 470px; position: relative; overflow: hidden;"></div>
+		
+								<div id="menu_wrap" class="bg_white" style="width: 230px">
+									<div class="option">
+										<div>
+											키워드 : <input type="text" value="" id="keyword" size="15">
+											<button id="submitMap">검색하기</button>
+										</div>
+									</div>
+									<hr>
+									<ul id="placesList"></ul>
+									<div id="pagination"></div>
+								</div>
+							</div>
 						</div>
-
+						
+					</div>
+					
+					<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요" class="form-control" style="height: 150px;"></textarea>
+					
+					<div class="row" style="text-align: center;">
+						<br/><br/><input type="button" id="writeBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
+					</div>
+					
 				</form:form>
 			</div>
 		</div>
@@ -658,6 +851,63 @@ function removeAllChildNods(el) {
 
 	<!-- Theme JavaScript -->
 	<script src="<c:url value="/static/js/agency.min.js"/>"></script>
+	
+	<!-- signIn Modal -->
+	<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 style="text-align: center;" class="modal-title" id="myModalLabel">Login</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="signInForm" style="width: 82%; margin: 0 auto">
+								<div class="form-group">
+									 <input class="form-control" type="text" name="userId" placeholder="ID">
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="password" name="password" placeholder="Password">
+									<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
+								</div>
+								<div class="form-group">
+									<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+								</div>
+							</form>
+							<div class="social-buttons" style="margin-left: 50px">
+								<a id="custom-login-btn" href="javascript:loginWithKakao()">
+									<img src="<c:url value="/static/img/kakao.png"/>"width="231" height="auto">
+								</a>
+								<a id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+									<script type="text/javascript">
+										/* id 쓰고 콜백주소 쓴다. */
+										var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+										var state = naver_id_login.getUniqState();
+										naver_id_login.setButton("green", 3,50);
+										naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+										naver_id_login.setState(state);
+										naver_id_login.setPopup();
+										naver_id_login.init_naver_id_login();
+									</script>
+								</a>
+								<%-- <a href="<c:url value="/user/google" /> ">
+									<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+								</a> --%>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="bottom text-center">
+						New here ? 
+						<a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 

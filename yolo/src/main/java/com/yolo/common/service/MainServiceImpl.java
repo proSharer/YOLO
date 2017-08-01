@@ -2,22 +2,20 @@ package com.yolo.common.service;
 
 import java.util.List;
 
-import com.yolo.message.biz.MessageBiz;
-import com.yolo.message.vo.MessageVO;
-import com.yolo.user.vo.UserVO;
+import com.yolo.trip.biz.TripBiz;
+import com.yolo.trip.vo.TripVO;
 
 public class MainServiceImpl implements MainService {
 	
-	private MessageBiz messageBiz;
+	private TripBiz tripBiz;
 	
-	public void setMessageBiz(MessageBiz messageBiz) {
-		this.messageBiz = messageBiz;
+	public void setTripBiz(TripBiz tripBiz) {
+		this.tripBiz = tripBiz;
 	}
 
 	@Override
-	public List<MessageVO> getMessageList(UserVO user) {
-		return messageBiz.getAllMessagesByReceiver(user);
+	public List<TripVO> selectAllNewestTrips() {
+		return tripBiz.selectAllNewestTrips();
 	}
 	
-
 }

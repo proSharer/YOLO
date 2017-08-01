@@ -158,7 +158,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i
 						class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="#page-top">`Solo</a>
+				<a class="navbar-brand page-scroll" href='<c:url value="/home" />'>`Solo</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -166,7 +166,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="#main" id="mainBtn">Main</a>
+					<li><a class="page-scroll" href='<c:url value="/home#main" />' id="mainBtn">Main</a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life

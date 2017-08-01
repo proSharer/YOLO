@@ -46,7 +46,6 @@ public class UserVO {
 	public void setNaverId(String naverId) {
 		this.naverId = naverId;
 	}
-
 	public String getLoginType() {
 		return loginType;
 	}

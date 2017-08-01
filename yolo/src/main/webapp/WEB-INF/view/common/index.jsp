@@ -88,6 +88,29 @@
 				border-top:0 none;
 			}
 		}
+		
+		::-webkit-scrollbar {
+			width: 8px;
+		}
+		
+		/* Track */
+		::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+		}
+		
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+			background: #d1d0cf;
+			-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+		}
+		
+		::-webkit-scrollbar-thumb:window-inactive {
+			background: #d1d0cf;
+		}
 	</style>
 
 </head>
@@ -106,7 +129,6 @@
 					if (data == "OK") {
 						window.location.href = "<c:url value="/home"/>";
 					} else if (data == "FAIL") {
-						alert("로그인 실패");
 						location.reload();
 					}
 			});
@@ -174,17 +196,6 @@
 				var gender = response.gender;
 				var name = response.nickname;
 				var birthday = response.birthday;
-				var user = {
-					userId : userId
-					, email : email
-					, userName : userName
-					, profile_image : profile_image
-					, enc_id : enc_id
-					, age : age
-					, gender : gender
-					, name : name
-					, birthday : birthday
-				};
 				
 				$.post("<c:url value="/user/naver/userInfo"/>", {
 					"userId" : userId
@@ -197,7 +208,9 @@
 					, "name" : name
 					, "birthday" : birthday
 				}, function(response){
-					alert("user.userName = " + user.userName);
+					if ( response == "success" ) {
+						console.log("aa");
+					}
 				});
 			} 
 			else {
@@ -227,7 +240,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i
 						class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="#page-top">`Solo</a>
+				<a class="navbar-brand page-scroll" href='<c:url value="/home"/>'>`Solo</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -235,7 +248,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="#main" id="mainBtn">Main</a>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
@@ -259,11 +272,11 @@
 							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
 						</c:when>
-						<c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
-						</c:when>
+						</c:when> --%>
 						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
@@ -283,59 +296,8 @@
 						</c:when>
 						
 						<c:otherwise>
-							<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
-								<ul id="login-dp" class="dropdown-menu">
-									<li>
-										 <div class="row">
-												<div class="col-md-12">
-													<div class="social-buttons">
-														<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
-															<script type="text/javascript">
-																/* id 쓰고 콜백주소 쓴다. */
-																var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
-																var state = naver_id_login.getUniqState();
-																naver_id_login.setButton("green", 3,20);
-																naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
-																naver_id_login.setState(state);
-																naver_id_login.setPopup();
-																naver_id_login.init_naver_id_login();
-															</script>
-														</form>
-														<a id="custom-login-btn" href="javascript:loginWithKakao()">
-															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
-														</a>
-														<a href="<c:url value="/user/google" /> ">
-															<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
-														</a>
-													
-													</div>
-													 <form id="signInForm" style="width: 194px;">
-															<div class="form-group">
-																 <input style="height:30px" type="text" name="userId" placeholder="ID">
-															</div>
-															<div class="form-group">
-																<input style="height:30px" type="password" name="password" placeholder="Password">
-																<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
-															</div>
-															<div class="form-group">
-																<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
-															</div>
-													 </form>
-												</div>
-												<div class="bottom text-center">
-													New here ? <a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
-												</div>
-										 </div>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<%-- <li><a class="page-scroll"
-							href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li> --%>
-						<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
-						</li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
+							<li><a class="page-scroll" data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -359,6 +321,7 @@
 
 	<!-- Main Grid Section -->
 	<section id="main">
+	
 		<!-- Daily -->
 		<div class="container">
 			<div class="row">
@@ -370,99 +333,27 @@
 				</div>
 			</div>
 			<div class="row" style="text-align: center;">
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal1" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/roundicons.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
-						<p class="text-muted">Graphic Design</p>
+				<c:forEach items="${tripList}" var="trip">
+					<div class="col-md-4 col-sm-6">
+						<div class="imgDiv portfolio-item">
+							<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
+								<div class="portfolio-hover">
+									<div class="portfolio-hover-content"></div>
+								</div>
+								<img src="<c:url value="/trip/download/${trip.tripId}"/>" class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
+							</a>
+						</div><br/>
+						<div class="portfolio-caption">
+							<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">${trip.title}</h4>
+							<p class="text-muted">${trip.userId}</p>
+						</div>
+						<br/>
 					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal2" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/startup-framework.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal3" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/treehouse.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal4" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/golden.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal5" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/escape.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal6" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/dreams.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 		<br />
+		
 		<!-- Trip -->
 		<div class="container">
 			<div class="row">
@@ -471,94 +362,23 @@
 				</div>
 			</div>
 			<div class="row" style="text-align: center;">
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal1" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/roundicons.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Round Icons</h4>
-						<p class="text-muted">Graphic Design</p>
+				<c:forEach items="${tripList}" var="trip">
+					<div class="col-md-4 col-sm-6">
+						<div class="imgDiv portfolio-item">
+							<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
+								<div class="portfolio-hover">
+									<div class="portfolio-hover-content"></div>
+								</div>
+								<img src="<c:url value="/trip/download/${trip.tripId}"/>" class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
+							</a>
+						</div><br/>
+						<div class="portfolio-caption">
+							<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">${trip.title}</h4>
+							<p class="text-muted">${trip.userId}</p>
+						</div>
+						<br/>
 					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal2" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/startup-framework.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Startup Framework</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal3" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/treehouse.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Treehouse</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal4" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/golden.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Golden</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal5" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fa fa-plus fa-3x"></i>
-							</div>
-						</div> <img src="<c:url value="/static/img/escape.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Escape</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
-					<a href="#portfolioModal6" class="portfolio-link"
-						data-toggle="modal">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content"></div>
-						</div> <img src="<c:url value="/static/img/dreams.png"/>"
-						class="img-responsive" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">Dreams</h4>
-						<p class="text-muted">Website Design</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
@@ -567,58 +387,6 @@
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 
-	<!-- Portfolio Modals -->
-	<!-- Use the modals below to showcase details about your portfolio projects! -->
-
-	<!-- Portfolio Modal 1 -->
-	<div class="portfolio-modal modal fade" id="portfolioModal1"
-		tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="close-modal" data-dismiss="modal">
-					<div class="lr">
-						<div class="rl"></div>
-					</div>
-				</div>
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 col-lg-offset-2">
-							<div class="modal-body">
-								<!-- Project Details Go Here -->
-								<h2>Project Name</h2>
-								<p class="item-intro text-muted">Lorem ipsum dolor sit amet
-									consectetur.</p>
-								<img class="img-responsive img-centered"
-									src="img/portfolio/roundicons-free.png" alt="">
-								<p>Use this area to describe your project. Lorem ipsum dolor
-									sit amet, consectetur adipisicing elit. Est blanditiis dolorem
-									culpa incidunt minus dignissimos deserunt repellat aperiam
-									quasi sunt officia expedita beatae cupiditate, maiores
-									repudiandae, nostrum, reiciendis facere nemo!</p>
-								<p>
-									<strong>Want these icons in this portfolio item
-										sample?</strong>You can download 60 of them for free, courtesy of <a
-										href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">RoundIcons.com</a>,
-									or you can purchase the 1500 icon set <a
-										href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">here</a>.
-								</p>
-								<ul class="list-inline">
-									<li>Date: July 2014</li>
-									<li>Client: Round Icons</li>
-									<li>Category: Graphic Design</li>
-								</ul>
-								<button type="button" class="btn btn-primary"
-									data-dismiss="modal">
-									<i class="fa fa-times"></i> Close Project
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<%-- <div><c:import url="http://192.168.201.29:3000"/></div> --%>
 	<div>
 		<input id="loginUserId" type="hidden" name="sender" value="${user.userId}">
 		<input id="receiver" type="hidden" name="receiver" value="This is not a asdf">
@@ -645,6 +413,63 @@
 
 	<!-- Theme JavaScript -->
 	<script src="<c:url value="/static/js/agency.min.js"/>"></script>
+	
+	<!-- signIn Modal -->
+	<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 style="text-align: center;" class="modal-title" id="myModalLabel">Login</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="signInForm" style="width: 82%; margin: 0 auto">
+								<div class="form-group">
+									 <input class="form-control" type="text" name="userId" placeholder="ID">
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="password" name="password" placeholder="Password">
+									<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
+								</div>
+								<div class="form-group">
+									<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+								</div>
+							</form>
+							<div class="social-buttons" style="margin-left: 50px">
+								<a id="custom-login-btn" href="javascript:loginWithKakao()">
+									<img src="<c:url value="/static/img/kakao.png"/>"width="231" height="auto">
+								</a>
+								<a id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+									<script type="text/javascript">
+										/* id 쓰고 콜백주소 쓴다. */
+										var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+										var state = naver_id_login.getUniqState();
+										naver_id_login.setButton("green", 3,50);
+										naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+										naver_id_login.setState(state);
+										naver_id_login.setPopup();
+										naver_id_login.init_naver_id_login();
+									</script>
+								</a>
+								<%-- <a href="<c:url value="/user/google" /> ">
+									<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+								</a> --%>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="bottom text-center">
+						New here ? 
+						<a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 

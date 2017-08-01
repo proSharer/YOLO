@@ -11,7 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Insert title here</title>
+<meta name="google-signin-client_id" content="818893027331-ss8am5r339qu1uespfmobqt23i0hgj41.apps.googleusercontent.com">
+<title>Trip List</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -82,15 +83,40 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 </style>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function(){
 		$("#keyword").val("");
 		var maxHeight = 0;
 		var maxWidth = 0;
-		$('.img').each(function() {
+		$('.img-responsive').each(function() {
 			maxHeight = Math.max(maxHeight, $(this).height());
 			maxWidth = Math.max(maxWidth, $(this).width());
 		});
@@ -134,7 +160,111 @@
 		$("#initBtn").click(function(){
 			location.href="<c:url value="/trip/list/init"/>";
 		});
+		
+		$("#loginBtn").click( function() {
+			$.post(
+				"<c:url value="/user/signIn" />",
+				$("#signInForm").serialize(),
+				function(data) {
+					if (data == "OK") {
+						window.location.href = "<c:url value="/home"/>";
+					} else if (data == "FAIL") {
+						location.reload();
+					}
+			});
+		});
 	});
+	
+	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
+	function loginWithKakao() {
+		// 로그인 창을 띄웁니다.
+		Kakao.Auth.login({
+			success: function(authObj) {
+				var accessToken = authObj.access_token;
+				var refreshToken = authObj.refresh_token;
+				
+				$.post("<c:url value="/user/kakao/savetoken"/>", {
+					"accessToken" : accessToken
+					, "refreshToken" : refreshToken
+				}, function() {});
+				
+				//alert(JSON.stringify(authObj)); 
+				
+				Kakao.API.request({
+					url: '/v1/user/me',
+					success: function(res) {
+						var id = res.id;
+						var nickName = res.properties.nickname;
+						var email = res.kaccount_email;
+						
+						$.post("<c:url value="/user/kakao/signin"/>", {
+							"id" : id
+							, "nickName" : nickName
+							, "email" : email
+						}, function(response){
+							if ( response == "ok" ) {
+								location.reload();
+							}
+						});
+						
+						//alert(JSON.stringify(res));
+				},
+
+					fail: function (error) {
+						alert(JSON.stringify(error));
+					}
+				});
+				
+				
+			},
+				fail: function(err) {
+				alert(JSON.stringify(err));
+			}
+		});
+	}
+	
+	//네이버 로그인 
+	function loginWithNaver() {
+		if (token != null) {
+			if (resultCode == "00") {
+				var userId = response.id;
+				var email = response.email;
+				var userName = response.name;
+				var profile_image = response.profile_image;
+				var enc_id = response.enc_id;
+				var age = response.age;
+				var gender = response.gender;
+				var name = response.nickname;
+				var birthday = response.birthday;
+				
+				$.post("<c:url value="/user/naver/userInfo"/>", {
+					"userId" : userId
+					, "email" : email
+					, "userName" : userName
+					, "profile_image" : profile_image
+					, "enc_id" : enc_id
+					, "age" : age
+					, "gender" : gender
+					, "name" : name
+					, "birthday" : birthday
+				}, function(response){
+					if ( response == "success" ) {
+						console.log("aa");
+					}
+				});
+			} 
+			else {
+				console.log(JSON.stringify(message));
+			}
+		}
+		
+	}
+	
+	function kakaoSignOut() {
+		Kakao.Auth.logout(function() {
+			location.href="<c:url value="/user/kakao/signout"/>"
+		});
+	}
 
 </script>
 
@@ -162,32 +292,56 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="<c:url value="/home#main" />"
-						id="mainBtn">Main</a></li>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
+					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
-							</li>
-							<li><a href='<c:url value="trip/list"/>' class="page-scroll" id="tripBtn">Trip</a>
+							<li><a href='<c:url value="/daily/list"/>'
+								id="dailyBtn">Daily</a></li>
+							<li><a href='<c:url value="/trip/list"/>' id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
 					<c:choose>
-						<c:when test="${user eq null}">
-							<li><a class="page-scroll"
-								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
-							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
-							</li>
+						<c:when test="${ sessionScope._USER_.loginType eq '' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a></li>
 						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'nvr' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
+						</c:when>
+						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
+						</c:when> --%>
+						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
+							<script type="text/javascript">
+								$().ready(function() {
+									$("#kakaoSignout").click(function() {
+										console.log("aa");
+										Kakao.Auth.logout(function () {
+											location.href="<c:url value="/user/kakao/signout"/>"
+										});
+									});
+								});
+							
+							</script>
+							
+						</c:when>
+						
 						<c:otherwise>
-							<li><a class="page-scroll"
-								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
-							</li>
-							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
-							</li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
+							<li><a class="page-scroll" data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
 
@@ -269,28 +423,24 @@
 						<input type="button" class="btn btn-search btn-default" id="initBtn" value="초기화"/>
 					
 						</div>
+					</div>
 				</div>
-				</div>
 				<br />
-				<br />
-				<br />
-				<br />
-				<a href="<c:url value="/trip/write"/>">글쓰기</a>
+				<c:if test="${!empty sessionScope._USER_}">
+					<a href="<c:url value="/trip/write"/>">글쓰기</a>
+				</c:if>
+				<br/>
+				<br/>
+				<br/>
 				<div class="row" style="text-align: center;">
 					<c:forEach items="${tripList.tripList}" var="trip">
 						<div class="col-md-4 col-sm-6">
 							<div class="imgDiv portfolio-item">
-								<a href="<c:url value="/trip/detail/${trip.tripId}"/>">
-								
-								<%-- <a href="#portfolioModal1" class="portfolio-link"
-									data-toggle="modal" href="<c:url value="/trip/detail/${trip.tripId}"/>"> --%>
-									
+								<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
-									</div> <img class="img"
-									src="<c:url value="/trip/download/${trip.tripId}"/>"
-									class="img-responsive" alt=""
-									style="width: 360px; height: 260.09px; margin: auto;">
+									</div>
+									<img src="<c:url value="/trip/download/${trip.tripId}"/>" class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
 								</a>
 							</div><br/>
 							<div class="portfolio-caption">
@@ -332,6 +482,63 @@
 
 	<!-- Theme JavaScript -->
 	<script src="<c:url value="/static/js/agency.min.js"/>"></script>
+	
+	<!-- signIn Modal -->
+	<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 style="text-align: center;" class="modal-title" id="myModalLabel">Login</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="signInForm" style="width: 82%; margin: 0 auto">
+								<div class="form-group">
+									 <input class="form-control" type="text" name="userId" placeholder="ID">
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="password" name="password" placeholder="Password">
+									<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
+								</div>
+								<div class="form-group">
+									<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+								</div>
+							</form>
+							<div class="social-buttons" style="margin-left: 50px">
+								<a id="custom-login-btn" href="javascript:loginWithKakao()">
+									<img src="<c:url value="/static/img/kakao.png"/>"width="231" height="auto">
+								</a>
+								<a id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+									<script type="text/javascript">
+										/* id 쓰고 콜백주소 쓴다. */
+										var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+										var state = naver_id_login.getUniqState();
+										naver_id_login.setButton("green", 3,50);
+										naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+										naver_id_login.setState(state);
+										naver_id_login.setPopup();
+										naver_id_login.init_naver_id_login();
+									</script>
+								</a>
+								<%-- <a href="<c:url value="/user/google" /> ">
+									<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+								</a> --%>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="bottom text-center">
+						New here ? 
+						<a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 

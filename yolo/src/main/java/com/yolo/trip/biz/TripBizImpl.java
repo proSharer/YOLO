@@ -94,5 +94,10 @@ public class TripBizImpl implements TripBiz {
 	public List<TripVO> selectAllTripByUserId(String userId) {
 		return tripDao.getAllTripByUserId(userId);
 	}
+	
+	@Override
+	public List<TripVO> selectAllNewestTrips() {
+		return tripDao.getAllNewestTrips();
+	}
 
 }
