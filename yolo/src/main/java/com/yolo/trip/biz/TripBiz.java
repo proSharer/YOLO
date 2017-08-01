@@ -23,4 +23,7 @@ public interface TripBiz {
 	public boolean modifyOneTrip(TripVO tripVO);
 	
 	public List<TripVO> selectAllTripByUserId(String userId);
+
+	public List<TripVO> selectAllNewestTrips();
+
 }

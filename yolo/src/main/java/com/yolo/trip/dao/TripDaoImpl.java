@@ -59,5 +59,10 @@ public class TripDaoImpl extends SqlSessionDaoSupport implements TripDao {
 	public List<TripVO> getAllTripByUserId(String userId) {
 		return getSqlSession().selectList("TripDao.getAllTripByUserId", userId);
 	}
+	
+	@Override
+	public List<TripVO> getAllNewestTrips() {
+		return getSqlSession().selectList("TripDao.getAllNewestTrips");
+	}
 
 }

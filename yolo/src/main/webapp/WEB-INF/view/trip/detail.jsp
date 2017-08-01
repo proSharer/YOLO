@@ -349,7 +349,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href='<c:url value="/home"/>' id="mainBtn">Main</a>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life

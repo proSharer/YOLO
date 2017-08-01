@@ -292,7 +292,7 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href='<c:url value="/home"/>' id="mainBtn">Main</a>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
 					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
@@ -423,7 +423,7 @@
 						<input type="button" class="btn btn-search btn-default" id="initBtn" value="초기화"/>
 					
 						</div>
-				</div>
+					</div>
 				</div>
 				<br />
 				<c:if test="${!empty sessionScope._USER_}">
@@ -437,10 +437,6 @@
 						<div class="col-md-4 col-sm-6">
 							<div class="imgDiv portfolio-item">
 								<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
-								
-								<%-- <a href="#portfolioModal1" class="portfolio-link"
-									data-toggle="modal" href="<c:url value="/trip/detail/${trip.tripId}"/>"> --%>
-									
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
 									</div>

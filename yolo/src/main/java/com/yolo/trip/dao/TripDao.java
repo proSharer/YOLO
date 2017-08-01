@@ -27,4 +27,6 @@ public interface TripDao {
 	
 	public List<TripVO> getAllTripByUserId(String userId);
 	
+	public List<TripVO> getAllNewestTrips();
+	
 }

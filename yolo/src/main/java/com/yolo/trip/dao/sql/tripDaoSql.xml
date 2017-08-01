@@ -107,6 +107,18 @@
 		WHERE	TR_ID = #{tripId}
 	</select>
 	
+	<select id="getAllNewestTrips" resultType="TripVO">
+		SELECT	TR_ID tripId
+				, TITLE title
+				, CRT_DT createDate
+				, USR_ID userId
+				, LIKE_CNT likeCount
+				, OVER_ALL overAll
+		FROM	TRIP
+		WHERE	ROWNUM <![CDATA[<=]]> 9
+		ORDER	BY	CRT_DT	DESC
+	</select>
+	
 	<update id="tripLikeCountUpdatePlus" parameterType="string">
 		UPDATE TRIP
 		SET     LIKE_CNT = LIKE_CNT + 1
