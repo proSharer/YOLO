@@ -13,6 +13,9 @@
 
 	<bean id="userServiceImpl" class="com.yolo.user.service.UserServiceImpl">
 		<property name="userBiz" ref="userBizImpl" />
+		<property name="messageBiz" ref="messageBizImpl"/>
+		<property name="tripBiz" ref="tripBizImpl"/>
+		<property name="tripReplyBiz" ref="tripReplyBizImpl"/>
 	</bean>
 
 

@@ -129,4 +129,16 @@
 		WHERE	TR_ID = #{tripId}
 	</update>
 	
+	<select id="getAllTripByUserId" resultType="TripVO" parameterType="string">
+		SELECT /* [TripDao][getOneTrip] */
+				TR_ID tripId
+				, TITLE title
+				, CRT_DT createDate
+				, USR_ID userId
+				, LIKE_CNT likeCount
+				, OVER_ALL overAll
+		FROM	TRIP
+		WHERE	USR_ID = #{userId}
+	</select>
+	
 </mapper>

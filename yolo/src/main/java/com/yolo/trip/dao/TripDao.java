@@ -25,4 +25,6 @@ public interface TripDao {
 	
 	public int updateOneTrip(TripVO tripVO);
 	
+	public List<TripVO> getAllTripByUserId(String userId);
+	
 }

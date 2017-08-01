@@ -25,6 +25,7 @@
 	margin-left: 5px;
 }
 
+
 ::-webkit-scrollbar {
 	width: 8px;
 }
@@ -46,6 +47,187 @@
 
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #d1d0cf;
+}
+
+#tripListBtn, #replyListBtn {
+	border: 0px transparent;
+	border-radius: 5px;
+	height: 25px;
+	width: 120px;
+	background-color: #d1d0cf;
+	color: #777;
+	margin-top: 10px;
+	margin-left: 10px;
+
+}
+
+/* /* nav bar search box - drop down menu button */
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.dropdown-menu .label-icon {
+	margin-left: 5px;
+}
+
+* /
+
+.wrap {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+}
+
+p.form-title {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	font-weight: 600;
+ 	margin-left:43%;
+	color: #7f7f7f;
+	margin-top: 5%;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+}
+
+form {
+	width: 250px;
+	margin: 0 auto;
+}
+
+form.login input[type="text"], form.login input[type="password"] {
+	width: 100%;
+	margin: 0;
+	padding: 5px 10px;
+	background: 0;
+	border: 0;
+	border-bottom: 1px solid #ccc;
+	outline: 0;
+	font-style: italic;
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: 1px;
+	margin-bottom: 5px;
+	color: #ccc;
+	outline: 0;
+}
+
+form.login input[type="submit"] {
+	width: 100%;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-top: 16px;
+	outline: 0;
+	cursor: pointer;
+	letter-spacing: 1px;
+}
+
+form.login input[type="submit"]:hover {
+	transition: background-color 0.5s ease;
+}
+
+form.login .remember-forgot {
+	float: left;
+	width: 100%;
+	margin: 10px 0 0 0;
+}
+
+form.login .forgot-pass-content {
+	min-height: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+form.login label, form.login a {
+	font-size: 12px;
+	font-weight: 400;
+	color: #FFFFFF;
+}
+
+form.login a {
+	transition: color 0.5s ease;
+}
+
+form.login a:hover {
+	color: #d66f11;
+}
+
+.pr-wrap {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	display: none;
+}
+
+.show-pass-reset {
+	display: block !important;
+}
+
+.pass-reset {
+	margin: 0 auto;
+	width: 250px;
+	position: relative;
+	margin-top: 22%;
+	z-index: 999;
+	background: #FFFFFF;
+	padding: 20px 15px;
+}
+
+.pass-reset label {
+	font-size: 12px;
+	font-weight: 400;
+	margin-bottom: 15px;
+}
+
+.pass-reset input[type="email"] {
+	width: 100%;
+	margin: 5px 0 0 0;
+	padding: 5px 10px;
+	background: 0;
+	border: 0;
+	border-bottom: 1px solid #000000;
+	outline: 0;
+	font-style: italic;
+	font-size: 12px;
+	font-weight: 400;
+	letter-spacing: 1px;
+	margin-bottom: 5px;
+	color: #000000;
+	outline: 0;
+}
+
+.pass-reset input[type="submit"] {
+	width: 100%;
+	border: 0;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-top: 10px;
+	outline: 0;
+	cursor: pointer;
+	letter-spacing: 1px;
+}
+
+.pass-reset input[type="submit"]:hover {
+	transition: background-color 0.5s ease;
+}
+
+.posted-by {
+	position: absolute;
+	bottom: 26px;
+	margin: 0 auto;
+	color: #FFF;
+	background-color: rgba(0, 0, 0, 0.66);
+	padding: 10px;
+	left: 45%;
 }
 </style>
 
@@ -87,7 +269,11 @@
 <script type="text/javascript">
 	$().ready( function() {
 		$("#profileDivBtn").click(function() {
+			$("#pw").val("");
 			$("#change1Div").css({
+				"display" : "none"
+			});
+			$("#change3Div").css({
 				"display" : "none"
 			});
 			$("#change2Div").css({
@@ -116,6 +302,76 @@
 						alert("수정이 실패 하였습니다.");
 					}
 			});
+		});
+		$("#tripListBtn").click(function(){
+			$("#tripList").css({
+				"display" : "block"
+			});
+			$("#replyList").css({
+				"display" : "none"
+			});
+		});
+		$("#replyListBtn").click(function(){
+			$("#replyList").css({
+				"display" : "block"
+			});
+			$("#tripList").css({
+				"display" : "none"
+			});
+		});
+		$("#confirmBtn").click(function(){
+			$.post("<c:url value="/user/cofrimPassword"/>",{
+				"password" : $("#pw").val()
+			},function(response){
+				var res = JSON.parse(response);
+				if( res.status == "success") {
+					//alert("성공!");
+					$("#pwCheck").css("display","none");
+					$("#change3Div").css({
+						"display" : "block"
+					});
+					$("#change2Div").css({
+						"display" : "none"
+					});
+					
+				}
+				else{
+					alert("올바르지 않은 비밀번호 입니다.");
+				}
+			});
+		});
+		$("#modifyBtn").click(function(){
+			$.post("<c:url value="/user/verify"/>",{
+				"password" : $("#modifyPw").val()
+			},function(response){
+				var res = JSON.parse(response);
+				if ( res.status == "fail" ){
+					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");
+				}
+				else{
+					$("#modifyForm").attr({
+						"action" : "<c:url value="/user/modify"/>",
+						"method" : "post"
+					}).submit();
+				}
+			});
+		});
+ 		$("#confirmPw").keydown(function() {
+ 			console.log("움직");
+			if( $("#modifyPw").val() != $("#confirmPw").val() ){
+				$("#pwCheck").css("display","block");
+			}
+			if( $("#modifyPw").val() == $("#confirmPw").val() ){
+				$("#pwCheck").css("display","none");
+			}
+		});
+		$("#confirmPw").keyup(function() {
+			if( $("#modifyPw").val() != $("#confirmPw").val() ){
+				$("#pwCheck").css("display","block");
+			}
+			if( $("#modifyPw").val() == $("#confirmPw").val() ){
+				$("#pwCheck").css("display","none");
+			}
 		});
 	});
 </script>
@@ -197,22 +453,112 @@
 							<input id="writeMessageBtn" type="button" value="+" style="border: 1px solid #b2b2b2; font-weight: bold; color: #b2b2b2; background-color: transparent;"
 								onclick="window.open('/yolo/message/write','window', 'width=450,height=400')"/>
 						</div>
-						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%"></div>
-						<div style="background-color: #e5e5e5; height: 290px; width: 96%"></div>
+						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%">
+							<div style="padding:10px;"> 
+								받은쪽지함<br/><br/>
+								<table>
+									<tr>
+										<th style="width:20%;">Sender</th>
+										<th style="width:30%;">Content</th>
+										<th style="width:40%;">Date</th>
+									</tr>
+									<c:forEach items="${MessagesByReceiver}" var="message">
+										<tr>
+											<td>${message.sender} </td>
+											<td>
+												 <a href="#"><p style="display:inline;" onclick="window.open('/yolo/message/receive/detail/${message.messageId}','window', 'width=500,height=410')"> ${message.content} </p></a>
+											</td> 
+										 	<td>${message.sendTime}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
+						
+						<div style="background-color: #e5e5e5; height: 290px; width: 96%">
+							<div style="padding:10px;"> 
+								보낸쪽지함<br/><br/>
+								<table>
+									<tr>
+										<th style="width:20%;">Receiver</th>
+										<th style="width:30%;">Content</th>
+										<th style="width:40%;">Date</th>
+									</tr>
+									<c:forEach items="${MessagesBySender}" var="message">
+										<tr>
+											<td>${message.receiver} </td>
+											<td>
+												 <a href="#"><p style="display:inline;" onclick="window.open('/yolo/message/send/detail/${message.messageId}','window', 'width=500,height=410')"> ${message.content} </p></a>
+											</td> 
+										 	<td>${message.sendTime}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
 					</div>
-					<div style="background-color: red; display: inline-block; float: left; width: 35%; height: 640px"></div>
+					<div style="background-color: #e5e5e5; display: inline-block; float: left; width: 35%; height: 640px">
+ 						<input type="button" id="tripListBtn" value="내가쓴글">
+ 						<input type="button" id="replyListBtn" value="나에게 달린댓글">
+ 						<div id="tripList" style="padding:10px;"> 
+	 						<table>
+								<tr>
+									<th style="width:60%;">Title</th>
+									<th style="width:40%;">Date</th>
+								</tr>
+								<c:forEach items="${tripList}" var="trip">
+									<tr>
+										<td>
+											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${trip.tripId}';"> ${trip.title}</p></a>
+											
+										</td>
+										<td>${trip.createDate}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+						 <div id="replyList" style="padding:10px; display:none;"> 
+	 						<table>
+								<tr>
+									<th style="width:35%;">Writer</th>
+									<th style="width:65%;">Content</th>
+								</tr>
+								<c:forEach items="${tripReplyList}" var="reply">
+									<tr>
+										<td>${reply.userId}</td>
+										<td>
+											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${reply.tripId}';">${reply.content}</p></a>
+											
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div id="change2Div" style="display: none;">
-					<%-- <jsp:include page="/WEB-INF/view/user/myPageProfile.jsp"></jsp:include> --%>
-					<form id="userModifyForm" class="modify">
-						<input type="hidden" name="userId" value="${user.userId}" /> 
-						ID : ${user.userId}<br /> 
-						PW : <input type="text" name="password" value="${user.password}"><br /> NAME : <input type="text"
-								name="userName" value="${user.userName}"><br /> 
-						Grade : ${user.authId}<br /> 
-						Join Date : ${user.joinDate}<br /> 
-						<input type="button" id="modifyBtn" value="submit">
-					</form>
+					<div class="wrap">
+ 						<p class="form-title" style="margin-bottom: 45px;">비밀번호 확인</p> 
+						<form id="confirmForm" class="login">
+							<input type="password" name="password" id="pw" placeholder="비밀번호를 입력하세요" style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
+							<input type="button" id="confirmBtn" class="btn btn-success btn-sm" value="Submit" 
+								style=" width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;"/>			
+						</form>
+					</div>
+				</div>
+				<div id="change3Div" style="display: none;">
+					<div class="wrap">
+ 						<p class="form-title" style="margin-bottom: 45px;">비밀번호 변경</p> 
+						<form id="modifyForm" class="login">
+							<input type="text" name="userId" value="${user.userId}" readonly style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
+							<input type="text" name="userName" value="${user.userName}" readonly style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
+							<input type="password" id="modifyPw" name="password" placeholder="새로운 비밀번호를 입력하세요" style="color: #7f7f7f; margin-bottom: 20px;"/><br/>
+							<input type="password" id="confirmPw" placeholder="비밀번호 확인" style="color: #7f7f7f; margin-bottom: 5px;"/><br/>
+							<p id="pwCheck" style="color: red; display: none;"> 일치한 비밀번호를 입력해주세요. </p>
+							<input type="button" id="modifyBtn" class="btn btn-success btn-sm" value="Submit" 
+								style=" width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;"/>			
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

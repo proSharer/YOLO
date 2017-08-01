@@ -1,5 +1,7 @@
 package com.yolo.trip.biz;
 
+import java.util.List;
+
 import com.yolo.trip.vo.TripListVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
@@ -19,4 +21,6 @@ public interface TripBiz {
 	public boolean tripLikeCountMinus(String tripId);
 	
 	public boolean modifyOneTrip(TripVO tripVO);
+	
+	public List<TripVO> selectAllTripByUserId(String userId);
 }
