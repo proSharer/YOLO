@@ -1,4 +1,4 @@
-package com.yolo.user.web;
+package com.yolo.userapi.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,11 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yolo.user.vo.KakaoVO;
 import com.yolo.user.vo.UserVO;
+import com.yolo.userapi.service.UserApiService;
+import com.yolo.userapi.vo.KakaoVO;
 
 @Controller
 public class KakaoController {
+	
+	private UserApiService userApiService;
+	
+	public void setUserApiService(UserApiService userApiService) {
+		this.userApiService = userApiService;
+	}
 
 	private Logger logger = LoggerFactory.getLogger(KakaoController.class);
 

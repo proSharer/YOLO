@@ -1,4 +1,4 @@
-package com.yolo.user.web;
+package com.yolo.userapi.web;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,17 +19,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.yolo.user.vo.NaverUserVO;
 import com.yolo.user.vo.UserVO;
+import com.yolo.userapi.service.UserApiService;
+import com.yolo.userapi.vo.NaverUserVO;
 
 @Controller
 public class NaverController {
+	
+	private UserApiService userApiService;
+	
+	public void setUserApiService(UserApiService userApiService) {
+		this.userApiService = userApiService;
+	}
 	
 	Logger logger = LoggerFactory.getLogger(NaverController.class);
 	
 	@RequestMapping("/user/callback")
 	public ModelAndView callback() throws IOException {
-		return new ModelAndView("user/callback");
+		return new ModelAndView("user/callBack");
 	}
 
 	@RequestMapping("/user/naver/savetoken")
@@ -44,26 +51,17 @@ public class NaverController {
 		session.setAttribute("_USER_", naverUserVO);
 		
 		if (naverUserVO != null) {
-			logger.info("saveToken");
-			naverUserInsert(session, response);
+			naverUserInfo(session);
 		}
-	}
-	
-	@RequestMapping(value="/user/naver/userInfo", method=RequestMethod.GET)
-	public String naverUserInsert(HttpSession session, HttpServletResponse response) {
-		logger.info("naverUserInsert");
-		naverUserInfo(session, response);
-		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/user/naver/userInfo", method = RequestMethod.POST)
-	public void naverUserInfo(HttpSession session, HttpServletResponse response) {
+	public void naverUserInfo(HttpSession session) {
 		NaverUserVO naverUserVO = (NaverUserVO) session.getAttribute("_USER_");
 
 		String token = naverUserVO.getAccessToken().toString();// 네이버 로그인 접근 토큰;
 		String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
-		System.out.println("naverUserInfo");
 		try {
 			String apiURL = "https://openapi.naver.com/v1/nid/me";
 			URL userInfoUrl = new URL(apiURL);
@@ -89,11 +87,10 @@ public class NaverController {
 				Gson gson = new Gson();
 				Map result = gson.fromJson(res.toString(), Map.class);
 				
-				String json = gson.toJson(result.get("response"));
-				logger.info(json);
-				NaverUserVO profile = gson.fromJson(json, NaverUserVO.class);
-				logger.info("id" + profile.getNaverId());
-				logger.info("name" + profile.getNaverName());
+				String code = gson.toJson(result.get("response"));
+				logger.info(code);
+				spritCode(code);
+				
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -140,9 +137,15 @@ public class NaverController {
 	public void spritCode(String responseCode) {
 		String[] code = responseCode.split(",");
 		
-		for( int i = 0; i < code.length; i++){
-			logger.info(code[i]);
-		}
+		String[] idSplit = code[5].split("\"");
+		String[] nameSplit = code[6].split("\"");
+		
+		String id = idSplit[3];
+		String name = nameSplit[3];
+		
+		logger.info(id);
+		logger.info(name);
+		
 	}
 
 }

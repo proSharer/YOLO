@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDaoApi">
+
+	<insert id="UserApiInsert" parameterType="UserVO">
+		INSERT	INTO		USR_API	(
+								USR_API_ID
+								, USR_API_NM
+								)
+		VALUES					(
+								<if test="userNaverApiId != null">
+								'NA' + #{userNaverApiId}
+								, #{userNaverApiName}
+								</if>
+								<if test="userKakaoApiId != null">
+								'KA' + #{userKakaoApiId}
+								, #{userKakaoApiName}
+								</if>
+								)
+	</insert>
+
+</mapper>

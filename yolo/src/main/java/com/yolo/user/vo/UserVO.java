@@ -18,8 +18,45 @@ public class UserVO {
 	private String password;
 	private String joinDate;
 	private String authId;
-
+	
+	private String userNaverApiId;
+	private String userNaverApiName;
+	private String userKakaoApiId;
+	private String userKakaoApiName;
+	
 	private String salt;
+	
+	public String getUserNaverApiId() {
+		return userNaverApiId;
+	}
+
+	public void setUserNaverApiId(String userNaverApiId) {
+		this.userNaverApiId = userNaverApiId;
+	}
+
+	public String getUserNaverApiName() {
+		return userNaverApiName;
+	}
+
+	public void setUserNaverApiName(String userNaverApiName) {
+		this.userNaverApiName = userNaverApiName;
+	}
+
+	public String getUserKakaoApiId() {
+		return userKakaoApiId;
+	}
+
+	public void setUserKakaoApiId(String userKakaoApiId) {
+		this.userKakaoApiId = userKakaoApiId;
+	}
+
+	public String getUserKakaoApiName() {
+		return userKakaoApiName;
+	}
+
+	public void setUserKakaoApiName(String userKakaoApiName) {
+		this.userKakaoApiName = userKakaoApiName;
+	}
 
 	public String getLoginType() {
 		return loginType;

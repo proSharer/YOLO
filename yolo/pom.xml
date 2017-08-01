@@ -50,8 +50,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>6.0</version>
+			<artifactId>ojdbc14</artifactId>
+			<version>14.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

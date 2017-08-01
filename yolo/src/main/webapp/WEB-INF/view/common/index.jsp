@@ -564,7 +564,7 @@
 		<input id="content" type="hidden" name="content" value="">
 	</div>
 	
-	<div><c:import url="http://192.168.201.29:3000"/></div>
+	<%-- <div><c:import url="http://192.168.201.29:3000"/></div> --%>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>

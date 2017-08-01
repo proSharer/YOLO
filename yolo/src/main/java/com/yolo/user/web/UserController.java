@@ -44,32 +44,6 @@ public class UserController {
 
 	}
 	
-	// NAVER CALL BACK
-	@RequestMapping("/callBack")
-	public String callBack(@RequestParam String state, @RequestParam String code, HttpServletRequest request) 
-			throws UnsupportedEncodingException{
-		String storedState = (String) request.getSession().getAttribute("state"); // 세션에 저장된 토큰을 받아온다.
-		if(!state.equals(storedState)) {	// 세션에 저장되 토큰과 인증을 요청해서 받은 토큰이 일치하는지 검증한다.
-			System.out.println("401 unauthorized");	// 인증이 실패했을 때의 처리 부분.
-			return "redirect:/";
-		}
-		
-			// AccessToken 요청 및 파싱할 부분.
-		return "redirect:/";
-	}
-	
-
-	// 카카오톡
-	@RequestMapping(value = "/user/loginByKakao", method = RequestMethod.GET)
-	public ModelAndView viewSignInPageByKakao() {
-		ModelAndView view = new ModelAndView();
-
-		view.setViewName("user/loginByKakao");
-
-		return view;
-	}
-
-	
 	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
 	ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
 
