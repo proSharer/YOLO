@@ -48,6 +48,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean modifyOneUser(UserVO userVO) {
+		String salt = SHA256Util.generateSalt();
+		System.out.println("salt:"+salt);
+		userVO.setSalt(salt);
+
+		String password = userVO.getPassword();
+		password = SHA256Util.getEncrypt(password, salt);
+		userVO.setPassword(password);
 		return userBiz.modifyOneUser(userVO);
 	}
 
@@ -65,7 +72,7 @@ public class UserServiceImpl implements UserService {
 		String password = userVO.getPassword();
 		password = SHA256Util.getEncrypt(password, salt);
 		userVO.setPassword(password);
-		
+		System.out.println("Service Impl pasword:"+password);
 		UserVO user = userBiz.selectOneUser(userVO);
 
 		if (user != null) {

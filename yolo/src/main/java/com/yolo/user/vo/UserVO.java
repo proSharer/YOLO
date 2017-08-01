@@ -21,6 +21,7 @@ public class UserVO {
 	private String googleId;
 	private String kakaoId;
 	private String naverId;
+	private String salt;
 
 	public String getGoogleId() {
 		return googleId;
@@ -45,8 +46,6 @@ public class UserVO {
 	public void setNaverId(String naverId) {
 		this.naverId = naverId;
 	}
-
-	private String salt;
 
 	public String getLoginType() {
 		return loginType;

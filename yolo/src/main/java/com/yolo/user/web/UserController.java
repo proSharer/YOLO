@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.yolo.message.vo.MessageVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.tripreply.vo.TripReplyVO;
@@ -97,9 +99,7 @@ public class UserController {
 				throw new RuntimeException(e.getMessage(), e);
 			}
 		}
-		
-		userVO.setLoginType(UserVO.DEFAULT);
-		
+
 		UserVO login = userService.selectOneUser(userVO);
 		login.setLoginType(UserVO.DEFAULT);
 		if (login != null) {
@@ -232,7 +232,7 @@ public class UserController {
 	
 	@RequestMapping("/message/receive/detail/{id}")
 	public ModelAndView viewReceiveMessageDetail(@PathVariable String id) {
-		System.out.println("Test");
+
 		ModelAndView view = new ModelAndView();
 		
 		MessageVO message = userService.selectOneMessage(id); 
@@ -253,32 +253,52 @@ public class UserController {
 		return view;
 	}
 	
-	@RequestMapping(value="/user/mypage/profile", method=RequestMethod.POST)
-	public void doMyPage(UserVO userVO, HttpServletResponse response){
+	@ResponseBody
+	@RequestMapping(value="/user/verify", method=RequestMethod.POST)
+	public String doVerifyUser(HttpServletResponse response, HttpServletRequest request){
 		
-	String pw = userVO.getPassword();
-			if (!pw.equals("")) {
-				try {
-					userService.modifyOneUser(userVO);
-					PrintWriter writer = response.getWriter();
-					writer.append("OK");
-					writer.flush();
-					writer.close();
-				} catch (IOException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				}
 
-			} else {
-				try {
-					PrintWriter writer = response.getWriter();
-					writer.append("FAIL");
-					writer.flush();
-					writer.close();
-				} catch (IOException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				}
-			}
+		String password = request.getParameter("password");
+		boolean isValidPassword = verify(password);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if (isValidPassword) {
+			map.put("status", "success");
+		} else {
+			map.put("status", "fail");
+		}
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		
+		return json;
+		
+	}
+	
+	@RequestMapping(value="/user/modify", method=RequestMethod.POST)
+	public String doModifyUser(UserVO userVO, HttpServletResponse response){
+		
+		System.out.println(userVO.getUserId());
+		System.out.println(userVO.getPassword());
+		boolean isSuccess = userService.modifyOneUser(userVO);
+		
+		if (isSuccess){
+			return "redirect:/user/mypage";
+		}
+		else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('정보 수정에 실패 하였습니다.'); history.go(-1);</script>"); 
+				out.flush(); 
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return "";
+		}
 		
 	}
 	
@@ -304,6 +324,30 @@ public class UserController {
 		}
 		
 		return data;
+	}
+	
+	@RequestMapping("/user/cofrimPassword")
+	@ResponseBody
+	public String doConfirmPassword(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("_USER_");
+	
+		String password = request.getParameter("password");
+		user.setPassword(password);
+		System.out.println("Controller:"+password);
+		UserVO userVO = userService.selectOneUser(user);
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (userVO != null) {
+			map.put("status", "success");
+			map.put("user", userVO);
+		} else {
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		
+		return json;
 	}
 
 	public boolean verify(String password) {

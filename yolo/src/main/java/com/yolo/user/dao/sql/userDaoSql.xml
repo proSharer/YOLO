@@ -99,6 +99,7 @@
 		UPDATE	USR
 		SET		USR_NM = #{userName}
 				, PWS = #{password}
+				, SALT = #{salt}
 		WHERE	USR_ID = #{userId}
 	</update>
 	
