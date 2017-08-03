@@ -105,7 +105,7 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #d1d0cf;
 }
-
+#LeftBottomLayerFixed {position:fixed;left:20px;bottom:20px}
 </style>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -138,7 +138,6 @@
 			$("#searchType").val(option);
 			
 			if ($("#searchType").val() == '5'){
-				console.log($("#searchType").val());
  				$("#regionOptionBtn").show();
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
@@ -157,10 +156,15 @@
 			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
 			
 			var option = $(this).find("span").data("option");
+			var name = $(this).find("span").data("name");
+			$("#keyword").val(name);
 			
-			$("#searchType").val(option);
+			$("#weatherDiv").load('<c:url value="/weather/"/>'+name);
+			$("#weatherDiv").attr('id', 'LeftBottomLayerFixed');
+			$("#LeftBottomLayerFixed").css('display', 'block');
+			
 			console.log($("#searchType").val());
-			// 지역 코드 받아옴. TO DO : 이제부터 지역별 검색을 해야함.. 
+			console.log($("#keyword").val());
 		});
 		
 		$("#keyword").keypress(function(event){
@@ -187,6 +191,7 @@
 					}
 			});
 		});
+		$("#LeftBottomLayerFixed").css('display', 'none');
 	});
 	
 	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
@@ -420,7 +425,8 @@
 							<ul class="dropdown-menu pull-left" role="menu">
 								<c:forEach items="${regionList}" var="region">
 								<li><a href="#" class="selectOption"> 
-								<span class="label-icon" data-option="${region.regionId}">${region.regionName}</span>
+								<span class="label-icon" data-option="${region.regionId}" data-name="${region.regionName}">${region.regionName}</span>
+								
 								</a></li>								
 								</c:forEach>
 							</ul>
@@ -552,6 +558,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<!-- Weather Div -->
+	<div id="weatherDiv" style="text-align: center; background-color: transparent;">
 	</div>
 
 </body>

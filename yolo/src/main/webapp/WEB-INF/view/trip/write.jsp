@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Yolo : Trip List</title>
+<title>Yolo : Trip write</title>
 
 <style type="text/css">
 
