@@ -131,11 +131,7 @@
 				$('#addUserIdModal').modal('show');
 			}
 		}
-		$.post("<c:url value="/user/naver/savetoken"/>", {}, function(data) {
-			if ( data == "OK" ) {
-				location.reload();
-			}
-		});
+		
 		$("#submitBtm").click(function() {
 			$.post("<c:url value="/user/plusId" />", $("#addUserIdForm").serialize(), function(data) {
 				if ( data == "OK" ) {
