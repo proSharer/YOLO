@@ -187,7 +187,8 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						window.location.href = "<c:url value="/home"/>";
+						/* window.location.href = "<c:url value="/home"/>"; */
+						location.reload();
 					} else if (data == "FAIL") {
 						location.reload();
 					}
