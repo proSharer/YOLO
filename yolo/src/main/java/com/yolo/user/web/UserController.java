@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ import com.yolo.user.vo.UserVO;
 @Controller()
 public class UserController {
 
-	// private Logger logger = LoggerFactory.getLogger(UserController.class);
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private UserService userService;
 
@@ -82,7 +84,6 @@ public class UserController {
 				HttpSession session = request.getSession();
 				session.setAttribute("_USER_", login);
 				login.setLoginType(UserVO.DEFAULT);
-				
 				PrintWriter write = response.getWriter();
 				write.append("OK");
 				write.flush();
