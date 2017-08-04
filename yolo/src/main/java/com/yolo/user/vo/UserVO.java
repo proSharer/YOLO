@@ -65,6 +65,17 @@ public class UserVO {
 
 	public void setUserKakaoApiName(String userKakaoApiName) {
 		this.userKakaoApiName = userKakaoApiName;
+	private String extraApiEmail;
+
+	private String salt;
+	
+
+	public String getExtraApiEmail() {
+		return extraApiEmail;
+	}
+
+	public void setExtraApiEmail(String extraApiEmail) {
+		this.extraApiEmail = extraApiEmail;
 	}
 
 	public String getLoginType() {
