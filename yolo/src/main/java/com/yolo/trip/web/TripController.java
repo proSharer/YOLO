@@ -3,9 +3,11 @@ package com.yolo.trip.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +28,7 @@ import com.yolo.common.web.PageExplorer;
 import com.yolo.common.web.checker.ExtFilter;
 import com.yolo.common.web.checker.ExtensionFilter;
 import com.yolo.common.web.checker.ExtensionFilterFactory;
-import com.yolo.daily.vo.DailyVO;
+import com.yolo.hashtag.vo.HashTagVO;
 import com.yolo.region.vo.RegionVO;
 import com.yolo.trip.service.TripService;
 import com.yolo.trip.vo.TripListVO;
@@ -96,17 +98,17 @@ public class TripController {
 	@RequestMapping(value = "/trip/write", method = RequestMethod.POST)
 	public String insertNewTripPart(HttpServletRequest request, TripVO tripVO) {
 
-		System.out.println(tripVO.getTripPartVO().get(0).getX());
-		System.out.println(tripVO.getTripPartVO().get(0).getY());
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("_USER_");
 
 		String userId = userVO.getUserId();
 		tripVO.setUserId(userId);
-
+		
 		for (int i = 0; i < tripVO.getTripPartVO().size(); i++) {
-
-			System.out.println(tripVO.getTripPartVO().get(i).getPlace());
+			String map = tripVO.getTripPartVO().get(i).getMap();
+			String region = map.substring(0,2);
+			System.out.println("region"+region);
+			tripVO.getTripPartVO().get(i).setRegion(region);
 			MultipartFile file = tripVO.getTripPartVO().get(i).getFile();
 
 			if (!file.isEmpty() && file.getSize() > 0) {
@@ -157,6 +159,15 @@ public class TripController {
 		TripVO tripVO = tripService.selectOneTrip(tripId);
 
 		Map<String, Object> map = tripService.selectTripPartByTripId(tripId, userVO);
+		
+		StringTokenizer tokens = new StringTokenizer(tripVO.getHashTag(), " ");
+		List<String> hashTagList = new ArrayList<String>();
+		String hashTag = null;
+		
+		for (int i = 0; tokens.hasMoreElements(); i++) {
+			hashTagList.add(tokens.nextToken());
+		}
+		
 
 		boolean like = (boolean) map.get("like");
 		List<TripReplyVO> tripReply = (List<TripReplyVO>) map.get("tripReplyVO");
@@ -166,6 +177,7 @@ public class TripController {
 		view.addObject("tripVO", tripVO);
 		view.addObject("tripReply", tripReply);
 		view.addObject("tripPartSize", tripVO.getTripPartVO().size());
+		view.addObject("hashTagList", hashTagList);
 
 		return view;
 

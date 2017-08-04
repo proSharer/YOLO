@@ -25,7 +25,6 @@
 	margin-left: 5px;
 }
 
-
 ::-webkit-scrollbar {
 	width: 8px;
 }
@@ -58,7 +57,6 @@
 	color: #777;
 	margin-top: 10px;
 	margin-left: 10px;
-
 }
 
 /* /* nav bar search box - drop down menu button */
@@ -86,7 +84,7 @@ p.form-title {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 20px;
 	font-weight: 600;
- 	margin-left:43%;
+	margin-left: 43%;
 	color: #7f7f7f;
 	margin-top: 5%;
 	text-transform: uppercase;
@@ -228,6 +226,63 @@ form.login a:hover {
 	background-color: rgba(0, 0, 0, 0.66);
 	padding: 10px;
 	left: 45%;
+}
+
+.tabs-menu {
+	margin-top: 13px;
+	height: 32px;
+	float: left;
+	clear: both;
+	list-style:none;
+}
+
+.tabs-menu li {
+	height: 30px;
+	line-height: 30px;
+	float: left;
+	margin-right: 10px;
+	background-color: #ccc;
+	border-top: 1px solid #d4d4d1;
+	border-right: 1px solid #d4d4d1;
+	border-left: 1px solid #d4d4d1;
+}
+
+.tabs-menu li.current {
+	position: relative;
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+	z-index: 5;
+	border-radius: 3px;
+}
+
+.tabs-menu li a {
+	padding: 10px;
+	text-transform: uppercase;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 3px;
+}
+
+.tabs-menu .current a {
+	color: #b2b2b2;
+}
+
+.tab {
+	border: 1px solid #d4d4d1;
+	background-color: #fff;
+	float: left;
+	margin-bottom: 20px;
+	width: auto;
+}
+
+.tab-content {
+	width: 660px;
+	padding: 20px;
+	display: none;
+}
+
+#tripList {
+	display: block;
 }
 </style>
 
@@ -373,6 +428,15 @@ form.login a:hover {
 				$("#pwCheck").css("display","none");
 			}
 		});
+		
+		$(".tabs-menu a").click(function(event) {
+	        event.preventDefault();
+	        $(this).parent().addClass("current");
+	        $(this).parent().siblings().removeClass("current");
+	        var tab = $(this).attr("href");
+	        $(".tab-content").not(tab).css("display", "none");
+	        $(tab).fadeIn();
+	    });
 	});
 </script>
 
@@ -441,7 +505,7 @@ form.login a:hover {
 				<div style="display: inline-block; float: left; width: 25%; height: 640px;">
 					<div style="border-top position: absolute; top: 50%; height: 120px; top: 50%; height: 120px; margin-left: 24px;">
 						<a href="#" id="profileDivBtn">My Profile</a><br /> 
-						<a href="#" id="postDivBtn">My Post/Reply/Msg</a>
+						<a href="#" id="postDivBtn" style="margin-top: 20px;">My Post/Reply/Msg</a>
 					</div>
 				</div>
 				<div id="change1Div" style="display: block;">
@@ -450,17 +514,17 @@ form.login a:hover {
 							<div style="font-size: 15px; display: inline-block; color: #b2b2b2; padding-right: 76%;">
 							Message
 							</div>
-							<input id="writeMessageBtn" type="button" value="+" style="border: 1px solid #b2b2b2; font-weight: bold; color: #b2b2b2; background-color: transparent;"
+							<input id="writeMessageBtn" type="button" value="+" style="border-bottom-color: #e2b81f; border-style: double; border-right-color: #e2b81f; border-top-color: transparent; border-left-color: transparent; border-radius: 3px; font-weight: bold; color: white; background-color: rgba(255, 204, 20, 0.6);"
 								onclick="window.open('/yolo/message/write','window', 'width=450,height=400')"/>
 						</div>
-						<div style="background-color: #e5e5e5; height: 290px; margin-bottom: 17px; width: 96%">
-							<div style="padding:10px;"> 
+						<div style="border-radius: 7px; border: 1px solid #d4d4d1; height: 290px; margin-bottom: 17px; width: 96%">
+							<div style="padding:10px; padding-left: 23px;"> 
 								받은쪽지함<br/><br/>
-								<table>
+								<table> 
 									<tr>
-										<th style="width:20%;">Sender</th>
-										<th style="width:30%;">Content</th>
-										<th style="width:40%;">Date</th>
+										<th style="width:25%;">Sender</th>
+										<th style="width:40%;">Content</th>
+										<th style="width:50%;">Date</th>
 									</tr>
 									<c:forEach items="${MessagesByReceiver}" var="message">
 										<tr>
@@ -475,14 +539,14 @@ form.login a:hover {
 							</div>
 						</div>
 						
-						<div style="background-color: #e5e5e5; height: 290px; width: 96%">
-							<div style="padding:10px;"> 
+						<div style="border-radius: 7px; border: 1px solid #d4d4d1; height: 290px; width: 96%">
+							<div style="padding:10px; padding-left: 23px;"> 
 								보낸쪽지함<br/><br/>
 								<table>
 									<tr>
-										<th style="width:20%;">Receiver</th>
-										<th style="width:30%;">Content</th>
-										<th style="width:40%;">Date</th>
+										<th style="width:25%;">Receiver</th>
+										<th style="width:40%;">Content</th>
+										<th style="width:50%;">Date</th>
 									</tr>
 									<c:forEach items="${MessagesBySender}" var="message">
 										<tr>
@@ -497,44 +561,50 @@ form.login a:hover {
 							</div>
 						</div>
 					</div>
-					<div style="background-color: #e5e5e5; display: inline-block; float: left; width: 35%; height: 640px">
- 						<input type="button" id="tripListBtn" value="내가쓴글">
- 						<input type="button" id="replyListBtn" value="나에게 달린댓글">
- 						<div id="tripList" style="padding:10px;"> 
-	 						<table>
-								<tr>
-									<th style="width:60%;">Title</th>
-									<th style="width:40%;">Date</th>
-								</tr>
-								<c:forEach items="${tripList}" var="trip">
-									<tr>
-										<td>
-											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${trip.tripId}';"> ${trip.title}</p></a>
-											
-										</td>
-										<td>${trip.createDate}</td>
-									</tr>
-								</c:forEach>
-							</table>
-						</div>
-						 <div id="replyList" style="padding:10px; display:none;"> 
-	 						<table>
-								<tr>
-									<th style="width:35%;">Writer</th>
-									<th style="width:65%;">Content</th>
-								</tr>
-								<c:forEach items="${tripReplyList}" var="reply">
-									<tr>
-										<td>${reply.userId}</td>
-										<td>
-											 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${reply.tripId}';">${reply.content}</p></a>
-											
-										</td>
-									</tr>
-								</c:forEach>
-							</table>
+					
+					<div id="tabs-container" style="display: inline-block; float: left; width: 35%; height: 640px">
+						<ul class="tabs-menu">
+							<li class="current"><a href="#tripList">My Post</a></li>
+							<li><a href="#replyList">My Reply</a></li>
+						</ul>
+						<div class="tab" style="border-radius: 7px; width: 100%; height: 93.5%; margin-top: -13px;">
+								<div class="tab-content" id="tripList" style="padding:10px; padding-left: 30px;"> 
+			 						<table>
+										<tr>
+											<th style="width:55%;">Title</th>
+											<th style="width:40%;">Date</th>
+										</tr>
+										<c:forEach items="${tripList}" var="trip">
+											<tr>
+												<td>
+													 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${trip.tripId}';"> ${trip.title}</p></a>
+													
+												</td>
+												<td>${trip.createDate}</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</div>	
+								<div class="tab-content" id="replyList" style="padding:10px; padding-left: 30px; display:none;"> 
+			 						<table>
+										<tr>
+											<th style="width:35%;">Writer</th>
+											<th style="width:30%;">Content</th>
+										</tr>
+										<c:forEach items="${tripReplyList}" var="reply">
+											<tr>
+												<td>${reply.userId}</td>
+												<td>
+													 <a href="#"><p style="display:inline;" onClick="javascript:self.location='/yolo/trip/detail/${reply.tripId}';">${reply.content}</p></a>
+													
+												</td>
+											</tr>
+										</c:forEach>
+									</table>
+								</div>
 						</div>
 					</div>
+					
 				</div>
 				<div id="change2Div" style="display: none;">
 					<div class="wrap">
