@@ -18,10 +18,14 @@
 	// 접근 토큰 값 출력
 	console.log(naver_id_login.oauthParams.access_token);
 	
-	$.post("<c:url value="/user/naver/savetoken"/>", {"accessToken": naver_id_login.oauthParams.access_token}, function(response) {});
-	
-	// 네이버 사용자 프로필 조회
-	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+	$.post("<c:url value="/user/naver/savetoken"/>", {"accessToken": naver_id_login.oauthParams.access_token}, function(data) {
+		console.log(data);
+		// 네이버 사용자 프로필 조회
+		if ( data == "OK" ) {
+			naver_id_login.get_naver_userprofile("naverSignInCallback()");
+		}
+		
+	});
 	
 	// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
 	function naverSignInCallback() {
@@ -29,10 +33,16 @@
 		console.log(naver_id_login.getProfileData('nickname'));
 		console.log(naver_id_login.getProfileData('age'));
 	
+		
 		opener.document.location.href="<c:url value="/home"/>";
 		
 		self.close();
+			
+		
 	}
 </script>
+
+	<h1>잠시만 기다려 주세요.........</h1>
+
 </body>
 </html>

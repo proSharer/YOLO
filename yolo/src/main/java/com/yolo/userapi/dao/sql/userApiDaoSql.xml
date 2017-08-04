@@ -2,23 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserDaoApi">
+<mapper namespace="UserApiDao">
 
-	<insert id="UserApiInsert" parameterType="UserVO">
+	<insert id="userApiInsert" parameterType="UserVO">
 		INSERT	INTO		USR_API	(
 								USR_API_ID
 								, USR_API_NM
+								, USR_API_TP
 								)
-		VALUES					(
-								<if test="userNaverApiId != null">
-								'NA' + #{userNaverApiId}
+		VALUES					<if test="userNaverApiId != null">
+								(
+								#{userNaverApiId}
 								, #{userNaverApiName}
+								, 'NAVER'
+								)
 								</if>
 								<if test="userKakaoApiId != null">
-								'KA' + #{userKakaoApiId}
+								(
+								#{userKakaoApiId}
 								, #{userKakaoApiName}
-								</if>
+								, 'KAKAO'
 								)
+								</if>
 	</insert>
+	
+	<resultMap type="UserVO" id="UserMap">
+		<id column="USR_API_ID" property="userKakaoApiId"/>
+		<result column="USR_API_NM" property="userKakaoApiName"/>
+		<result column="USR_API_TP" property="userKakaoApiType"/>
+		<result column="USR_ID" property="userId"/>
+	</resultMap>
+	
+	<select id="selectAllUserApi" resultMap="UserMap" parameterType="string">
+		SELECT	USR_API_ID
+				, USR_API_NM
+				, USR_API_TP
+				, USR_ID
+		FROM		USR_API
+		WHERE	USR_API_TP = #{type}
+	</select>
+	
+	<update id="updateUserId" parameterType="UserVO">
+		UPDATE	USR_API
+		SET		USR_ID = #{userId}
+		WHERE	USR_API_ID = #{userNaverApiId}
+	</update>
+	
+	<select id="selectOneUser" resultMap="UserMap" parameterType="string">
+		SELECT	USR_API_ID
+				, USR_API_NM
+				, USR_API_TP
+				, USR_ID
+		FROM		USR_API
+		WHERE	USR_API_ID = #{userId}
+	</select>
 
 </mapper>

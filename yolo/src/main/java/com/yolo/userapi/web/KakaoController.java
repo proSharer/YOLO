@@ -1,7 +1,6 @@
 package com.yolo.userapi.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,35 +28,40 @@ public class KakaoController {
 	private Logger logger = LoggerFactory.getLogger(KakaoController.class);
 
 	@RequestMapping(value = "/user/kakao/signin", method = RequestMethod.POST)
-	public void getToken(@RequestParam String id, @RequestParam String nickName, @RequestParam String email, HttpServletResponse response) {
+	public void getToken(@RequestParam String id, @RequestParam String nickName, HttpServletResponse response) {
+		String kakaoId = "KA-" + id;
 		
-		logger.info("id : " + id);
-		logger.info("nickName : " + nickName);
-		logger.info("email : " + email);
+		UserVO userVO = new UserVO();
+		userVO.setUserKakaoApiId(kakaoId);
+		userVO.setUserKakaoApiName(nickName);
 		
-		try {
-			PrintWriter write = response.getWriter();
-			write.write("ok");
-			write.flush();
-			write.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		List<UserVO> userList = userApiService.selectAllUser("KAKAO");
+		
+		for( int i = 0; i < userList.size(); i++ ) {
+			
+			if ( userList.get(i).getUserKakaoApiId().equals(kakaoId) ) {
+				return;
+			}
+			else {
+				continue;
+			}
+			
 		}
+		userApiService.addUserApi(userVO);
 		
 	}
 	
 	@RequestMapping(value="/user/kakao/savetoken")
 	public void saveToken(@RequestParam String accessToken, HttpSession session) {
-		KakaoVO kakaoVO = (KakaoVO) session.getAttribute("_USER_");
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
 		
-		if ( kakaoVO == null ) {
-			kakaoVO = new KakaoVO();
+		if ( userVO == null ) {
+			userVO = new KakaoVO();
 		}
 		
-		kakaoVO.setAccessToken(accessToken);
-		kakaoVO.setLoginType(UserVO.KAKAO);
-		session.setAttribute("_USER_", kakaoVO);
-		
+		userVO.setAccessToken(accessToken);
+		userVO.setLoginType(UserVO.KAKAO);
+		session.setAttribute("_USER_", userVO);
 		
 	}
 	

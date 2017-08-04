@@ -98,6 +98,29 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		
+		var userId = '${sessionScope._USER_.userId}'
+		console.log('${sessionScope._USER_.userNaverApiId}')
+		console.log(userId)
+		
+		if ( '${sessionScope._USER_}' ){
+			if ( userId == "" ) {
+				$('#addUserIdModal').modal('show');
+			}
+		}
+		$.post("<c:url value="/user/naver/savetoken"/>", {}, function(data) {
+			if ( data == "OK" ) {
+				location.reload();
+			}
+		});
+		$("#submitBtm").click(function() {
+			$.post("<c:url value="/user/plusId" />", $("#addUserIdForm").serialize(), function(data) {
+				if ( data == "OK" ) {
+					location.reload();
+				}
+			});
+		});
+		
 		$("#loginBtn").click( function() {
 			$.post(
 				"<c:url value="/user/signIn" />",
@@ -110,6 +133,9 @@
 					}
 			});
 		});
+		
+		
+		
 	});
 	
 	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
@@ -122,7 +148,6 @@
 				
 				$.post("<c:url value="/user/kakao/savetoken"/>", {
 					"accessToken" : accessToken
-					, "refreshToken" : refreshToken
 				}, function() {});
 				
 				//alert(JSON.stringify(authObj)); 
@@ -137,13 +162,9 @@
 						$.post("<c:url value="/user/kakao/signin"/>", {
 							"id" : id
 							, "nickName" : nickName
-							, "email" : email
-						}, function(response){
-							if ( response == "ok" ) {
-								location.reload();
-							}
-						});
+						}, function(){});
 						
+						location.reload();
 						//alert(JSON.stringify(res));
 				},
 
@@ -269,7 +290,6 @@
 								});
 							
 							</script>
-							
 						</c:when>
 						
 						<c:otherwise>
@@ -564,7 +584,7 @@
 		<input id="content" type="hidden" name="content" value="">
 	</div>
 	
-	<%-- <div><c:import url="http://192.168.201.29:3000"/></div> --%>
+	<div><c:import url="http://192.168.201.29:3000"/></div>
 
 	<!-- jQuery -->
 	<script src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
@@ -605,7 +625,7 @@
 									<!-- <div class="help-block text-right"><a href="">Forget the password ?</a></div> -->
 								</div>
 								<div class="form-group">
-									<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+									<input class="btn btn-primary btn-block" type="button" id="loginBtn" value="Sign in" style="height: 30px; padding-top: 5px;"/>
 								</div>
 							</form>
 							<div class="social-buttons" style="margin-left: 50px">
@@ -636,6 +656,38 @@
 					<div class="bottom text-center">
 						New here ? 
 						<a href="<c:url value="/user/signUp"/>"><b>Join Us</b></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- addUserId -->
+	<div class="modal fade" id="addUserIdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 style="text-align: center;" class="modal-title" id="myModalLabel">
+						홈페이지에서 사용할 ID를 입력해주세요!
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="addUserIdForm" style="width: 82%; margin: 0 auto">
+								<div class="form-group">
+									<input class="form-control" type="hidden" name="userNaverApiId" value="${sessionScope._USER_.userNaverApiId}">
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="text" name="userId" placeholder="ID">
+								</div>
+								<div class="form-group">
+									<input class="btn btn-primary btn-block" type="button" id="submitBtm" value="Submit" style="height: 30px; padding-top: 5px;"/>
+								</div>
+								
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

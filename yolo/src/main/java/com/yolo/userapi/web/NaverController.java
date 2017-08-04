@@ -1,10 +1,13 @@
 package com.yolo.userapi.web;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +31,7 @@ import com.yolo.userapi.vo.NaverUserVO;
 public class NaverController {
 	
 	private UserApiService userApiService;
+	private String id;
 	
 	public void setUserApiService(UserApiService userApiService) {
 		this.userApiService = userApiService;
@@ -36,10 +41,10 @@ public class NaverController {
 	
 	@RequestMapping("/user/callback")
 	public ModelAndView callback() throws IOException {
-		return new ModelAndView("user/callBack");
+		return new ModelAndView("user/callback");
 	}
 
-	@RequestMapping("/user/naver/savetoken")
+	@RequestMapping(value="/user/naver/savetoken", method=RequestMethod.POST)
 	public void saveToken(@RequestParam String accessToken, HttpSession session, HttpServletResponse response) {
 		NaverUserVO naverUserVO = (NaverUserVO) session.getAttribute("_USER_");
 		if ( naverUserVO == null ) {
@@ -53,8 +58,39 @@ public class NaverController {
 		if (naverUserVO != null) {
 			naverUserInfo(session);
 		}
+		
+		UserVO userVO = userApiService.getOneUser(id);
+		logger.info(userVO.getUserId());
+		if ( userVO.getUserId().equals("") ) {
+			naverUserVO.setUserNaverApiId(id);
+			session.setAttribute("_USER_", naverUserVO);
+			try {
+				PrintWriter write = response.getWriter();
+				write.append("OK");
+				write.flush();
+				write.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			naverUserVO.setUserNaverApiId(userVO.getUserId());
+			session.setAttribute("_USER_", naverUserVO);
+			try {
+				PrintWriter write = response.getWriter();
+				write.append("OK");
+				write.flush();
+				write.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
 	}
-
+	
 	@RequestMapping(value = "/user/naver/userInfo", method = RequestMethod.POST)
 	public void naverUserInfo(HttpSession session) {
 		NaverUserVO naverUserVO = (NaverUserVO) session.getAttribute("_USER_");
@@ -134,17 +170,52 @@ public class NaverController {
 		return "redirect:/home";
 	}
 	
+	@RequestMapping(value="/user/plusId", method=RequestMethod.POST)
+	public void plusId(UserVO userVO, HttpServletResponse response) {
+		
+		logger.info(userVO.getUserId());
+		logger.info(userVO.getUserNaverApiId());
+		
+		userApiService.setUserId(userVO);
+		
+		try {
+			PrintWriter write = response.getWriter();
+			write.append("OK");
+			write.flush();
+			write.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void spritCode(String responseCode) {
 		String[] code = responseCode.split(",");
 		
 		String[] idSplit = code[5].split("\"");
 		String[] nameSplit = code[6].split("\"");
 		
-		String id = idSplit[3];
+		id = "NA-" + idSplit[3];
 		String name = nameSplit[3];
 		
-		logger.info(id);
-		logger.info(name);
+		UserVO userVO = new UserVO();
+		userVO.setUserNaverApiId(id);
+		userVO.setUserNaverApiName(name);
+		
+		List<UserVO> userList = userApiService.selectAllUser("NAVER");
+		
+		for( int i = 0; i < userList.size(); i++ ) {
+			
+			if ( userList.get(i).getUserKakaoApiId().equals(id) ) {
+				return;
+			}
+			else {
+				continue;
+			}
+			
+		}	
+		
+		userApiService.addUserApi(userVO);
 		
 	}
 

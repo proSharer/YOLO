@@ -19,12 +19,21 @@ public class UserVO {
 	private String joinDate;
 	private String authId;
 	
+	private String accessToken;
 	private String userNaverApiId;
 	private String userNaverApiName;
 	private String userKakaoApiId;
 	private String userKakaoApiName;
 	
 	private String salt;
+	
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
+	public String getAccessToken() {
+		return accessToken;
+	}
 	
 	public String getUserNaverApiId() {
 		return userNaverApiId;
