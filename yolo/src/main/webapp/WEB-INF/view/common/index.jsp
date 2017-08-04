@@ -121,11 +121,9 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$("#loginBtn").click( function() {
-			$.post(
-				"<c:url value="/user/signIn" />",
-				$("#signInForm").serialize(),
-				function(data) {
+		
+		$("#signInForm").find("input[type=button]").click( function() {
+			$.post("<c:url value="/user/signIn" />", $("#signInForm").serialize(), function(data) {
 					if (data == "OK") {
 						window.location.href = "<c:url value="/home"/>";
 					} else if (data == "FAIL") {

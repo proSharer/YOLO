@@ -50,34 +50,11 @@ public class UserController {
 
 	}
 	
-	// NAVER CALL BACK
-	@RequestMapping("/callBack")
-	public String callBack(@RequestParam String state, @RequestParam String code, HttpServletRequest request) 
-			throws UnsupportedEncodingException{
-		String storedState = (String) request.getSession().getAttribute("state"); // 세션에 저장된 토큰을 받아온다.
-		if(!state.equals(storedState)) {	// 세션에 저장되 토큰과 인증을 요청해서 받은 토큰이 일치하는지 검증한다.
-			System.out.println("401 unauthorized");	// 인증이 실패했을 때의 처리 부분.
-			return "redirect:/";
-		}
+	
+	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) 
+	public ModelAndView viewSignInPage() { 
 		
-			// AccessToken 요청 및 파싱할 부분.
-		return "redirect:/";
-	}
-	
-
-	// 카카오톡
-	@RequestMapping(value = "/user/loginByKakao", method = RequestMethod.GET)
-	public ModelAndView viewSignInPageByKakao() {
 		ModelAndView view = new ModelAndView();
-
-		view.setViewName("user/loginByKakao");
-
-		return view;
-	}
-
-	
-	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
-	ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
 
 		view.setViewName("user/signIn");
 
@@ -87,9 +64,7 @@ public class UserController {
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
 	public void doSignInAction(UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
 		
-		System.out.println("asdfasdfasdf");
 		if (userVO.getUserId() == "" || userVO.getPassword() == "") {
-			System.out.println("test2");
 			try {
 				PrintWriter write = response.getWriter();
 				write.append("FAIL");
@@ -99,14 +74,14 @@ public class UserController {
 				throw new RuntimeException(e.getMessage(), e);
 			}
 		}
-
 		
 		UserVO login = userService.selectOneUser(userVO);
-		login.setLoginType(UserVO.DEFAULT);
+		
 		if (login != null) {
 			try {
 				HttpSession session = request.getSession();
 				session.setAttribute("_USER_", login);
+				login.setLoginType(UserVO.DEFAULT);
 				
 				PrintWriter write = response.getWriter();
 				write.append("OK");
@@ -129,10 +104,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/signUp", method = RequestMethod.GET)
-	public ModelAndView viewSignUpPage() {
+	public ModelAndView viewSignUpPage(HttpSession session) {
 		ModelAndView view = new ModelAndView();
-
+		
+		UserVO user = (UserVO) session.getAttribute("_USER_"); 
+		
+		view.addObject("user", user);
 		view.setViewName("user/signUp");
+		
 
 		return view;
 	}
@@ -164,7 +143,7 @@ public class UserController {
 				}
 			}
 		} catch (RuntimeException e) {
-			throw new RuntimeException("에러에러에러", e);
+			throw new RuntimeException("회원가입 에러", e);
 		}
 	}
 
@@ -352,7 +331,7 @@ public class UserController {
 	}
 
 	public boolean verify(String password) {
-		String passwordPolicy = "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,})";
+		String passwordPolicy = "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9媛�-�옡]).{8,})";
 		Pattern pattern = Pattern.compile(passwordPolicy);
 		Matcher matcher = pattern.matcher(password);
 		return matcher.matches();

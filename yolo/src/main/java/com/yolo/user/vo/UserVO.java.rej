@@ -1,0 +1,9 @@
+diff a/yolo/src/main/java/com/yolo/user/vo/UserVO.java b/yolo/src/main/java/com/yolo/user/vo/UserVO.java	(rejected hunks)
+@@ -69,6 +69,7 @@
+ 
+ 	public void setUserKakaoApiName(String userKakaoApiName) {
+ 		this.userKakaoApiName = userKakaoApiName;
++=======
+ 	private String extraApiEmail;
+ 
+ 	private String salt;

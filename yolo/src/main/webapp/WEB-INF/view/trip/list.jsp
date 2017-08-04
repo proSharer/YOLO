@@ -31,7 +31,7 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 <link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel|Saira+Condensed"
 	rel="stylesheet">
 <!-- Theme CSS -->
 <link href="<c:url value="/static/css/agency.min.css"/>"
@@ -105,7 +105,7 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #d1d0cf;
 }
-
+#LeftBottomLayerFixed {position:fixed;left:20px;bottom:20px}
 </style>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -128,7 +128,7 @@
 			width : maxWidth + 'px'
 		});
 		
-		$(".input-group-btn .dropdown-menu li a").click(function(){
+		$("#SearchBox .dropdown-menu li a").click(function(){
 			$("#keyword").val("");
 			var selText = $(this).html();
 			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
@@ -142,11 +142,29 @@
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
 			} 
+			
 			else if ($("#searchType").val() != '5'){
+				$("#searchType").val()
  				$("#regionOptionBtn").hide();
  				$("#keyword").show();
  				
 			}
+		});
+		$("#regionBox .dropdown-menu li a").click(function(){
+			$("#keyword").val("");
+			var selText = $(this).html();
+			$(this).parents(".input-group-btn").find(".btn-search").html(selText);
+			
+			var option = $(this).find("span").data("option");
+			var name = $(this).find("span").data("name");
+			$("#keyword").val(name);
+			
+			$("#weatherDiv").load('<c:url value="/weather/"/>'+name);
+			$("#weatherDiv").attr('id', 'LeftBottomLayerFixed');
+			$("#LeftBottomLayerFixed").css('display', 'block');
+			
+			console.log($("#searchType").val());
+			console.log($("#keyword").val());
 		});
 		
 		$("#keyword").keypress(function(event){
@@ -173,6 +191,7 @@
 					}
 			});
 		});
+		$("#LeftBottomLayerFixed").css('display', 'none');
 	});
 	
 	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
@@ -371,7 +390,7 @@
 					<div class="input-group">
 						<input type="hidden" id="searchType" name="searchType" />
 						<input type="hidden" id="regionType" name="regionType" />
-						<div class="input-group-btn">
+						<div id="SearchBox" class="input-group-btn">
 							<button type="button"
 								class="btn btn-search btn-default dropdown-toggle"
 								data-toggle="dropdown" value="1" id="searchOptionBtn">
@@ -397,7 +416,7 @@
 							
 						</div>
 						
-						<div class="input-group-btn">
+						<div id="regionBox" class="input-group-btn">
 							<button type="button"
 								class="btn btn-search btn-default dropdown-toggle"
 								data-toggle="dropdown" value="1" id="regionOptionBtn">
@@ -406,7 +425,8 @@
 							<ul class="dropdown-menu pull-left" role="menu">
 								<c:forEach items="${regionList}" var="region">
 								<li><a href="#" class="selectOption"> 
-								<span class="label-icon" data-option="${region.regionId}">${region.regionName}</span>
+								<span class="label-icon" data-option="${region.regionId}" data-name="${region.regionName}">${region.regionName}</span>
+								
 								</a></li>								
 								</c:forEach>
 							</ul>
@@ -427,7 +447,7 @@
 				</div>
 				<br />
 				<c:if test="${!empty sessionScope._USER_}">
-					<a href="<c:url value="/trip/write"/>">글쓰기</a>
+					<a href="<c:url value="/trip/write"/>" style="text-decoration: none;">글쓰기</a>
 				</c:if>
 				<br/>
 				<br/>
@@ -454,7 +474,7 @@
 				<br />
 				<br />
 
-				<div class="row">
+				<div class="row" style="text-decoration: none;">
 					${pager}
 					<c:if test="${!empty sessionScope._USER_}">
 						
@@ -538,6 +558,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<!-- Weather Div -->
+	<div id="weatherDiv" style="text-align: center; background-color: transparent; font-family: 'Saira Condensed', sans-serif; font-size: 18px; color:#777">
 	</div>
 
 </body>
