@@ -5,8 +5,11 @@ eclipse.preferences.version=1
 encoding//src/main/java/com/yolo/common/utilities/SHA256Util.java=UTF-8
 encoding//src/main/java/com/yolo/common/web/ClassicPageExplorer.java=UTF-8
 encoding//src/main/java/com/yolo/common/web/DownloadUtil.java=UTF-8
+<<<<<<< HEAD
 encoding//src/main/webapp/WEB-INF/view/common/test.jsp=UTF-8
 encoding//src/main/java/com/yolo/user/web/UserController.java=UTF-8
+=======
+>>>>>>> lizzy
 encoding//src/main/webapp/WEB-INF/view/message/write.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/trip/list.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/user/loginByKaKao.jsp=UTF-8

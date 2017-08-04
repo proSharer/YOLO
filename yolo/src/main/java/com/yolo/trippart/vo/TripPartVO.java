@@ -16,6 +16,7 @@ public class TripPartVO {
 	private String fileName;
 	private String x;
 	private String y;
+	private String region;
 	
 	public String getTripPartId() {
 		return tripPartId;
@@ -88,6 +89,12 @@ public class TripPartVO {
 	}
 	public void setY(String y) {
 		this.y = y;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
 	}
 	
 }

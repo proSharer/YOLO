@@ -77,5 +77,6 @@
  		<property name="authService" ref="authServiceImpl" />
  	</bean>
  	
+ 	<bean id="weatherController" class="com.yolo.trip.common.weather.web.WeatherController"></bean>
 
 </beans>

@@ -19,6 +19,8 @@
 
 		<typeAlias type="com.yolo.dailyMain.vo.DailyMainVO" alias="DailyMainVO"/>
 		<typeAlias type="com.yolo.dailyMain.vo.DailyMainSearchVO" alias="DailyMainSearchVO"/>
+		
+		<typeAlias type="com.yolo.hashtag.vo.HashTagVO" alias="HashTagVO"/>
 	</typeAliases>
 	
 	<mappers>
@@ -33,6 +35,7 @@
 		<mapper resource="com/yolo/region/dao/sql/regionDaoSql.xml"/>
 		<mapper resource="com/yolo/dailyMain/dao/sql/DailyMainDaoSql.xml"/>
 		<mapper resource="com/yolo/userapi/dao/sql/userApiDaoSql.xml"/>
+		<mapper resource="com/yolo/hashtag/dao/sql/HashTagDaoSql.xml" />
 	</mappers>
 
 </configuration>

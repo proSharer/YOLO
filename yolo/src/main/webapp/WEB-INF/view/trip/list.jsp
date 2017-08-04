@@ -138,6 +138,7 @@
 			$("#searchType").val(option);
 			
 			if ($("#searchType").val() == '5'){
+				console.log($("#searchType").val());
  				$("#regionOptionBtn").show();
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
@@ -163,8 +164,9 @@
 			$("#weatherDiv").attr('id', 'LeftBottomLayerFixed');
 			$("#LeftBottomLayerFixed").css('display', 'block');
 			
+			$("#searchType").val(option);
 			console.log($("#searchType").val());
-			console.log($("#keyword").val());
+			// 지역 코드 받아옴. TO DO : 이제부터 지역별 검색을 해야함.. 
 		});
 		
 		$("#keyword").keypress(function(event){

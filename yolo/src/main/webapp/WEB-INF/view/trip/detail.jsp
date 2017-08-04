@@ -105,6 +105,14 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #d1d0cf;
 }
+
+.hashTag {
+	color: #b5b5b5;
+}
+
+.hashTag:hover .hashTag:active a:hover {
+	color: #fed136;
+}
 </style>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -439,6 +447,13 @@
 							</div><br>
 						</c:forEach>
 						<br/><br/>총 평 : ${tripVO.overAll}<br/>
+						<br/><br/>
+						<div style="text-align: right; margin-right: 11%;">
+							<c:forEach items="${hashTagList}" var="hashTag">
+								<a class="hashTag" href="#" style="/* color: #b5b5b5; */ text-decoration: none;">#${hashTag}&emsp;</a>
+							</c:forEach>
+						</div>
+						<br/>
 					</div>
 					<div style="margin: 20px; display: inline-block; width: 49%; height: 600px; margin: auto 0; padding: 16px; text-align: center;">
 						<div id="detailMap" style="width:100%;height:100%;"></div>
@@ -508,7 +523,7 @@
 					<c:if test="${!empty sessionScope._USER_.userId}">
 						<form id="replyForm" style="margin-left: 20px">	
 							<input style="width: 90%; height: 80px" type="text" id="content"> 
-							<a id="replyBtn" style="margin-left: 10px">Submit</a>
+							<a href="#" id="replyBtn" style="margin-left: 10px">Submit</a>
 						</form>
 					</c:if>
 				</div>
