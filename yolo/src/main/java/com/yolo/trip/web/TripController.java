@@ -218,7 +218,7 @@ public class TripController {
 		tripVO.setTripId(tripId);
 
 		List<TripPartVO> tripPartList = tripVO.getTripPartVO();
-
+		System.out.println("size==="+tripPartList.size());
 		// 파일 수정 부분 파일 setting..
 		for (TripPartVO tripPartVO : tripPartList) {
 			if (!tripPartVO.getFile().isEmpty() || tripPartVO.getFile().getSize() > 0) {

@@ -523,7 +523,7 @@
 					<c:if test="${!empty sessionScope._USER_.userId}">
 						<form id="replyForm" style="margin-left: 20px">	
 							<input style="width: 90%; height: 80px" type="text" id="content"> 
-							<a id="replyBtn" style="margin-left: 10px">Submit</a>
+							<a href="#" id="replyBtn" style="margin-left: 10px">Submit</a>
 						</form>
 					</c:if>
 				</div>

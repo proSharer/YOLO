@@ -32,9 +32,10 @@ public class TripPartBizImpl implements TripPartBiz {
 		//return tripPartDao.updateOneTripPart(tripPartVO)>0;
 		
 		boolean isSuccess = false;
-		
+	
 		for(TripPartVO tripPartVO : tripPartVOList){
-			
+			System.out.println("x"+tripPartVO.getX());
+			System.out.println("x"+tripPartVO.getY());
 			TripPartVO tripPart = selectOneTripPart(tripPartVO.getTripPartId());
 			
 			if ( tripPartVO.getStartTime() == 0){
@@ -66,13 +67,13 @@ public class TripPartBizImpl implements TripPartBiz {
 					|| tripPartVO.getContent().length() < 0 ){
 				tripPartVO.setContent(tripPart.getContent());
 			}
-			if ( tripPartVO.getX().isEmpty() 
+			if ( tripPartVO.getX() == null
 					|| tripPartVO.getX().length() < 0 ){
-				tripPartVO.setContent(tripPart.getX());
+				tripPartVO.setX(tripPart.getX());
 			}
-			if ( tripPartVO.getY().isEmpty() 
+			if ( tripPartVO.getY() == null
 					|| tripPartVO.getY().length() < 0 ){
-				tripPartVO.setContent(tripPart.getY());
+				tripPartVO.setY(tripPart.getY());
 			}
 			isSuccess = tripPartDao.updateOneTripPart(tripPartVO) > 0;
 		}

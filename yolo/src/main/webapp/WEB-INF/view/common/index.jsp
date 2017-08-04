@@ -129,6 +129,7 @@
 					if (data == "OK") {
 						window.location.href = "<c:url value="/home"/>";
 					} else if (data == "FAIL") {
+						alert("아이디와 비밀번호를 확인해 주세요!");
 						location.reload();
 					}
 			});
