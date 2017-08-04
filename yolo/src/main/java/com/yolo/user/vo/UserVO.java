@@ -26,6 +26,7 @@ public class UserVO {
 	private String userKakaoApiName;
 	
 	private String salt;
+	private String extraApiEmail;
 	
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
@@ -65,11 +66,8 @@ public class UserVO {
 
 	public void setUserKakaoApiName(String userKakaoApiName) {
 		this.userKakaoApiName = userKakaoApiName;
-	private String extraApiEmail;
-
-	private String salt;
+	}
 	
-
 	public String getExtraApiEmail() {
 		return extraApiEmail;
 	}
