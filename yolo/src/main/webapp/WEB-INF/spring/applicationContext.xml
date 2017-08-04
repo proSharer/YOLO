@@ -69,5 +69,9 @@
 		<property name="googleOAuth2Parameters" ref="googleOAuth2Parameters" />
  	</bean>
  	
+ 	<bean id="authController" class="com.yolo.auth.web.AuthController">
+ 		<property name="authService" ref="authServiceImpl" />
+ 	</bean>
+ 	
 
 </beans>

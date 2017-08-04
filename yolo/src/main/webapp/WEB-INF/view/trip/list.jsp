@@ -280,16 +280,12 @@
 						<div class="col-md-4 col-sm-6">
 							<div class="imgDiv portfolio-item">
 								<a href="<c:url value="/trip/detail/${trip.tripId}"/>">
-								
-								<%-- <a href="#portfolioModal1" class="portfolio-link"
-									data-toggle="modal" href="<c:url value="/trip/detail/${trip.tripId}"/>"> --%>
 									
 									<div class="portfolio-hover">
 										<div class="portfolio-hover-content"></div>
-									</div> <img class="img"
-									src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName }"/>"
-									class="img-responsive" alt=""
-									style="width: 360px; height: 260.09px; margin: auto;">
+									</div> 
+									<img class="img" src="<c:url value="/static/img/${trip.tripPartVO[0].realFileName }"/>"
+										class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
 								</a>
 							</div><br/>
 							<div class="portfolio-caption">

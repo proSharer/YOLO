@@ -98,11 +98,9 @@
 	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$("#loginBtn").click( function() {
-			$.post(
-				"<c:url value="/user/signIn" />",
-				$("#signInForm").serialize(),
-				function(data) {
+		
+		$("#signInForm").find("input[type=button]").click( function() {
+			$.post("<c:url value="/user/signIn" />", $("#signInForm").serialize(), function(data) {
 					if (data == "OK") {
 						alert("성공");
 						window.location.href = "<c:url value="/home"/>";
@@ -293,7 +291,7 @@
 																/* id 쓰고 콜백주소 쓴다. */
 																var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
 																var state = naver_id_login.getUniqState();
-																naver_id_login.setButton("green", 3,50);
+																naver_id_login.setButton("green", 3,20);
 																naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
 																naver_id_login.setState(state);
 																naver_id_login.setPopup();
@@ -304,7 +302,7 @@
 															<img src="<c:url value="/static/img/kakao.png"/>"width="100" height="auto">
 														</a>
 														<a href="<c:url value="/user/google" /> ">
-															<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+															<img style="width: 100px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
 														</a>
 													
 													</div>
@@ -317,7 +315,8 @@
 																<div class="help-block text-right"><a href="">Forget the password ?</a></div>
 															</div>
 															<div class="form-group">
-																<button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button>
+																<input type="button" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;" value="Sign In">
+																<!-- <button type="submit" id="loginBtn" class="btn btn-primary btn-block" style="height: 30px; padding-top: 5px;">Sign in</button> -->
 															</div>
 													 </form>
 												</div>

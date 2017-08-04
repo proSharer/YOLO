@@ -218,8 +218,9 @@ form.login a:hover {
 
 </head>
 
-<script type="text/javascript"
-	src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 	$().ready(function () {
 		
@@ -234,8 +235,8 @@ form.login a:hover {
 		$("#signUpForm").find("input[type=button]").click(function () {
 			$.post("<c:url value="/user/signUp"/>", $("#signUpForm").serialize(), function(data){
 				if(data == "OK") {
-					alert("회원가입이 완료 되었습니다. 로그인 하십시요.");
-					window.location.href="<c:url value="/user/signIn"/>";
+					alert("회원가입이 완료 되었습니다.");
+					window.location.href="<c:url value="/yolo/home"/>";
 				}
 				else if(data=="FAIL") {
 					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");
@@ -243,6 +244,103 @@ form.login a:hover {
 			});
 		});
 	});
+	
+	Kakao.init('961fe9a368d2a0cd75ebc5dc7b30c7d2');
+	function loginWithKakao() {
+	// 로그인 창을 띄웁니다.
+	Kakao.Auth.login({
+	success: function(authObj) {
+	var accessToken = authObj.access_token;
+	var refreshToken = authObj.refresh_token;
+		$.post("<c:url value="/user/kakao/savetoken"/>", {
+				"accessToken" : accessToken
+				, "refreshToken" : refreshToken
+				}, function() {});
+								
+				//alert(JSON.stringify(authObj)); 
+								
+				Kakao.API.request({
+				url: '/v1/user/me',
+				success: function(res) {
+				var id = res.id;
+				var nickName = res.properties.nickname;
+				var email = res.kaccount_email;
+										
+				$.post("<c:url value="/user/kakao/signin"/>", {
+					"id" : id
+					, "nickName" : nickName
+					, "email" : email
+				}, function(response){
+						if ( response == "ok" ) {
+								location.reload();
+							}
+						});
+					//alert(JSON.stringify(res));
+					},
+					fail: function (error) {
+					alert(JSON.stringify(error));
+					}
+				});
+			},
+			fail: function(err) {
+			alert(JSON.stringify(err));
+			}
+		});
+	}
+	
+	//네이버 로그인 
+	function loginWithNaver() {
+		if (token != null) {
+			if (resultCode == "00") {
+				var userId = response.id;
+				var email = response.email;
+				var userName = response.name;
+				var profile_image = response.profile_image;
+				var enc_id = response.enc_id;
+				var age = response.age;
+				var gender = response.gender;
+				var name = response.nickname;
+				var birthday = response.birthday;
+				var user = {
+					userId : userId
+					, email : email
+					, userName : userName
+					, profile_image : profile_image
+					, enc_id : enc_id
+					, age : age
+					, gender : gender
+					, name : name
+					, birthday : birthday
+				};
+				
+				$.post("<c:url value="/user/naver/userInfo"/>", {
+					"userId" : userId
+					, "email" : email
+					, "userName" : userName
+					, "profile_image" : profile_image
+					, "enc_id" : enc_id
+					, "age" : age
+					, "gender" : gender
+					, "name" : name
+					, "birthday" : birthday
+				}, function(response){
+					alert("user.userName = " + user.userName);
+				});
+			} 
+			else {
+				console.log(JSON.stringify(message));
+			}
+		}
+	}
+	function kakaoSignOut() {
+		Kakao.Auth.logout(function() {
+			location.href="<c:url value="/user/kakao/signout"/>"
+		});
+	}	
+	
+	
+	
+	
 </script>
 
 <body id="page-top" class="index">
@@ -321,6 +419,31 @@ form.login a:hover {
 			</div>
 		</div>
 	</section>
+	
+	<div align="center">
+		<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+			<script type="text/javascript">
+				/* id 쓰고 콜백주소 쓴다. */
+				var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+				var state = naver_id_login.getUniqState();
+				naver_id_login.setButton("green", 3,50);
+				naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+				naver_id_login.setState(state);
+				naver_id_login.setPopup();
+				naver_id_login.init_naver_id_login();
+			</script>
+		</form>
+		<div>
+			<a id="custom-login-btn" href="javascript:loginWithKakao()">
+				<img src="<c:url value="/static/img/kakao.png"/>"width="235px" height="auto">
+			</a>
+			<br/>
+			<a href="<c:url value="/user/google" /> ">
+				<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+			</a>
+		</div>
+		
+	</div>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 

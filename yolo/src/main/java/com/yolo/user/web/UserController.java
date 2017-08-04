@@ -67,8 +67,10 @@ public class UserController {
 	}
 
 	
-	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) public
-	ModelAndView viewSignInPage() { ModelAndView view = new ModelAndView();
+	@RequestMapping(value ="/user/signIn", method = RequestMethod.GET) 
+	public ModelAndView viewSignInPage() { 
+		
+		ModelAndView view = new ModelAndView();
 
 		view.setViewName("user/signIn");
 
@@ -76,11 +78,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/signIn", method = RequestMethod.POST)
-	public void doSignInAction(UserVO userVO, String password, HttpServletRequest request, HttpServletResponse response) {
+	public void doSignInAction(UserVO userVO, HttpServletRequest request, HttpServletResponse response) {
 		
-		System.out.println("asdfasdfasdf");
 		if (userVO.getUserId() == "" || userVO.getPassword() == "") {
-			System.out.println("test2");
 			try {
 				PrintWriter write = response.getWriter();
 				write.append("FAIL");
@@ -91,13 +91,13 @@ public class UserController {
 			}
 		}
 		
-		userVO.setLoginType(UserVO.DEFAULT);
-		
 		UserVO login = userService.selectOneUser(userVO);
+		
 		if (login != null) {
 			try {
 				HttpSession session = request.getSession();
 				session.setAttribute("_USER_", login);
+				login.setLoginType(UserVO.DEFAULT);
 				
 				PrintWriter write = response.getWriter();
 				write.append("OK");

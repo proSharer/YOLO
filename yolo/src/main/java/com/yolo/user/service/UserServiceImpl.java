@@ -8,15 +8,11 @@ import com.yolo.common.utilities.SHA256Util;
 public class UserServiceImpl implements UserService {
 
 	private UserBiz userBiz;
-	private UserDao userDao;
 
 	public void setUserBiz(UserBiz userBiz) {
 		this.userBiz = userBiz;
 	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
 
 	@Override
 	public boolean insertOneUser(UserVO userVO) {
