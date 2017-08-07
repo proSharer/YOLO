@@ -1,4 +1,4 @@
-package com.yolo.user.web;
+package com.yolo.userapi.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.yolo.user.vo.GoogleVO;
 import com.yolo.user.vo.UserVO;
+import com.yolo.user.web.UserController;
+import com.yolo.userapi.vo.GoogleVO;
 
 
 @Controller

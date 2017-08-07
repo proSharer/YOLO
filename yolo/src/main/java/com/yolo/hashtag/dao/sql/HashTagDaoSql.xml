@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HashTagDao">
+
+	<insert id="insertHashTag" parameterType="HashTagVO">
+		INSERT INTO	HASHTAG	(
+								HS_ID
+								, CONT
+								, TR_ID
+								, DL_ID
+							)
+		VALUES				(
+								'HS-' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24') || '-' || LPAD(HS_ID_SEQ.NEXTVAL, 6, '0')
+								, #{content}
+								, #{tripId}
+								, #{dailyId}
+							)
+	</insert>
+	
+	<select id="selectAllHashTagsByTripId" parameterType="string" resultType="HashTagVO">
+		SELECT	HS_ID hashTagId
+				, CONT content
+				, TR_ID tripId
+				, DL_ID dailyId
+		FROM 	HASHTAG
+		WHERE	TR_ID = #{tripId}
+	</select>
+	
+	<select id="selectAllHashTagsByDailyId" parameterType="string" resultType="HashTagVO">
+		
+		SELECT	HS_ID hashTagId
+				, CONT content
+				, TR_ID tripId
+				, DL_ID dailyId
+		FROM 	HASHTAG
+		WHERE	DL_ID = #{dailyId}
+	</select>
+	
+	<delete id="deleteAllHashTagByTripId" parameterType="String">
+		DELETE	FROM	HASHTAG
+		WHERE	TR_ID = #{tripId}
+	</delete>
+	
+	<delete id="deleteAllHashTagByDailyId" parameterType="String">
+		DELETE	FROM	HASHTAG
+		WHERE	DL_ID = #{dailyId}
+	</delete>
+
+</mapper>

@@ -67,7 +67,9 @@
 			FROM	TRIP<if test="searchType == 4">T, <include refid="TripPartDao.getTripContentByKeyword"/> P 
 			WHERE T.TR_ID = P.P_TR_ID
 			</if> 
-			
+			<if test="searchType == 5">T, <include refid="TripPartDao.getTripRegionByKeyword"/> R 
+			WHERE T.TR_ID = R.R_TR_ID
+			</if> 
 			<if test="searchType == 1">
 				WHERE	1=1
 				<if test="keyword != null  and keyword != '' ">

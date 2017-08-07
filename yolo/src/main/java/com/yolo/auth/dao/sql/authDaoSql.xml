@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AuthDao">
+
+	<insert id="insertNewAuth" parameterType="AuthVO">
+		INSERT INTO AUTH( /*[AuthDao][insertNewAuth]*/
+									AUTH_ID
+									, AUTH_NM
+									, AUTH_PW
+									, SALT
+									, JOIN_DATE
+								)
+		VALUES
+								(
+									#{authId}
+									, #{authNm}
+									, #{authPw}
+									, #{salt}
+									, SYSDATE
+								)
+	</insert>
+	
+	<resultMap type="AuthVO" id="AuthMap">
+		<id column="AUTH_ID" property="authId"/>
+		<result column="AUTH_NM" property="authNm"/>
+		<result column="AUTH_PW" property="authPw"/>
+		<result column="JOIN_DATE" property="joinDate"/>
+	</resultMap>
+	
+	<select id="selectOneAuth" resultType="AuthVO" resultMap="AuthMap">
+		SELECT	/*[AuthDao][selectOneAuth]*/
+				AUTH_ID
+				, AUTH_NM
+				, AUTH_PW
+				, "JOIN_DATE"
+		FROM	AUTH 
+		WHERE	AUTH_NM = #{authNm}
+		AND		AUTH_PW = #{authPw}
+	</select>
+	
+</mapper>

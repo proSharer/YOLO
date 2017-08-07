@@ -1,6 +1,8 @@
-package com.yolo.user.vo;
+package com.yolo.userapi.vo;
 
-public class KakaoVO extends UserVO{
+import com.yolo.user.vo.UserVO;
+
+public class NaverUserVO extends UserVO {
 
 	private String accessToken;
 
