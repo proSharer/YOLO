@@ -151,6 +151,7 @@
  				
 			}
 		});
+		
 		$("#regionBox .dropdown-menu li a").click(function(){
 			$("#keyword").val("");
 			var selText = $(this).html();
@@ -164,9 +165,8 @@
 			$("#weatherDiv").attr('id', 'LeftBottomLayerFixed');
 			$("#LeftBottomLayerFixed").css('display', 'block');
 			
-			$("#searchType").val(option);
 			console.log($("#searchType").val());
-			// 지역 코드 받아옴. TO DO : 이제부터 지역별 검색을 해야함.. 
+			console.log($("#keyword").val());
 		});
 		
 		$("#keyword").keypress(function(event){
