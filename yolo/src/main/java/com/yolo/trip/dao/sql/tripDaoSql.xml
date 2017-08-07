@@ -85,9 +85,12 @@
 			</if>
 			<if test="searchType == 3">
 				<if test="keyword != null  and keyword != '' ">
-				WHERE		 OVER_ALL LIKE '%' || #{keyword} || '%' 
+				WHERE	OVER_ALL LIKE '%' || #{keyword} || '%' 
 				</if> 
 			</if>
+<!-- 			<if test="searchType == 6">
+				WHERE	TR_ID = <include refid="TripPartDao.getTripContentByKeyword"/> 
+			</if> -->
 		<include refid="CommonDao.PAGING_FOOTER"/>
 	</select>
 	

@@ -31,7 +31,7 @@
 	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
 	rel='stylesheet' type='text/css'>
 <link
-	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel|Saira+Condensed"
 	rel="stylesheet">
 <!-- Theme CSS -->
 <link href="<c:url value="/static/css/agency.min.css"/>"
@@ -138,6 +138,7 @@
 			$("#searchType").val(option);
 			
 			if ($("#searchType").val() == '5'){
+				console.log($("#searchType").val());
  				$("#regionOptionBtn").show();
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
@@ -150,6 +151,7 @@
  				
 			}
 		});
+		
 		$("#regionBox .dropdown-menu li a").click(function(){
 			$("#keyword").val("");
 			var selText = $(this).html();
@@ -185,7 +187,8 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						window.location.href = "<c:url value="/home"/>";
+						/* window.location.href = "<c:url value="/home"/>"; */
+						location.reload();
 					} else if (data == "FAIL") {
 						location.reload();
 					}
@@ -447,7 +450,7 @@
 				</div>
 				<br />
 				<c:if test="${!empty sessionScope._USER_}">
-					<a href="<c:url value="/trip/write"/>">글쓰기</a>
+					<a href="<c:url value="/trip/write"/>" style="text-decoration: none;">글쓰기</a>
 				</c:if>
 				<br/>
 				<br/>
@@ -474,7 +477,7 @@
 				<br />
 				<br />
 
-				<div class="row">
+				<div class="row" style="text-decoration: none;">
 					${pager}
 					<c:if test="${!empty sessionScope._USER_}">
 						
@@ -561,7 +564,7 @@
 	</div>
 	
 	<!-- Weather Div -->
-	<div id="weatherDiv" style="text-align: center; background-color: transparent;">
+	<div id="weatherDiv" style="text-align: center; background-color: transparent; font-family: 'Saira Condensed', sans-serif; font-size: 18px; color:#777">
 	</div>
 
 </body>
