@@ -60,14 +60,23 @@
 		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	
- 	<bean id="naverController"  class="com.yolo.user.web.NaverController"></bean>
- 	
- 	<bean id="kakaoController" class="com.yolo.user.web.KakaoController"></bean>
- 	
- 	<bean id="googleController" class="com.yolo.user.web.GoogleController">
- 		<property name="googleConnectionFactory" ref="googleConnectionFactory" />
+	<bean id="naverController"  class="com.yolo.userapi.web.NaverController">
+		<property name="userApiService" ref="userApiServiceImpl"/>
+	</bean>
+	
+	<bean id="kakaoController" class="com.yolo.userapi.web.KakaoController">
+		<property name="userApiService" ref="userApiServiceImpl"/>
+	</bean>
+	
+	<bean id="googleController" class="com.yolo.userapi.web.GoogleController">
+		<property name="googleConnectionFactory" ref="googleConnectionFactory" />
 		<property name="googleOAuth2Parameters" ref="googleOAuth2Parameters" />
  	</bean>
  	
+ 	<bean id="authController" class="com.yolo.auth.web.AuthController">
+ 		<property name="authService" ref="authServiceImpl" />
+ 	</bean>
+ 	
+ 	<bean id="weatherController" class="com.yolo.trip.common.weather.web.WeatherController"></bean>
 
 </beans>

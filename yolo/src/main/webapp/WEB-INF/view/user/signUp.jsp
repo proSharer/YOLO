@@ -258,8 +258,8 @@ form.login a:hover {
 		$("#signUpForm").find("input[type=button]").click(function () {
 			$.post("<c:url value="/user/signUp"/>", $("#signUpForm").serialize(), function(data){
 				if(data == "OK") {
-					alert("회원가입이 완료 되었습니다. 로그인 하십시요.");
-					window.location.href="<c:url value="/home"/>";
+					alert("회원가입이 완료 되었습니다.");
+					window.location.href="<c:url value="/yolo/home"/>";
 				}
 				else if(data=="FAIL") {
 					alert("비밀번호는 영소문자, 영대문자, 숫자, 특수문자로 이루어진 8글자 이상으로 입력해주세요.");
@@ -273,7 +273,7 @@ form.login a:hover {
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						window.location.href = "<c:url value="/home"/>";
+						location.reload();
 					} else if (data == "FAIL") {
 						location.reload();
 					}
@@ -476,7 +476,30 @@ form.login a:hover {
 		</div>
 	</section>
 	
-	
+	<%-- <div align="center">
+		<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
+			<script type="text/javascript">
+				/* id 쓰고 콜백주소 쓴다. */
+				var naver_id_login = new naver_id_login("5jcUw1BzWAus2lCeKdeU", "http://localhost:8080/yolo/user/callback");
+				var state = naver_id_login.getUniqState();
+				naver_id_login.setButton("green", 3,50);
+				naver_id_login.setDomain("http://localhost:8080/yolo/user/naver/signIn");
+				naver_id_login.setState(state);
+				naver_id_login.setPopup();
+				naver_id_login.init_naver_id_login();
+			</script>
+		</form>
+		<div>
+			<a id="custom-login-btn" href="javascript:loginWithKakao()">
+				<img src="<c:url value="/static/img/kakao.png"/>"width="235px" height="auto">
+			</a>
+			<br/>
+			<a href="<c:url value="/user/google" /> ">
+				<img style="width: 235px;" src="<c:url value="/static/img/btn_google_signin_light_normal_web@2x.png"/> ">
+			</a>
+		</div>
+		
+	</div> --%>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 

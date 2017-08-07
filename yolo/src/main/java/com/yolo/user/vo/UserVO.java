@@ -18,34 +18,83 @@ public class UserVO {
 	private String password;
 	private String joinDate;
 	private String authId;
-	private String googleId;
-	private String kakaoId;
-	private String naverId;
+	
+	private String accessToken;
+	private String userNaverApiId;
+	private String userNaverApiName;
+	private String userNaverApiType;
+
+	private String userKakaoApiId;
+	private String userKakaoApiName;
+	private String userKakaoApiType;
+	
 	private String salt;
-
-	public String getGoogleId() {
-		return googleId;
+	private String extraApiEmail;
+	
+	public String getUserNaverApiType() {
+		return userNaverApiType;
 	}
 
-	public void setGoogleId(String googleId) {
-		this.googleId = googleId;
+	public void setUserNaverApiType(String userNaverApiType) {
+		this.userNaverApiType = userNaverApiType;
 	}
 
-	public String getKakaoId() {
-		return kakaoId;
+	public String getUserKakaoApiType() {
+		return userKakaoApiType;
 	}
 
-	public void setKakaoId(String kakaoId) {
-		this.kakaoId = kakaoId;
+	public void setUserKakaoApiType(String userKakaoApiType) {
+		this.userKakaoApiType = userKakaoApiType;
+	}
+	
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
+	public String getAccessToken() {
+		return accessToken;
+	}
+	
+	public String getUserNaverApiId() {
+		return userNaverApiId;
 	}
 
-	public String getNaverId() {
-		return naverId;
+	public void setUserNaverApiId(String userNaverApiId) {
+		this.userNaverApiId = userNaverApiId;
 	}
 
-	public void setNaverId(String naverId) {
-		this.naverId = naverId;
+	public String getUserNaverApiName() {
+		return userNaverApiName;
 	}
+
+	public void setUserNaverApiName(String userNaverApiName) {
+		this.userNaverApiName = userNaverApiName;
+	}
+
+	public String getUserKakaoApiId() {
+		return userKakaoApiId;
+	}
+
+	public void setUserKakaoApiId(String userKakaoApiId) {
+		this.userKakaoApiId = userKakaoApiId;
+	}
+
+	public String getUserKakaoApiName() {
+		return userKakaoApiName;
+	}
+
+	public void setUserKakaoApiName(String userKakaoApiName) {
+		this.userKakaoApiName = userKakaoApiName;
+	}
+	
+	public String getExtraApiEmail() {
+		return extraApiEmail;
+	}
+
+	public void setExtraApiEmail(String extraApiEmail) {
+		this.extraApiEmail = extraApiEmail;
+	}
+
 	public String getLoginType() {
 		return loginType;
 	}

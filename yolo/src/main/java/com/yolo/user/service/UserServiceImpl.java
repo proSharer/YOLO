@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
 	public void setTripReplyBiz(TripReplyBiz tripReplyBiz) {
 		this.tripReplyBiz = tripReplyBiz;
 	}
+
+
 	@Override
 	public boolean insertOneUser(UserVO userVO) {
 

@@ -41,7 +41,7 @@
 	box-sizing: content-box;
 	height: 30px;
 	padding: 0 46px 0 10px;
-	border-color: #d1d0cf;
+	border-color: rgba(209, 208, 207, 0.6);
 	border-radius: 13px; /* (height/2) + border-width */
 	border-style: solid;
 	border-width: 4px;
