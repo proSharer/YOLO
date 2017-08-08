@@ -1,8 +1,9 @@
 package com.yolo.trip.service;
 
+import java.util.List;
 import java.util.Map;
 
-import com.yolo.trip.vo.TripListVO;
+import com.yolo.hashtag.vo.HashTagVO;
 import com.yolo.trip.vo.TripSearchVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.trippart.vo.TripPartVO;
@@ -30,4 +31,7 @@ public interface TripService {
 	public boolean tripAddNewReply(TripReplyVO tripReplyVO);
 	
 	public TripPartVO selectOneTripPart(String tripPartId);
+	
+	public List<HashTagVO> selectAllHashTagByTripId(String tripId);
+	
 }

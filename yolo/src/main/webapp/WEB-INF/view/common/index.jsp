@@ -38,6 +38,9 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
 	<![endif]-->
 	<style type="text/css">
+	
+		@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+		
 		#login-dp{
 		min-width: 250px;
 		padding: 14px 14px 0;
@@ -159,7 +162,7 @@
 		$("#popularTagsDiv").attr('id', 'RightTopLayerFixed');
 		$("#LeftBottomLayerFixed").css('display', 'none');
 		
-		$("#tagBtn").click( function() {
+		$(".tagBtn").click( function() {
 			if ($("#contentDiv").css('display') == 'none') {
 				$("#contentDiv").css('display', 'block');
 			} else if ($("#contentDiv").css('display') == 'block') {
@@ -578,50 +581,148 @@
 		</div>
 	</div>
 	
-	<style>
-	.t1 {
-		font-size: 12px;
-		color: #7b94b0;
-	}
-	
-	.t2 {
-		font-size: 13px;
-		color: #6a89b0;
-	}
-	
-	.t3 {
-		font-size: 14px;
-		color: #5880b0;
-	}
-	
-	.t4 {
-		font-size: 16px;
-		color: #4676b0;
-	}
-	
-	.t5 {
-		font-size: 18px;
-		color: #356cb0;
-	}
-	
-	.t6 {
-		font-size: 19px;
-		color: #2363b0;
-	}
-	
-	.t7 {
-		font-size: 24px;
-		color: #1259b0;
-	}
-	</style>
+<style>
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:700";
+
+a>.tagBtn {
+	color: #333;
+	text-decoration: none;
+	transition: 0.3s all ease;
+	padding: 0px 20px;
+	margin: 0;
+	font-family: "Source Sans Pro", sans-serif;
+	background: #F4F5EE;
+	-webkit-font-smoothing: antialiased;
+}
+
+a>.tagBtn:hover {
+	color: #B15947;
+	text-decoration: none;
+}
+
+a>.tagBtn:focus {
+	text-decoration: none;
+	text-decoration: none;
+}
+
+a>.tagBtn:active {
+	color: #FFF;
+	text-decoration: none;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+}
+
+.bttn {
+	width: 70px;
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: bold;
+	position: relative;
+	text-decoration: none;
+}
+
+.bttn:after {
+	transition: 0.3s all ease;
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	border-radius: 3px;
+	border: 2.4px solid #B15947;
+	text-decoration: none;
+}
+
+.bttn:before {
+	content: '';
+	position: absolute;
+	border-radius: 3px;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	background: transparent;
+	z-index: -1;
+	text-decoration: none;
+}
+
+.bttn:hover:after {
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	text-decoration: none;
+}
+
+.bttn:active {
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+	text-decoration: none;
+}
+
+.bttn:active:before {
+	background-color: transparent;
+	text-decoration: none;
+}
+
+.bttn:active:after {
+	border-color: #f1481b;
+	text-decoration: none;
+}
+
+.t1 {
+	font-size: 12px;
+	color: #7b94b0;
+}
+
+.t2 {
+	font-size: 13px;
+	color: #6a89b0;
+}
+
+.t3 {
+	font-size: 14px;
+	color: #5880b0;
+}
+
+.t4 {
+	font-size: 16px;
+	color: #4676b0;
+}
+
+.t5 {
+	font-size: 18px;
+	color: #356cb0;
+}
+
+.t6 {
+	font-size: 19px;
+	color: #2363b0;
+}
+
+.t7 {
+	font-size: 24px;
+	color: #1259b0;
+}
+</style>
 	
 	<div id="popularTagsDiv" style="z-index: 2;">
-		<input id="tagBtn" type="button" value="popular Tags"/>
- 		<form id="searchForm"> 
+		<div class="flex"><a href="#0" class="bttn tagBtn" style="text-decoration: none">Tags</a></div>
+		<form id="searchForm"> 
 			<input type="hidden" name="keyword" id="keyword">
 			<input type="hidden" name="searchType" id="searchType">
  		</form> 
-		<div id="contentDiv" style="width:200px; height: 200px; display: none;">
+		<div id="contentDiv" style="width:200px; height: 200px; display: none; margin-top: 20px;">
 			<script type="text/javascript">
 				var contentArray = [];
 				var sizeArray = [];
@@ -635,7 +736,7 @@
 				</c:forEach>
 				
 				for ( var i in contentArray) {
-					document.write("<a href='#' onclick='movePage(0)' class='hash t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "'>"+ contentArray[i] + "</a>\n");
+					document.write("<a href='#' class='t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "' style='font-family: 'Nanum Pen Script''>"+ contentArray[i] + "</a>\n");
 				}
 			</script>
 		</div> 
