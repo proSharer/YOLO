@@ -75,6 +75,9 @@ public class TripPartBizImpl implements TripPartBiz {
 					|| tripPartVO.getY().length() < 0 ){
 				tripPartVO.setY(tripPart.getY());
 			}
+			if ( tripPartVO.getRegion() == null || tripPartVO.getRegion().length() < 0 ){
+				tripPartVO.setRegion(tripPart.getRegion());
+			}
 			isSuccess = tripPartDao.updateOneTripPart(tripPartVO) > 0;
 		}
 		

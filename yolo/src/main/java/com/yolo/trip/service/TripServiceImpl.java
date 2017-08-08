@@ -125,7 +125,15 @@ public class TripServiceImpl implements TripService{
 	}
 	@Override
 	public boolean removeTrip(String tripId) {
-		return tripBiz.removeTrip(tripId);
+		
+		boolean isSuccess = hashTagBiz.deleteAllHashTagByTripId(tripId);
+		
+		if (isSuccess) {
+			return tripBiz.removeTrip(tripId);
+		} else {
+			return false;
+		}
+		
 	}
 	@Override
 	public TripVO selectOneTrip(String tripId) {
@@ -189,6 +197,28 @@ public class TripServiceImpl implements TripService{
 			tripPartVOList.get(i).setTripPartId(tripPartList.get(i).getTripPartId());
 		}
 		
+		/* delete HashTag */
+		hashTagBiz.deleteAllHashTagByTripId(tripVO.getTripId());
+		
+		/* insert HashTag */
+		String hashTagString = tripVO.getHashTag();
+		System.out.println(hashTagString);
+		
+		hashTagString = hashTagString.replaceAll(" ", "");
+		
+		System.out.println(hashTagString);
+		StringTokenizer tokens = new StringTokenizer(hashTagString, "#");
+		
+		HashTagVO hashTagVO = null;
+		for(int i = 0; tokens.hasMoreElements(); i++) {
+			hashTagVO = new HashTagVO();
+			hashTagVO.setTripId(tripVO.getTripId());
+			hashTagVO.setContent(tokens.nextToken());
+			hashTagVO.setDailyId("");
+			
+			hashTagBiz.addHashTag(hashTagVO);
+		}
+		
 		tripPartBiz.modifyTripPart(tripPartVOList);
 		tripBiz.modifyOneTrip(tripVO);
 		
@@ -201,6 +231,10 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public TripPartVO selectOneTripPart(String tripPartId) {
 		return tripPartBiz.selectOneTripPart(tripPartId);
+	}
+	@Override
+	public List<HashTagVO> selectAllHashTagByTripId(String tripId) {
+		return hashTagBiz.getAllHashTagsByTripId(tripId);
 	}
 	
 }

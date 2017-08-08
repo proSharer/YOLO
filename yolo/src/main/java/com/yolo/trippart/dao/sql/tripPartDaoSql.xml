@@ -87,7 +87,7 @@
 				MAP_X = #{x},
 				MAP_Y = #{y},
 				FILE_NM = #{fileName}
-				, REGION region
+				, REGION = #{region}
 		WHERE	TR_PART_ID = #{tripPartId}
 	</update>
 	

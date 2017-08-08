@@ -378,7 +378,9 @@
 
 								<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}" />" width="400px" height="300px"/><br/>
 								<img src="#" class="preview"  style='display: block;'/>
-								<input type="button" class="update" value="수정하기"/>
+								<div style="text-align: right; margin-bottom: 5px;">
+									<input type="button" class="update" value="수정하기"/>
+								</div>
 									<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요" class="form-control" style="height:150px;">${tripPart.content}</textarea><br/><hr/>
 								</div>
 						</c:forEach>
@@ -387,10 +389,11 @@
 					</div>
 		
 					
-					<textarea id="overAll" name="overAll">${tripVO.overAll}</textarea>
-					
-					<input type="button" id="updateBtn" value="submit">
-					
+					<textarea id="overAll" class="form-control" name="overAll" style="height: 150px; margin-top: 20px;">${tripVO.overAll}</textarea> <br/>
+					<textarea id="hashTag" name="hashTag" class="form-control" style="height: 80px; margin-top:16px">${tripVO.hashTag}</textarea>
+					<div style="text-align: center;">
+						<input type="button" id="updateBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 35px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
+					</div>
 			</form>
 			</div>
 		</div>

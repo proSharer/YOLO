@@ -201,6 +201,14 @@ public class TripController {
 		ModelAndView view = new ModelAndView();
 
 		TripVO tripVO = tripService.selectOneTrip(tripId);
+		List<HashTagVO> hashTagList = tripService.selectAllHashTagByTripId(tripId);
+		
+		String hashTagString = "";
+		for (int i = 0; i < hashTagList.size(); i++) {
+			hashTagString += "#" + hashTagList.get(i).getContent() + " ";
+		}
+		
+		tripVO.setHashTag(hashTagString);
 
 		view.setViewName("/trip/update");
 		view.addObject("tripVO", tripVO);
@@ -247,7 +255,7 @@ public class TripController {
 				}
 			}
 		}
-
+		
 		boolean isSuccess = tripService.modifyOneTrip(tripVO);
 
 		if (isSuccess) {
