@@ -736,7 +736,7 @@ a>.tagBtn:active {
 				</c:forEach>
 				
 				for ( var i in contentArray) {
-					document.write("<a href='#' class='t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "' style='font-family: 'Nanum Pen Script''>"+ contentArray[i] + "</a>\n");
+					document.write("<a href='#' class='hash t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "' style='font-family: 'Nanum Pen Script''>"+ contentArray[i] + "</a>\n");
 				}
 			</script>
 		</div> 
