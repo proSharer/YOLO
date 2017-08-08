@@ -13,8 +13,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Yolo : Write your trip!</title>
 
+<title>Yolo : Write your trip!</title>
 <style type="text/css">
 
 /* nav bar search box - drop down menu button */

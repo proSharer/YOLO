@@ -457,7 +457,10 @@
 					</div>
 					<div style="margin: 20px; display: inline-block; width: 49%; height: 600px; margin: auto 0; padding: 16px; text-align: center;">
 						<div id="detailMap" style="width:100%;height:100%;"></div>
+						<button onclick="zoomIn()" class="btn btn-success btn-sm">확대</button>
+    					<button onclick="zoomOut()" class="btn btn-success btn-sm">축소</button>
 					</div>
+			
 				</div>
 				
 				<br/><br/>
@@ -621,6 +624,27 @@
 	        infowindow.close();
 	    };
 	}
+	function zoomIn() {        
+	    // 현재 지도의 레벨을 얻어옵니다
+	    var level = map.getLevel();
+	    
+	    // 지도를 1레벨 내립니다 (지도가 확대됩니다)
+	    map.setLevel(level - 1);
+	    
+	    // 지도 레벨을 표시합니다
+	    displayLevel();
+	}    
+
+	function zoomOut() {    
+	    // 현재 지도의 레벨을 얻어옵니다
+	    var level = map.getLevel(); 
+	    
+	    // 지도를 1레벨 올립니다 (지도가 축소됩니다)
+	    map.setLevel(level + 1);
+	    
+	    // 지도 레벨을 표시합니다
+	    displayLevel(); 
+	}    
 
 </script>
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>

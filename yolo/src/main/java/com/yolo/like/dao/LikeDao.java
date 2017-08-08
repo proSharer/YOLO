@@ -19,5 +19,6 @@ public interface LikeDao {
 	
 	public int deleteOneLikeByDailyId(LikeVO likeVO);
 	public int deleteOneLikeByTripId(LikeVO likeVO);
-	
+
+	public List<LikeVO> selectLikeListByTripId(String tripId);
 }

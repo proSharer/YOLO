@@ -18,5 +18,8 @@ public interface LikeBiz {
 	
 	public boolean removeOneLikeByDailyId(LikeVO likeVO);
 	public boolean removeOneLikeByTripId(LikeVO likeVO);
+	
+	// 글추천 기능을 위한 매서드
+	public List<LikeVO> getLikeListByTripId(String tripId);
 
 }

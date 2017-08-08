@@ -28,9 +28,17 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
 		List<TripVO> tripList = mainService.selectAllNewestTrips();
 		List<PopularHashTagVO> hashTagList= mainService.getPopularHashTagListByTripId();
 		
+		
+		List<TripVO> recommendList = mainService.selectAllRecommendTrips(user);
+		
+		if ( recommendList != null ){
+			view.addObject("recommendList", recommendList);
+		}
+
 		view.addObject("user", user);
 		view.addObject("tripList", tripList);
 		view.addObject("hashTagList", hashTagList);

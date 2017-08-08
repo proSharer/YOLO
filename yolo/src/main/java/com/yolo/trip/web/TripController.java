@@ -211,14 +211,13 @@ public class TripController {
 
 	@RequestMapping(value = "/trip/update/{tripId}", method = RequestMethod.POST)
 	public String doUpdatePage(TripVO tripVO, @PathVariable String tripId, HttpSession session) {
-		System.out.println("dafasdfasdff");
 		UserVO user = (UserVO) session.getAttribute("_USER_");
 
 		tripVO.setUserId(user.getUserId());
 		tripVO.setTripId(tripId);
 
 		List<TripPartVO> tripPartList = tripVO.getTripPartVO();
-		System.out.println("size==="+tripPartList.size());
+
 		// 파일 수정 부분 파일 setting..
 		for (TripPartVO tripPartVO : tripPartList) {
 			if (!tripPartVO.getFile().isEmpty() || tripPartVO.getFile().getSize() > 0) {
