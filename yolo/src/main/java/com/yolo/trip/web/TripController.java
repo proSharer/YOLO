@@ -58,15 +58,17 @@ public class TripController {
 	@RequestMapping("/trip/list")
 	public ModelAndView viewListPage(TripSearchVO tripSearchVO, HttpSession session) {
 
-		// 페이지 정보가 없이 들어왔다면
+/*		// 페이지 정보가 없이 들어왔다면
 		if (tripSearchVO.getPageNo() == null || tripSearchVO.getPageNo().length() == 0) {
 			TripSearchVO tripSearchVOInSession = (TripSearchVO) session.getAttribute("_SEARCH_");
 
 			if (tripSearchVOInSession != null) {
 				tripSearchVO = tripSearchVOInSession;
 			}
-		}
-
+		}*/
+		System.out.println(tripSearchVO.getKeyword());
+		System.out.println(tripSearchVO.getSearchType());
+	
 		Map<String, Object> map = tripService.selectAllTrips(tripSearchVO);
 		TripListVO tripList = (TripListVO) map.get("tripList");
 		List<RegionVO> regionList = (List<RegionVO>) map.get("regionList");

@@ -166,6 +166,20 @@
 				$("#contentDiv").css('display', 'none');
 			}
 		});
+		$(".hash").click(function (){
+			var keyword = $(this).data('keyword');
+			
+			$("#keyword").val(keyword);
+			$("#searchType").val("6");
+			
+			console.log($("#keyword").val());
+			console.log($("#searchType").val());
+			
+ 			$("#searchForm").attr({
+				"action" : "<c:url value="/trip/list"/>",
+			}).submit(); 
+			//location.href="<c:url value="/trip/list"/>";
+		});
 		
 	});
 	
@@ -603,6 +617,10 @@
 	
 	<div id="popularTagsDiv" style="z-index: 2;">
 		<input id="tagBtn" type="button" value="popular Tags"/>
+ 		<form id="searchForm"> 
+			<input type="hidden" name="keyword" id="keyword">
+			<input type="hidden" name="searchType" id="searchType">
+ 		</form> 
 		<div id="contentDiv" style="width:200px; height: 200px; display: none;">
 			<script type="text/javascript">
 				var contentArray = [];
@@ -617,7 +635,7 @@
 				</c:forEach>
 				
 				for ( var i in contentArray) {
-					document.write("<a href='#' class='t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "'>"+ contentArray[i] + "</a>\n");
+					document.write("<a href='#' onclick='movePage(0)' class='hash t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "'>"+ contentArray[i] + "</a>\n");
 				}
 			</script>
 		</div> 
