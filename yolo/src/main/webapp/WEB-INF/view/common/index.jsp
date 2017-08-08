@@ -339,7 +339,40 @@
 	<!-- Main Grid Section -->
 	<section id="main">
 	
-		<!-- Daily -->
+		<!-- 추천 -->
+		<c:if test="${!empty sessionScope._USER_.userId}">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 text-center">
+						<h2 class="section-heading"
+							style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">New Post</h2>
+						<br /> <br />
+						<h3 class="section-subheading text-muted">- 회원님을 위한 추천 -</h3>
+					</div>
+				</div>
+				<div class="row" style="text-align: center;">
+					<c:forEach items="${recommendList}" var="trip">
+						<div class="col-md-4 col-sm-6">
+							<div class="imgDiv portfolio-item">
+								<a href="<c:url value="/trip/detail/${trip.tripId}"/>" class="portfolio-link">
+									<div class="portfolio-hover">
+										<div class="portfolio-hover-content"></div>
+									</div>
+									<img src="<c:url value="/trip/download/${trip.tripId}"/>" class="img-responsive" alt="" style="width: 360px; height: 260.09px; margin: auto;">
+								</a>
+							</div><br/>
+							<div class="portfolio-caption">
+								<h4 style="text-transform: none; margin: 0; font-family: 'Abel', sans-serif; font-size: 19px;">${trip.title}</h4>
+								<p class="text-muted">${trip.userId}</p>
+							</div>
+							<br/>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</c:if><br/>
+		
+ 		<!-- Daily -->
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
@@ -397,7 +430,7 @@
 					</div>
 				</c:forEach>
 			</div>
-		</div>
+		</div> 
 	</section>
 
 

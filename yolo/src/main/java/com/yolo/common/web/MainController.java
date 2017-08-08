@@ -1,26 +1,16 @@
 package com.yolo.common.web;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yolo.common.service.MainService;
+import com.yolo.hashtag.vo.PopularHashTagVO;
 import com.yolo.trip.vo.TripVO;
 import com.yolo.user.vo.UserVO;
 
@@ -39,9 +29,11 @@ public class MainController {
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
 		List<TripVO> tripList = mainService.selectAllNewestTrips();
+		List<PopularHashTagVO> hashTagList= mainService.getPopularHashTagListByTripId();
 		
 		view.addObject("user", user);
 		view.addObject("tripList", tripList);
+		view.addObject("hashTagList", hashTagList);
 		view.setViewName("common/index");
 		
 		return view;

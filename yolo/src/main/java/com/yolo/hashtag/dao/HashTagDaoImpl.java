@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.yolo.hashtag.vo.HashTagVO;
+import com.yolo.hashtag.vo.PopularHashTagVO;
 
 public class HashTagDaoImpl extends SqlSessionDaoSupport implements HashTagDao {
 
@@ -31,6 +32,11 @@ public class HashTagDaoImpl extends SqlSessionDaoSupport implements HashTagDao {
 	@Override
 	public int deleteAllHashTagByDailyId(String dailyId) {
 		return getSqlSession().delete("HashTagDao.deleteAllHashTagByDailyId", dailyId);
+	}
+
+	@Override
+	public List<PopularHashTagVO> selectPopularHashTagByTripId() {
+		return getSqlSession().selectList("HashTagDao.selectPopularHashTagsByTripId");
 	}
 	
 }

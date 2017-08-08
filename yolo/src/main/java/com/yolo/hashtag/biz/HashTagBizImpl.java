@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yolo.hashtag.dao.HashTagDao;
 import com.yolo.hashtag.vo.HashTagVO;
+import com.yolo.hashtag.vo.PopularHashTagVO;
 
 public class HashTagBizImpl implements HashTagBiz {
 	
@@ -36,6 +37,11 @@ public class HashTagBizImpl implements HashTagBiz {
 	@Override
 	public boolean deleteAllHashTagByDailyId(String dailyId) {
 		return hashTagDao.deleteAllHashTagByDailyId(dailyId) > 0;
+	}
+
+	@Override
+	public List<PopularHashTagVO> getPopularHashTagsByTripId() {
+		return hashTagDao.selectPopularHashTagByTripId();
 	}
 
 }

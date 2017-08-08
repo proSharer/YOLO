@@ -46,5 +46,12 @@
 		DELETE	FROM	HASHTAG
 		WHERE	DL_ID = #{dailyId}
 	</delete>
+	
+	<select id="selectPopularHashTagsByTripId" resultType="PopularHashTagVO">
+		SELECT	CONT content
+				, COUNT(*) count
+		FROM 	HASHTAG
+		GROUP	BY	CONT 
+	</select>
 
 </mapper>

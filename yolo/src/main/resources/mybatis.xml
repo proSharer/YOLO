@@ -21,6 +21,7 @@
 		<typeAlias type="com.yolo.dailyMain.vo.DailyMainSearchVO" alias="DailyMainSearchVO"/>
 		
 		<typeAlias type="com.yolo.hashtag.vo.HashTagVO" alias="HashTagVO"/>
+		<typeAlias type="com.yolo.hashtag.vo.PopularHashTagVO" alias="PopularHashTagVO"/>
 	</typeAliases>
 	
 	<mappers>
