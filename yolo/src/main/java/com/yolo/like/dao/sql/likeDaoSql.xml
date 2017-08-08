@@ -25,10 +25,10 @@
 	</select>
 
 	<select id="selectAllLikesByUserID" parameterType="UserVO" resultType="LikeVO">
-		SELECT	LK_ID
-				, USR_ID
-				, DL_ID
-				, TR_ID
+		SELECT	LK_ID likeId
+				, USR_ID userId
+				, DL_ID dailyId
+				, TR_ID tripId
 		FROM	LK
 		WHERE	USR_ID = #{userId}
 		ORDER	BY	LK_ID DESC
@@ -62,5 +62,15 @@
 		WHERE	USR_ID = #{userId}
 		AND		TR_ID = #{tripId}
 	</delete>
+	
+	<select id="selectLikeListByTripId" parameterType="string" resultType="LikeVO">
+		SELECT	LK_ID likeId
+				, USR_ID userId
+				, DL_ID dailyId
+				, TR_ID tripId
+		FROM	LK
+		WHERE	TR_ID = #{tripId}
+		ORDER	BY	LK_ID DESC
+	</select>
 
 </mapper>

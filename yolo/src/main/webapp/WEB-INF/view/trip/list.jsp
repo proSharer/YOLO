@@ -415,6 +415,9 @@
 								<li><a href="#" class="selectOption"> <span
 										class="label-icon" data-option="5">지역</span>
 								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="6">해시태그</span>
+								</a></li>
 							</ul>
 							
 						</div>

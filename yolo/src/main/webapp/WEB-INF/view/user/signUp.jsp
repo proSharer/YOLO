@@ -476,7 +476,7 @@ form.login a:hover {
 		</div>
 	</section>
 	
-	<%-- <div align="center">
+	 <div align="center">
 		<form id="naver_id_login" href="<c:url value="javascript:loginWithNaver()"/>">
 			<script type="text/javascript">
 				/* id 쓰고 콜백주소 쓴다. */
@@ -499,7 +499,7 @@ form.login a:hover {
 			</a>
 		</div>
 		
-	</div> --%>
+	</div> 
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
 

@@ -38,10 +38,15 @@ public class MainController {
 		ModelAndView view = new ModelAndView();
 		
 		UserVO user = (UserVO)session.getAttribute("_USER_");
+		
 		List<TripVO> tripList = mainService.selectAllNewestTrips();
+		List<TripVO> recommendList = mainService.selectAllRecommendTrips(user);
 		
 		view.addObject("user", user);
 		view.addObject("tripList", tripList);
+		if ( recommendList != null ){
+			view.addObject("recommendList", recommendList);
+		}
 		view.setViewName("common/index");
 		
 		return view;

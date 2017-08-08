@@ -70,6 +70,9 @@
 			<if test="searchType == 5">T, <include refid="TripPartDao.getTripRegionByKeyword"/> R 
 			WHERE T.TR_ID = R.R_TR_ID
 			</if> 
+			<if test="searchType == 6"> T, <include refid="HashTagDao.selectHashTagsByContent"/> H
+			WHERE T.TR_ID = H.H_TR_ID
+			</if> 
 			<if test="searchType == 1">
 				WHERE	1=1
 				<if test="keyword != null  and keyword != '' ">
@@ -88,9 +91,8 @@
 				WHERE	OVER_ALL LIKE '%' || #{keyword} || '%' 
 				</if> 
 			</if>
-<!-- 			<if test="searchType == 6">
-				WHERE	TR_ID = <include refid="TripPartDao.getTripContentByKeyword"/> 
-			</if> -->
+
+			
 		<include refid="CommonDao.PAGING_FOOTER"/>
 	</select>
 	

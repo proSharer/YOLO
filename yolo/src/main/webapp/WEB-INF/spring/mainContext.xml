@@ -5,6 +5,7 @@
 
 	<bean id="mainServiceImpl" class="com.yolo.common.service.MainServiceImpl">
 		<property name="tripBiz" ref="tripBizImpl"></property>
+		<property name="likeBiz" ref="likeBizImpl"/>
 	</bean>
 
 

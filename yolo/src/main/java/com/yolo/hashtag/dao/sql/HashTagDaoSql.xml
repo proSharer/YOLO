@@ -46,5 +46,12 @@
 		DELETE	FROM	HASHTAG
 		WHERE	DL_ID = #{dailyId}
 	</delete>
+	
+	<sql id="selectHashTagsByContent">
+		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID H_TR_ID
+                        FROM HASHTAG
+                        WHERE CONT = #{keyword} ) 
+		]]>
+	</sql>
 
 </mapper>
