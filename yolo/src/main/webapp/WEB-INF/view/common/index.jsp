@@ -111,6 +111,8 @@
 		::-webkit-scrollbar-thumb:window-inactive {
 			background: #d1d0cf;
 		}
+		
+		#RightTopLayerFixed {position:fixed;right:100px;top:100px;}
 	</style>
 
 </head>
@@ -154,7 +156,16 @@
 			});
 		});
 		
+		$("#popularTagsDiv").attr('id', 'RightTopLayerFixed');
+		$("#LeftBottomLayerFixed").css('display', 'none');
 		
+		$("#tagBtn").click( function() {
+			if ($("#contentDiv").css('display') == 'none') {
+				$("#contentDiv").css('display', 'block');
+			} else if ($("#contentDiv").css('display') == 'block') {
+				$("#contentDiv").css('display', 'none');
+			}
+		});
 		
 	});
 	
@@ -337,7 +348,7 @@
 	</header>
 
 	<!-- Main Grid Section -->
-	<section id="main">
+	<section id="main" style="z-index: 1;">
 	
 		<!-- 추천 -->
 		<c:if test="${!empty sessionScope._USER_.userId}">
@@ -551,6 +562,65 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<style>
+	.t1 {
+		font-size: 12px;
+		color: #7b94b0;
+	}
+	
+	.t2 {
+		font-size: 13px;
+		color: #6a89b0;
+	}
+	
+	.t3 {
+		font-size: 14px;
+		color: #5880b0;
+	}
+	
+	.t4 {
+		font-size: 16px;
+		color: #4676b0;
+	}
+	
+	.t5 {
+		font-size: 18px;
+		color: #356cb0;
+	}
+	
+	.t6 {
+		font-size: 19px;
+		color: #2363b0;
+	}
+	
+	.t7 {
+		font-size: 24px;
+		color: #1259b0;
+	}
+	</style>
+	
+	<div id="popularTagsDiv" style="z-index: 2;">
+		<input id="tagBtn" type="button" value="popular Tags"/>
+		<div id="contentDiv" style="width:200px; height: 200px; display: none;">
+			<script type="text/javascript">
+				var contentArray = [];
+				var sizeArray = [];
+				
+				<c:forEach items="${contentArray}" var="content">
+					contentArray.push("${content}");
+				</c:forEach>
+				
+				<c:forEach items="${sizeArray}" var="size">
+					sizeArray.push("${size}");
+				</c:forEach>
+				
+				for ( var i in contentArray) {
+					document.write("<a href='#' class='t" + sizeArray[i] + "' data-keyword='" + contentArray[i] + "'>"+ contentArray[i] + "</a>\n");
+				}
+			</script>
+		</div> 
 	</div>
 
 </body>
