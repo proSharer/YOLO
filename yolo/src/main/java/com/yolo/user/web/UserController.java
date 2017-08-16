@@ -2,7 +2,6 @@ package com.yolo.user.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +12,13 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,7 +32,7 @@ import com.yolo.user.vo.UserVO;
 @Controller()
 public class UserController {
 
-	// private Logger logger = LoggerFactory.getLogger(UserController.class);
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private UserService userService;
 
@@ -82,7 +81,6 @@ public class UserController {
 				HttpSession session = request.getSession();
 				session.setAttribute("_USER_", login);
 				login.setLoginType(UserVO.DEFAULT);
-				
 				PrintWriter write = response.getWriter();
 				write.append("OK");
 				write.flush();

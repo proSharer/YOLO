@@ -46,4 +46,10 @@ public class LikeBizImpl implements LikeBiz {
 		return likeDao.deleteOneLikeByTripId(likeVO) > 0;
 	}
 
+	@Override
+	public List<LikeVO> getLikeListByTripId(String tripId) {
+		return likeDao.selectLikeListByTripId(tripId);
+	}
+	
+
 }

@@ -105,6 +105,14 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: #d1d0cf;
 }
+
+.hashTag {
+	color: #b5b5b5;
+}
+
+.hashTag:hover .hashTag:active a:hover {
+	color: #fed136;
+}
 </style>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -226,7 +234,7 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						window.location.href = "<c:url value="/home"/>";
+						location.reload();
 					} else if (data == "FAIL") {
 						location.reload();
 					}
@@ -439,10 +447,20 @@
 							</div><br>
 						</c:forEach>
 						<br/><br/>총 평 : ${tripVO.overAll}<br/>
+						<br/><br/>
+						<div style="text-align: right; margin-right: 11%;">
+							<c:forEach items="${hashTagList}" var="hashTag">
+								<a class="hashTag" href="#" style="/* color: #b5b5b5; */ text-decoration: none;">#${hashTag}&emsp;</a>
+							</c:forEach>
+						</div>
+						<br/>
 					</div>
 					<div style="margin: 20px; display: inline-block; width: 49%; height: 600px; margin: auto 0; padding: 16px; text-align: center;">
 						<div id="detailMap" style="width:100%;height:100%;"></div>
+						<button onclick="zoomIn()" class="btn btn-success btn-sm">확대</button>
+    					<button onclick="zoomOut()" class="btn btn-success btn-sm">축소</button>
 					</div>
+			
 				</div>
 				
 				<br/><br/>
@@ -508,7 +526,7 @@
 					<c:if test="${!empty sessionScope._USER_.userId}">
 						<form id="replyForm" style="margin-left: 20px">	
 							<input style="width: 90%; height: 80px" type="text" id="content"> 
-							<a id="replyBtn" style="margin-left: 10px">Submit</a>
+							<a href="#" id="replyBtn" style="margin-left: 10px">Submit</a>
 						</form>
 					</c:if>
 				</div>
@@ -606,6 +624,27 @@
 	        infowindow.close();
 	    };
 	}
+	function zoomIn() {        
+	    // 현재 지도의 레벨을 얻어옵니다
+	    var level = map.getLevel();
+	    
+	    // 지도를 1레벨 내립니다 (지도가 확대됩니다)
+	    map.setLevel(level - 1);
+	    
+	    // 지도 레벨을 표시합니다
+	    displayLevel();
+	}    
+
+	function zoomOut() {    
+	    // 현재 지도의 레벨을 얻어옵니다
+	    var level = map.getLevel(); 
+	    
+	    // 지도를 1레벨 올립니다 (지도가 축소됩니다)
+	    map.setLevel(level + 1);
+	    
+	    // 지도 레벨을 표시합니다
+	    displayLevel(); 
+	}    
 
 </script>
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>

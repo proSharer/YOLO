@@ -138,6 +138,7 @@
 			$("#searchType").val(option);
 			
 			if ($("#searchType").val() == '5'){
+				console.log($("#searchType").val());
  				$("#regionOptionBtn").show();
  				$("#keyword").hide();
  				$("#keyword").val($("#searchType").val());
@@ -150,6 +151,7 @@
  				
 			}
 		});
+		
 		$("#regionBox .dropdown-menu li a").click(function(){
 			$("#keyword").val("");
 			var selText = $(this).html();
@@ -185,7 +187,8 @@
 				$("#signInForm").serialize(),
 				function(data) {
 					if (data == "OK") {
-						window.location.href = "<c:url value="/home"/>";
+						/* window.location.href = "<c:url value="/home"/>"; */
+						location.reload();
 					} else if (data == "FAIL") {
 						location.reload();
 					}
@@ -412,6 +415,9 @@
 								<li><a href="#" class="selectOption"> <span
 										class="label-icon" data-option="5">지역</span>
 								</a></li>
+								<li><a href="#" class="selectOption"> <span
+										class="label-icon" data-option="6">해시태그</span>
+								</a></li>
 							</ul>
 							
 						</div>
@@ -486,6 +492,8 @@
 	</form>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
+	
+	<div><c:import url="http://192.168.201.29:3000"/></div>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>

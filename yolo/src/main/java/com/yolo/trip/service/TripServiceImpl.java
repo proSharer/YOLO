@@ -3,7 +3,10 @@ package com.yolo.trip.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
+import com.yolo.hashtag.biz.HashTagBiz;
+import com.yolo.hashtag.vo.HashTagVO;
 import com.yolo.like.biz.LikeBiz;
 import com.yolo.like.vo.LikeVO;
 import com.yolo.region.biz.RegionBiz;
@@ -25,6 +28,7 @@ public class TripServiceImpl implements TripService{
 	private LikeBiz likeBiz;
 	private TripReplyBiz tripReplyBiz;
 	private RegionBiz regionBiz;
+	private HashTagBiz hashTagBiz;
 	
 	public void setTripBiz(TripBiz tripBiz) {
 		this.tripBiz = tripBiz;
@@ -41,6 +45,10 @@ public class TripServiceImpl implements TripService{
 	public void setRegionBiz(RegionBiz regionBiz) {
 		this.regionBiz = regionBiz;
 	}
+	public void setHashTagBiz(HashTagBiz hashTagBiz) {
+		this.hashTagBiz = hashTagBiz;
+	}
+	
 	@Override
 	public boolean addNewOneTrip(TripVO tripVO) {
 		
@@ -50,6 +58,25 @@ public class TripServiceImpl implements TripService{
 		
 		for ( int i = 0; i<tripPartListVO.size(); i++){
 			tripPartListVO.get(i).setTripId(tripId);
+		}
+		
+		/* insert HashTag */
+		String hashTagString = tripVO.getHashTag();
+		System.out.println(hashTagString);
+		
+		hashTagString = hashTagString.replaceAll(" ", "");
+		
+		System.out.println(hashTagString);
+		StringTokenizer tokens = new StringTokenizer(hashTagString, "#");
+		
+		HashTagVO hashTagVO = null;
+		for(int i = 0; tokens.hasMoreElements(); i++) {
+			hashTagVO = new HashTagVO();
+			hashTagVO.setTripId(tripId);
+			hashTagVO.setContent(tokens.nextToken());
+			hashTagVO.setDailyId("");
+			
+			hashTagBiz.addHashTag(hashTagVO);
 		}
 		
 		return tripPartBiz.addOneTripPart(tripPartListVO);
@@ -98,7 +125,15 @@ public class TripServiceImpl implements TripService{
 	}
 	@Override
 	public boolean removeTrip(String tripId) {
-		return tripBiz.removeTrip(tripId);
+		
+		boolean isSuccess = hashTagBiz.deleteAllHashTagByTripId(tripId);
+		
+		if (isSuccess) {
+			return tripBiz.removeTrip(tripId);
+		} else {
+			return false;
+		}
+		
 	}
 	@Override
 	public TripVO selectOneTrip(String tripId) {
@@ -108,6 +143,12 @@ public class TripServiceImpl implements TripService{
 		List<TripPartVO> tripPartList = tripPartBiz.selectTripPartByTripId(tripId);
 		tripVO.setTripPartVO(tripPartList);
 		
+		List<HashTagVO> hashTagList = hashTagBiz.getAllHashTagsByTripId(tripId);
+		String hashTagString = "";
+		for (int i=0; i < hashTagList.size(); i++) {
+			hashTagString += hashTagList.get(i).getContent() + " ";
+		}
+		tripVO.setHashTag(hashTagString);
 		
 		return tripVO;
 	}
@@ -149,11 +190,33 @@ public class TripServiceImpl implements TripService{
 		// tripPartVO 에 아이디 setting 해주기.
 		List<TripPartVO> tripPartList 
 				= tripPartBiz.selectTripPartByTripId(tripVO.getTripId());
-		
+		System.out.println(tripPartList.size());
 		List<TripPartVO> tripPartVOList = tripVO.getTripPartVO();
 		
 		for(int i = 0; i< tripPartVOList.size(); i++){
 			tripPartVOList.get(i).setTripPartId(tripPartList.get(i).getTripPartId());
+		}
+		
+		/* delete HashTag */
+		hashTagBiz.deleteAllHashTagByTripId(tripVO.getTripId());
+		
+		/* insert HashTag */
+		String hashTagString = tripVO.getHashTag();
+		System.out.println(hashTagString);
+		
+		hashTagString = hashTagString.replaceAll(" ", "");
+		
+		System.out.println(hashTagString);
+		StringTokenizer tokens = new StringTokenizer(hashTagString, "#");
+		
+		HashTagVO hashTagVO = null;
+		for(int i = 0; tokens.hasMoreElements(); i++) {
+			hashTagVO = new HashTagVO();
+			hashTagVO.setTripId(tripVO.getTripId());
+			hashTagVO.setContent(tokens.nextToken());
+			hashTagVO.setDailyId("");
+			
+			hashTagBiz.addHashTag(hashTagVO);
 		}
 		
 		tripPartBiz.modifyTripPart(tripPartVOList);
@@ -168,6 +231,10 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public TripPartVO selectOneTripPart(String tripPartId) {
 		return tripPartBiz.selectOneTripPart(tripPartId);
+	}
+	@Override
+	public List<HashTagVO> selectAllHashTagByTripId(String tripId) {
+		return hashTagBiz.getAllHashTagsByTripId(tripId);
 	}
 	
 }

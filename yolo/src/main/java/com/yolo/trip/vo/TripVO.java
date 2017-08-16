@@ -17,6 +17,7 @@ public class TripVO {
 	private String overAll;
 	private List<TripPartVO> tripPartVO;
 	private String regionId;
+	private String hashTag;
 	
 	public String getTripId() {
 		return tripId;
@@ -71,6 +72,12 @@ public class TripVO {
 	}
 	public void setRegionId(String regionId) {
 		this.regionId = regionId;
+	}
+	public String getHashTag() {
+		return hashTag;
+	}
+	public void setHashTag(String hashTag) {
+		this.hashTag = hashTag;
 	}
 
 }

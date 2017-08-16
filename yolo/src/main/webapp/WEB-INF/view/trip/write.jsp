@@ -13,8 +13,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Yolo : Trip List</title>
 
+<title>Yolo : Write your trip!</title>
 <style type="text/css">
 
 /* nav bar search box - drop down menu button */
@@ -300,7 +300,7 @@
 					$("#signInForm").serialize(),
 					function(data) {
 						if (data == "OK") {
-							window.location.href = "<c:url value="/home"/>";
+							location.reload();
 						} else if (data == "FAIL") {
 							location.reload();
 						}
@@ -549,12 +549,14 @@
 					</div>
 					
 					<textarea id="overAll" name="overAll" placeholder="총평을 입력해주세요" class="form-control" style="height: 150px;"></textarea>
-					
-					<div class="row" style="text-align: center;">
-						<br/><br/><input type="button" id="writeBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
-					</div>
-					
+					<textarea id="hashTag" name="hashTag" placeholder="HashTag\nEx> #keyword1 #keyword2 ... " class="form-control" style="height: 80px; margin-top:16px"></textarea>
+				
 				</form:form>
+				
+				<div class="row" style="text-align: center;">
+					<br/><br/><input type="button" id="writeBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 25px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
+				</div>
+					
 			</div>
 		</div>
 	

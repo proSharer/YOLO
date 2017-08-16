@@ -42,4 +42,9 @@ public class LikeDaoImpl extends SqlSessionDaoSupport implements LikeDao {
 		return getSqlSession().delete("LikeDao.deleteOneLikeByTripId", likeVO);
 	}
 
+	@Override
+	public List<LikeVO> selectLikeListByTripId(String tripId) {
+		return getSqlSession().selectList("LikeDao.selectLikeListByTripId", tripId);
+	}
+
 }

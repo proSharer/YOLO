@@ -25,6 +25,7 @@
 								, FILE_NM
 								, MAP_X
 								, MAP_Y
+								, REGION
 								 ) 
 				 VALUES			
 				 				(	
@@ -39,6 +40,7 @@
 								, #{fileName}
 								, #{x}
 								, #{y}
+								, #{region}
 								 ) 
 
 	</insert> 
@@ -56,6 +58,7 @@
 				, FILE_NM fileName
 				, MAP_X x
 				, MAP_Y y
+				, REGION region
 		FROM	TR_PART
 		WHERE	TR_ID = #{tripId}
 	</select>
@@ -64,6 +67,12 @@
 		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID P_TR_ID
                         FROM TR_PART
                         WHERE CONT LIKE '%' || #{keyword} || '%' ) 
+		]]>
+	</sql>
+	<sql id="getTripRegionByKeyword">
+		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID R_TR_ID
+                        FROM TR_PART
+                        WHERE REGION = #{keyword} ) 
 		]]>
 	</sql>
 	
@@ -76,8 +85,9 @@
 				CONT = #{content},
 				MAP  = #{map},
 				MAP_X = #{x},
-				MAP_Y = #{y}
+				MAP_Y = #{y},
 				FILE_NM = #{fileName}
+				, REGION = #{region}
 		WHERE	TR_PART_ID = #{tripPartId}
 	</update>
 	
@@ -93,6 +103,7 @@
 				, FILE_NM fileName
 				, MAP_X x
 				, MAP_Y y
+				, REGION region
 		FROM	TR_PART
 		WHERE	TR_PART_ID = #{tripPartId}
 	</select>

@@ -22,11 +22,30 @@ public class UserVO {
 	private String accessToken;
 	private String userNaverApiId;
 	private String userNaverApiName;
+	private String userNaverApiType;
+
 	private String userKakaoApiId;
 	private String userKakaoApiName;
+	private String userKakaoApiType;
 	
 	private String salt;
 	private String extraApiEmail;
+	
+	public String getUserNaverApiType() {
+		return userNaverApiType;
+	}
+
+	public void setUserNaverApiType(String userNaverApiType) {
+		this.userNaverApiType = userNaverApiType;
+	}
+
+	public String getUserKakaoApiType() {
+		return userKakaoApiType;
+	}
+
+	public void setUserKakaoApiType(String userKakaoApiType) {
+		this.userKakaoApiType = userKakaoApiType;
+	}
 	
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;

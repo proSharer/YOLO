@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib  prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Insert title here</title>
+
+<title>Yolo : Trip Update</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -43,7 +45,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" integrity="sha384-ZoaMbDF+4LeFxg6WdScQ9nnR1QC2MIRxA1O9KWEXQwns1G8UNyIEZIQidzb0T1fo" crossorigin="anonymous"></script>
     <![endif]-->
     
-<title>Yolo : Trip Update</title>
 
 <style type="text/css">
 
@@ -82,21 +83,140 @@
 	opacity: 1;
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
+#searchText:focus {
+	
+}
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}  
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #d1d0cf;
+	-webkit-box-shadow: inset 0 0 6px #d1d0cf;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: #d1d0cf;
+}
+
 </style>
+
+<!-- Bootstrap Core CSS -->
+<link href="<c:url value="/static/css/bootstrap.min.css"/>" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="<c:url value="/static/css/font-awesome.min.css"/>"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+<link
+	href="https://fonts.googleapis.com/css?family=Damion|Roboto+Slab|Rokkitt|Abel"
+	rel="stylesheet">
+<!-- Theme CSS -->
+<link href="<c:url value="/static/css/agency.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/static/css/styles.css"/>" rel="stylesheet">
+
+
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrX88apxamUwGdt3GMcN-P3b_C0qFrQBo&libraries=places"></script>
+<script src="<c:url value="/static/js/logger.js"/>"></script>
+
+
 <script type="text/javascript">
 	$().ready(function(){
 		$(".file").hide();
 		$(".preview").hide();
 		
 		$(".update").click(function(){
-			var img = $(this).prev().prev();
+			var img = $(this).prev().prev().prev();
+			console.log(img);
 			$(img).hide();
 			$(img).prev().prev().show();
 			$(this).hide();
 		});
 		
  		$(".file").on("change",function(){
+ 			console.log("test");
             readtoURL(this);
         	var that = $(this);
         	console.log(that);
@@ -114,7 +234,7 @@
 	   	}); 
  		
  		$("#updateBtn").click(function(){
- 			alert("sddssdf");
+ 			
  			$("#updateForm").attr({
  				"action" : "<c:url value="/trip/update/"/>"+$("#tripId").val(),
  				"method" : "post"
@@ -127,6 +247,7 @@
 </script>
 </head>
 
+</head>
 <body id="page-top" class="index">
 
 	<!-- Navigation -->
@@ -140,7 +261,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i
 						class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="<c:url value="/home"/>">`Solo</a>
+				<a class="navbar-brand page-scroll" href='<c:url value="/home"/>'>`Solo</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -148,34 +269,59 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="<c:url value="/home#main" />"
-						id="mainBtn">Main</a></li>
+					<li><a class="page-scroll" href='<c:url value="/home#main"/>' id="mainBtn">Main</a>
+					</li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Life
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href='<c:url value="/daily/list" />' id="dailyBtn">Daily</a>
-							</li>
-							<li><a href='<c:url value="/trip/list"/>' class="page-scroll" id="tripBtn">Trip</a>
+							<li><a href='<c:url value="/daily/list"/>'
+								id="dailyBtn">Daily</a></li>
+							<li><a href='<c:url value="/trip/list"/>' id="tripBtn">Trip</a>
 							</li>
 						</ul></li>
 
 					<c:choose>
-						<c:when test="${user eq null}">
-							<li><a class="page-scroll"
-								href="<c:url value="/user/signIn" />" id="loginBtn">Login</a></li>
-							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a>
-							</li>
+						<c:when test="${ sessionScope._USER_.loginType eq '' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/signOut" />">Logout</a></li>
 						</c:when>
+						<c:when test="${ sessionScope._USER_.loginType eq 'nvr' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
+						</c:when>
+						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
+						</c:when> --%>
+						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
+							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
+							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
+							<li id="kakaoSignout" ><a href="javascript:void(0)" class="page-scroll" >Logout</a></li>
+							<script type="text/javascript">
+								$().ready(function() {
+									$("#kakaoSignout").click(function() {
+										console.log("aa");
+										Kakao.Auth.logout(function () {
+											location.href="<c:url value="/user/kakao/signout"/>"
+										});
+									});
+								});
+							
+							</script>
+							
+						</c:when>
+						
 						<c:otherwise>
-							<li><a class="page-scroll"
-								href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a>
-							</li>
-							<li><a class="page-scroll" href="/yolo/user/signOut">Logout</a>
-							</li>
+							<li><a class="page-scroll" href="<c:url value="/user/signUp" />" id="joinBtn">Join</a></li>
+							<li><a class="page-scroll" data-toggle="modal" data-target="#signInModal" style="text-size:20px;">Login</a></li>
 						</c:otherwise>
 					</c:choose>
+
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -184,51 +330,70 @@
 	</nav>
 	<header id="header"> </header>
 	
-	<section id="detail">
+	<section id="update">
 		<div class="container">
 			<div class="row" style="margin: auto 0;">
 
 			<form id="updateForm" enctype="multipart/form-data">
-					<input type="text" name="title" value="${tripVO.title}">
+				<input type="text" name="title" value="${tripVO.title}" class="form-control"><br/>
+				<hr/>
 					<input type="hidden" id="tripId" value="${tripVO.tripId}">
 					<div class="tripPart">
-					
+					<div class="row">
+					<div class="wrapDiv col-md-6" style="overflow-y:scroll; height: 470px;">
 					<c:set var="i" value="-1"/>
 					<c:forEach items="${tripVO.tripPartVO}" var="tripPart" varStatus="status">
 						<c:set var="i" value="${i+1}"/>
-						<div class="part">
-							<input type="hidden" name="tripPartVO[${i}].tripPartId" value="${tripPart.tripPartId}"><br/>
-							<input type="text" name="tripPartVO[${i}].startTime" value="${tripPart.startTime}"><br/>
-							<input type="text" name="tripPartVO[${i}].endTime" value="${tripPart.endTime}"><br/>
-							<input type="text" name="tripPartVO[${i}].place" value="${tripPart.place}"><br/>
-							<input type="text" name="tripPartVO[${i}].map" value="${tripPart.map}"><br/>
-							<select name="tripPartVO[${i}].timeControl">
-							    
-							    <option value="${tripPart.timeControl}">${tripPart.timeControl}</option>
-							    <c:if test="${tripPart.timeControl eq '오후'}">
-							    	<option value="오전">오전</option>
-							    </c:if>
-							    <c:if test="${tripPart.timeControl eq '오전'}">
-							    	<option value="오후">오후</option>
-							    </c:if>
-							    
-							</select>
-							
-							<input type="file" name="tripPartVO[${i}].file" class="file" ><br/>
-							<img src="<c:url value="/static/img/${tripPart.realFileName}"/>">
-							<img src="#" class="preview"  style='display: block;'/>
-							<input type="button" class="update" value="수정하기"/>
-							
-							<textarea name="tripPartVO[${i}].content" placeholder="내용을 입력해주세요">${tripPart.content}</textarea><br/><hr/>
-						</div>
+								<div class="part">
+									<div class="row">
+										<div class="col-md-6">
+											<input type="text" name="tripPartVO[0].startTime" value="${tripPart.startTime}" class="form-control"><br/>
+										</div>
+										<div class="col-md-6">
+											<input type="text" name="tripPartVO[0].endTime" value="${tripPart.endTime}" class="form-control"><br/>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<input type="text" class ="place form-control" name="tripPartVO[0].place" value="${tripPart.place}"><br/>
+										</div>
+										<div class="col-md-6">
+											<input id="map0" class="contorls form-control" type="text" name="tripPartVO[0].map" 
+												value="${tripPart.map}" size="50" onClick="value=''" />
+										</div>
+									</div>
+									
+									<select name="tripPartVO[0].timeControl" class="form-control">
+								    <option value="${tripPart.timeControl}">${tripPart.timeControl}</option>
+							  		  <c:if test="${tripPart.timeControl eq '오후'}">
+							  		  	<option value="오전">오전</option>
+									  </c:if>
+							  		  <c:if test="${tripPart.timeControl eq '오전'}">
+							    			<option value="오후">오후</option>
+							   		 </c:if>
+									</select><br/>
+
+									
+							        <input type="file" name="tripPartVO[0].file" id="imgInp0" class="file" ><br/>
+
+								<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}" />" width="400px" height="300px"/><br/>
+								<img src="#" class="preview"  style='display: block;'/>
+								<div style="text-align: right; margin-bottom: 5px;">
+									<input type="button" class="update" value="수정하기"/>
+								</div>
+									<textarea name="tripPartVO[0].content" placeholder="내용을 입력해주세요" class="form-control" style="height:150px;">${tripPart.content}</textarea><br/><hr/>
+								</div>
 						</c:forEach>
+					</div>
+					</div>
 					</div>
 		
 					
-					<textarea id="overAll" name="overAll">${tripVO.overAll}</textarea>
-					
-					<input type="button" id="updateBtn" value="submit">
-					
+					<textarea id="overAll" class="form-control" name="overAll" style="height: 150px; margin-top: 20px;">${tripVO.overAll}</textarea> <br/>
+					<textarea id="hashTag" name="hashTag" class="form-control" style="height: 80px; margin-top:16px">${tripVO.hashTag}</textarea>
+					<div style="text-align: center;">
+						<input type="button" id="updateBtn" value="submit" class="btn btn-success btn-sm" style="width: 250px; margin-top: 35px; font-family: 'Open Sans', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;">
+					</div>
 			</form>
 			</div>
 		</div>
