@@ -46,6 +46,7 @@
 	
 	<bean id = "dailyController" class="com.yolo.daily.web.DailyController">
 		<property name="dailyService" ref="dailyServiceImpl"></property>
+		<property name="dailyMainService" ref="dailyMainServiceImpl"></property>
 	</bean>
 	
 	<bean id = "messageController" class="com.yolo.message.web.MessageController">

@@ -12,8 +12,10 @@
 		<property name="dailyMainDao" ref="dailyMainDaoImpl"></property>
 	</bean>
 	
-	
-
+	<bean id ="dailyMainServiceImpl" class="com.yolo.dailyMain.service.DailyMainServiceImpl">
+		<property name="dailyMainBiz" ref="dailyMainBizImpl"></property>
+		<property name="likeBiz" ref="likeBizImpl"></property>
+	</bean>
 
 
 </beans>

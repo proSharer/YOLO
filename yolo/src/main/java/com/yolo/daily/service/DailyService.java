@@ -23,4 +23,5 @@ public interface DailyService {
 	public DailyVO getOneDailyPart(String dailyPatyId);
 	
 	public boolean removeDailyMain(String dailyId);
+	
 }

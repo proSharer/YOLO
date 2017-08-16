@@ -41,4 +41,22 @@ public class DailyMainBizImpl implements DailyMainBiz{
 		return dailyMainDao.deleteDailyMain(dailyId) > 0;
 	}
 
+	@Override
+	public boolean dailyMainLikeCountUpdatePlus(String dailyId) {
+		
+		return dailyMainDao.dailyMainLikeCountUpdatePlus(dailyId) > 0;
+	}
+
+	@Override
+	public boolean dailyMainLikeCountUpdateMinus(String dailyId) {
+		
+		return dailyMainDao.dailyMainLikeCountUpdateMinus(dailyId) > 0;
+	}
+
+	@Override
+	public DailyMainVO getOneDailyMain(String dailyId) {
+	
+		return dailyMainDao.selectOneDailyMain(dailyId);
+	}
+
 }

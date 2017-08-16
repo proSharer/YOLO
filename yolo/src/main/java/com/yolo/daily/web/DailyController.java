@@ -4,28 +4,43 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.yolo.common.web.DownloadUtil;
 import com.yolo.daily.service.DailyService;
 import com.yolo.daily.vo.DailyVO;
+import com.yolo.dailyMain.service.DailyMainService;
 import com.yolo.dailyMain.vo.DailyMainListVO;
 import com.yolo.dailyMain.vo.DailyMainSearchVO;
 import com.yolo.dailyMain.vo.DailyMainVO;
+import com.yolo.like.vo.LikeVO;
+import com.yolo.user.vo.UserVO;
 
 @Controller
 public class DailyController {
 
 	private DailyService dailyService;
+	private DailyMainService dailyMainService;
+	                       
+	
+	public void setDailyMainService(DailyMainService dailyMainService) {
+		this.dailyMainService = dailyMainService;
+	}
+
 	
 	public void setDailyService(DailyService dailyService) {
 		this.dailyService = dailyService;
@@ -167,7 +182,7 @@ public class DailyController {
 	}
 	
 	@RequestMapping("/daily/detail/{id}")
-	public ModelAndView viewDetailPage(@PathVariable String id){
+	public ModelAndView viewDetailPage(@PathVariable String id, HttpServletRequest request){
 		
 		ModelAndView view = new ModelAndView();
 		
@@ -176,6 +191,26 @@ public class DailyController {
 		
 		view.addObject("dailyVOs",dailyPartList);
 		view.addObject("dailyVO",dailyVO);
+		
+
+		DailyMainVO dailyMainVO = dailyMainService.getOneDailyMain(id);
+		view.addObject("dailyMain",dailyMainVO);
+		
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		if(userVO != null){
+		
+			String userId= userVO.getUserId();
+			
+			LikeVO likeVO = new LikeVO();
+			likeVO.setDailyId(id);
+			likeVO.setUserId(userId);
+			
+			boolean isLike = dailyMainService.isLikeByDailyId(likeVO);
+			view.addObject("like", isLike);
+		}
 		
 		view.setViewName("daily/detail");
 		
@@ -214,5 +249,66 @@ public class DailyController {
 		return "redirect:/daily/list";
 		
 	}
+	
+	
+	@RequestMapping(value="/daily/likeCountPlus",method=RequestMethod.POST)
+	@ResponseBody
+	public String dolikeCountPlus(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		String userId= userVO.getUserId();
+		
+		String dailyId = request.getParameter("dailyId");
+		
+		boolean isSuccess = dailyMainService.dailyMainLikeCountPlus(dailyId, userId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int likeCount = dailyMainService.getOneDailyMain(dailyId).getLikeCount();
+		if( isSuccess ) {
+			map.put("status", "success");
+			map.put("likeCount", likeCount);
+		}
+		else { 
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+	
+		return json;
+	}
+	
+	@RequestMapping(value="/daily/likeCountMinus",method=RequestMethod.POST)
+	@ResponseBody
+	public String dolikeCountMinus(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("_USER_");
+		
+		String userId= userVO.getUserId();
+		
+		String dailyId = request.getParameter("dailyId");
+		boolean isSuccess = dailyMainService.dailyMainCountMinus(dailyId, userId);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int likeCount = dailyMainService.getOneDailyMain(dailyId).getLikeCount();
+		if( isSuccess ) {
+			map.put("status", "success");
+			map.put("likeCount", likeCount);
+		}
+		else { 
+			map.put("status", "fail");
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+	
+		return json;
+	}
+	
+	
+	
 
 }

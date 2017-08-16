@@ -8,11 +8,14 @@ import com.yolo.dailyMain.biz.DailyMainBiz;
 import com.yolo.dailyMain.vo.DailyMainListVO;
 import com.yolo.dailyMain.vo.DailyMainSearchVO;
 import com.yolo.dailyMain.vo.DailyMainVO;
+import com.yolo.like.biz.LikeBiz;
+import com.yolo.like.vo.LikeVO;
 
 public class DailyServiceImpl implements DailyService {
 
 	private DailyBiz dailyBiz;
 	private DailyMainBiz dailyMainBiz;
+
 	
 	public void setDailyMainBiz(DailyMainBiz dailyMainBiz) {
 		this.dailyMainBiz = dailyMainBiz;
@@ -64,5 +67,8 @@ public class DailyServiceImpl implements DailyService {
 		
 		return dailyMainBiz.removeDailyMain(dailyId);
 	}
+	
+	
+
 
 }

@@ -52,7 +52,28 @@
 		FROM 	DAILY D
 		WHERE 	D.DL_ID = #{dailyId}
 	</delete>
+	
+	<update id="dailyMainLikeCountUpdatePlus" parameterType="string">
+		UPDATE  DAILY
+		SET     LIKE_CNT = LIKE_CNT + 1
+		WHERE   DL_ID = #{dailyId}
 		
+	</update>
+	
+	<update id="dailyMainCountUpdateMinus" parameterType="string">
+		UPDATE  DAILY
+		SET     LIKE_CNT = LIKE_CNT - 1
+		WHERE   DL_ID = #{dailyId}
+		
+	</update>
+	
+	<select id="selectOneDailyMain" parameterType="string" resultType="DailyMainVO">
+		SELECT 		D.DL_ID , D.TITLE , D.CRT_DT
+					,D.USR_ID , D.LIKE_CNT, D.OVER_ALL
+		FROM 		DAILY D
+		WHERE		D.DL_ID = #{dailyId}
+	</select>
+
 
 
 </mapper>

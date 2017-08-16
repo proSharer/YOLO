@@ -33,8 +33,23 @@ public class DailyMainDaoImpl extends SqlSessionDaoSupport implements DailyMainD
 		return getSqlSession().delete("DailyMainDao.deleteDailyMain", dailyId);
 	}
 
+	@Override
+	public int dailyMainLikeCountUpdatePlus(String dailyId) {
+		
+		return getSqlSession().update("DailyMainDao.dailyMainLikeCountUpdatePlus", dailyId);
+	}
+
+	@Override
+	public int dailyMainLikeCountUpdateMinus(String dailyId) {
 	
-	
-	
+		return getSqlSession().update("DailyMainDao.dailyMainCountUpdateMinus", dailyId);
+													
+	}
+
+	@Override
+	public DailyMainVO selectOneDailyMain(String dailyId) {
+		
+		return getSqlSession().selectOne( "DailyMainDao.selectOneDailyMain", dailyId);
+	}
 	
 }

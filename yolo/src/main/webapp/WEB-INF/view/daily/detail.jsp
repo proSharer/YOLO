@@ -11,6 +11,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<script type="text/javascript" src="<c:url value="/static/js/jquery-3.1.1.min.js"/>"></script>
+<script type="text/javascript">
+$().ready(function(){
+	
+
+	$(".likeBtn").click(function(){
+		var likeVal = $("#like").val();
+		if( likeVal == "false" ){
+			$.ajax({
+			url : "<c:url value="/daily/likeCountPlus"/>",
+			dataType : "json",
+			type : "post",
+			data : {
+				"dailyId" : $("#dailyId").val()
+			}, 
+			success: function(response) {
+				if( response.status == "success"){
+					$(".likeBtn").val("♥");
+					$("#likeCount").html(response.likeCount);
+					$("#like").val("true");
+					console.log(response.likeCount)
+				}
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		 
+			});
+		}
+		else {
+			$.ajax({
+			url : "<c:url value="/daily/likeCountMinus"/>",
+			dataType : "json",
+			type : "post",
+			data : {
+				"dailyId" : $("#dailyId").val()
+			}, 
+			success: function(response) {
+				if( response.status == "success"){
+					$(".likeBtn").val("♡");
+					$("#likeCount").html(response.likeCount);
+					$("#like").val("false")
+					console.log(response.likeCount)
+				}
+		    },
+		    error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"error:"+error);
+		    }
+		 
+			});
+		}
+
+	});
+	
+	
+	
+});
+
+</script>
+
+
+
+
+
+
 <title>Insert title here</title>
 
 <!-- Bootstrap Core CSS -->
@@ -84,7 +149,16 @@
 
 </style>
 
+
+
+
 </head>
+
+
+
+
+
+
 <body id="page-top" class="index">
 
 	<!-- Navigation -->
@@ -147,6 +221,8 @@
 		<div class="container">
 			<div class="row" style="margin: auto 0;">
 <h1> 디테일 페이지</h1>
+<input type="hidden" id="like" value="${like}"/>
+<input type="hidden" id="dailyId" value="${dailyVO.dailyId}"/>
 
 <table>
 	
@@ -183,6 +259,19 @@
 
 
 </table>
+
+	<div style="text-align: right; margin-right: 20px">
+					좋아요 : <span id="likeCount"> ${dailyMain.dailyId}</span>
+					<c:if test="${!empty sessionScope._USER_.userId}">
+						<c:if test="${!like}">
+							<input style="width: 30px; height: 30px; background-color: transparent; border-color: transparent;" type="button" class="likeBtn" value="♡"/>
+						</c:if>
+						
+						<c:if test="${like}">
+							<input style="width: 30px; height: 30px; background-color: transparent; border-color: transparent;" type="button" class="likeBtn" value="♥"/>
+						</c:if><br/>
+						
+					</c:if> 
 
 
 

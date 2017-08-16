@@ -14,4 +14,10 @@ public interface DailyMainBiz {
 		
 		public boolean removeDailyMain(String dailyId);
 		
+		public boolean dailyMainLikeCountUpdatePlus(String dailyId);
+		
+		public boolean dailyMainLikeCountUpdateMinus(String dailyId);
+		
+		public DailyMainVO getOneDailyMain(String dailyId);
+		
 }

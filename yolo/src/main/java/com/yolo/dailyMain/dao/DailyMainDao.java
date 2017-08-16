@@ -15,4 +15,10 @@ public interface DailyMainDao {
 	
 	public int deleteDailyMain(String dailyId);
 	
+	public int dailyMainLikeCountUpdatePlus(String dailyId);
+	
+	public int dailyMainLikeCountUpdateMinus(String dailyId);
+	
+	public DailyMainVO selectOneDailyMain(String dailyId);
+	
 }
