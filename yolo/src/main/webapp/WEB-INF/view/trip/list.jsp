@@ -492,6 +492,8 @@
 	</form>
 
 	<%@include file="/WEB-INF/view/common/commonfooter.jsp"%>
+	
+	<div><c:import url="http://192.168.201.29:3000"/></div>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>

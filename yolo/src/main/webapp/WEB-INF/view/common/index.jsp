@@ -373,9 +373,9 @@
 				<div class="row">
 					<div class="col-lg-12 text-center">
 						<h2 class="section-heading"
-							style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">New Post</h2>
+							style="font-family: 'Abel', sans-serif; font-weight: normal; color: #333; font-size: 35px">Recommend</h2>
 						<br /> <br />
-						<h3 class="section-subheading text-muted">- 회원님을 위한 추천 -</h3>
+						<h3 class="section-subheading text-muted">- 이런 글은 어때요? -</h3>
 					</div>
 				</div>
 				<div class="row" style="text-align: center;">
