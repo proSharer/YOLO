@@ -41,7 +41,7 @@ public class MainServiceImpl implements MainService {
 	
 	@Override
 	public List<TripVO> selectAllRecommendTrips(UserVO userVO) {
-		if( userVO == null ){
+		if( userVO == null || userVO.getUserId() == null ){
 			userVO = new UserVO();
 			userVO.setUserId("");
 		}
