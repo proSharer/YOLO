@@ -58,17 +58,17 @@
 		<select id="getAllTrips" resultMap="TripMap" parameterType="TripSearchVO">
 		<include refid="CommonDao.PAGING_HEADER"/>
 			SELECT	/* [TripDao][getAllTrip] */
-					TR_ID 
+					DISTINCT TR_ID
 					, TITLE
 					, CRT_DT
 					, USR_ID
 					, LIKE_CNT
-					, OVER_ALL
+					, dbms_lob.substr(OVER_ALL) 
 			FROM	TRIP<if test="searchType == 4">T, <include refid="TripPartDao.getTripContentByKeyword"/> P 
 			WHERE T.TR_ID = P.P_TR_ID
 			</if> 
 			<if test="searchType == 5">T, <include refid="TripPartDao.getTripRegionByKeyword"/> R 
-			WHERE T.TR_ID = R.R_TR_ID
+			WHERE	T.TR_ID = R.R_TR_ID
 			</if> 
 			<if test="searchType == 6"> T, <include refid="HashTagDao.selectHashTagsByContent"/> H
 			WHERE T.TR_ID = H.H_TR_ID
@@ -91,6 +91,7 @@
 				WHERE	OVER_ALL LIKE '%' || #{keyword} || '%' 
 				</if> 
 			</if>
+			ORDER	BY CRT_DT DESC
 
 			
 		<include refid="CommonDao.PAGING_FOOTER"/>
