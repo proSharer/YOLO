@@ -70,9 +70,10 @@
 		]]>
 	</sql>
 	<sql id="getTripRegionByKeyword">
-		 <![CDATA[ (  SELECT dbms_lob.substr(CONT), TR_ID R_TR_ID
+		 <![CDATA[ (  SELECT TR_ID R_TR_ID
                         FROM TR_PART
-                        WHERE REGION = #{keyword} ) 
+                        WHERE REGION = #{keyword} 
+                         ) 
 		]]>
 	</sql>
 	

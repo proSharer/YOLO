@@ -39,27 +39,27 @@ public class MainController {
 		List<String> content = new ArrayList<>();
 		
 		for (int i = 0; i < hashTagList.size(); i++) {
-			if (hashTagList.get(i).getCount() >= 20) {
+			if (hashTagList.get(i).getCount() >= 7) {
 				//sizeArray[i] = 7;
 				size.add(7);
 			}
-			else if (hashTagList.get(i).getCount() >= 15) {
+			else if (hashTagList.get(i).getCount() >= 6) {
 				//sizeArray[i] = 6;
 				size.add(6);
 			}
-			else if (hashTagList.get(i).getCount() >= 10) {
+			else if (hashTagList.get(i).getCount() >= 5) {
 				//sizeArray[i] = 5;
 				size.add(5);
 			}
-			else if (hashTagList.get(i).getCount() >= 8) {
+			else if (hashTagList.get(i).getCount() >= 4) {
 				//sizeArray[i] = 4;
 				size.add(4);
 			}
-			else if (hashTagList.get(i).getCount() >= 6) {
+			else if (hashTagList.get(i).getCount() >= 3) {
 				//sizeArray[i] = 3;
 				size.add(3);
 			}
-			else if (hashTagList.get(i).getCount() >= 4) {
+			else if (hashTagList.get(i).getCount() >= 2) {
 				//sizeArray[i] = 2;
 				size.add(2);
 			}

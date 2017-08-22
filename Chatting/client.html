@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://192.168.201.29:1337/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://192.168.201.29:1337/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+
+        // Spring이 접근하기 위해  $().ready(); 밖에서 선언
+        var newPostUrl = "";
+
+        $().ready(function(){
+
+            //var newPostUrl = "${newPostUrl}";
+            
+            var name = $('#loginUserId').val();
+            var myId = "";
+            var receiver = "all";
+
+            var socket = io.connect("http://192.168.201.29:1337"); // socket 연결
+
+
+            // 대화방 접속
+            socket.emit("join", name); // socket이 join을 호출
+            
+            // 고유 아이디 받기
+            socket.on("getMyId",function(id){
+                myId = id; // 파라미터로 전달받은 id를 myId에 넣어준다.
+        
+            });
+
+            // 접속 사용자 보여주기
+            socket.on("displayAllUsers", function(allUsers) { // socket.on = 이벤트 발생
+                console.log(allUsers);
+
+                // 접속자 현황 초기화 
+                $("#connectedUsers").html("");
+
+                // 접속자 현황 갱신
+                for(var i in allUsers) {
+                    $("#connectedUsers").append($("<div data-id='" + allUsers[i].id + "'><a href='#'>" + allUsers[i].name + "</a></div>"));
+                }
+
+                $("#connectedUsers").append($("<div data-id='all' style='font-weight: bold'><a href='#'>Send to all</a></div>"))
+            });
+            
+            $("#connectedUsers").on("click", "div", function() {
+                //alert($(this).data("id"));
+                receiver = $(this).data("id");
+            });
+
+            // 메세지 전달 받기
+            socket.on("receive",function(data){
+                var message = $("<div style='margin-top:5px;'>"+data.name+" | "+ data.chat  + "</div>");
+
+                if( myId == data.sender ){
+                    if (data.receiver != "all") {
+                        message = $("<div style='margin-top:5px;'>"+data.name+"(secret) | "+ data.chat  + "</div>");
+                    }
+                    message.css({
+                        "color" : "#FF0000"
+                    });
+                }
+                
+                else if (data.receiver != "all") {
+                    message = $("<div style='margin-top:5px;'>"+data.name+"(secret) | "+ data.chat  + "</div>");
+                    message.css({
+                        "color" : "#0053d8"
+                    });
+                }
+
+                $("#chattingBox").append(message);
+            });
+
+            socket.on("popupNews", function(newPostUrl){
+                if (confirm("New Post just arrived! Do you want to check?")){
+                    location.href = newPostUrl;
+                }
+            });         
+
+            $("#hiddenButton").click(function(){
+                socket.emit("newPost", newPostUrl);    
+            });
+
+            $("#button").click(function(){
+                var chat = $("#chat").val();
+            
+                socket.emit("broadcast",{
+                    "name" : name,
+                    "chat" : chat,
+                    "sender" : myId,
+                    "receiver" : receiver
+                });
+
+                $("#chat").val("");
+                $("#chat").focus();
+            });
+
+            $("#chat").keypress(function(event){
+                if(event.which == 13){
+                    $("#button").click();
+                    return false;
+                }
+            });
+
+           
+
+        });
+    </script>
+    
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Inconsolata');
+    </style>
+
+<body>
+
+    <div style="text-align: center">
+        <div id="chattingBody" style="display: inline-block; margin: auto; vertical-align: top; font-family: 'Inconsolata', monospace; text-align: left">
+            <div id="chattingBox" style="overflow-y: scroll; width: 750px; height: 500px;"></div>
+                <div style="margin-top: 20px;">
+                    <input type="text" id="chat" style="width: 650px; margin: auto; height: 31px;"/>
+                    <input type="button" id="button" class="btn btn-success btn-sm" value="Send" style="margin-left: 20px; padding-left: 16px; padding-right: 16px; font-size: 14px;"/><br/>
+                </div>
+            </div>
+
+            <div id="connectedUsers" style="margin-left:20px; padding-top: 20px;padding-bottom: 20px; display: inline-block; width:200px; height: 500px; background-color: #e1e3e8; text-align: center; font-family: 'Inconsolata', monospace;"></div>
+    </div>
+    
+    <div id="hiddenButton"></div>
+</body>
+</head>
+</html>

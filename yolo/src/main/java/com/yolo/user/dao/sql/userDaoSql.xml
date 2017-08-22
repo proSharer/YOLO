@@ -32,7 +32,7 @@
 		<result column="PWS" property="password"/>
 		<result column="JOIN_DT" property="joinDate"/>
 		<result column="AUTH_ID" property="authId"/>
-		<result column="EXTRA_API_EMAIL" property="extraApiEmail"/>
+<!-- 		<result column="EXTRA_API_EMAIL" property="extraApiEmail"/> -->
 	</resultMap>
 	
 	<select id="selectOneUser" resultType="UserVO" resultMap="UserMap">
