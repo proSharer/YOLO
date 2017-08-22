@@ -12,7 +12,7 @@
 							, JOIN_DT
 							, SALT
 							, AUTH_ID
-							, EXTRA_API_EMAIL
+<!-- 							, EXTRA_API_EMAIL -->
 						)
 		VALUES
 						(
@@ -22,7 +22,7 @@
 							, SYSDATE
 							, #{salt}
 							, #{authId}
-							, #{extraApiEmail}
+<!-- 							, #{extraApiEmail} -->
 						)
 	</insert>
 	

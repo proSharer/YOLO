@@ -588,8 +588,8 @@ form.login a:hover {
 								<div class="tab-content" id="replyList" style="padding:10px; padding-left: 30px; display:none;"> 
 			 						<table>
 										<tr>
-											<th style="width:35%;">Writer</th>
-											<th style="width:30%;">Content</th>
+											<th style="width:25%;">Writer</th>
+											<th style="width:%;">Content</th>
 										</tr>
 										<c:forEach items="${tripReplyList}" var="reply">
 											<tr>
