@@ -428,7 +428,7 @@
 					<span style="font-size: x-large; color: #777">${tripVO.title}</span>
 				</div>
 				<hr/>
-				<span style="margin-left: 82%; color: #777" >${tripVO.createDate}  /  ${tripVO.userId}</span>
+				<span style="margin-left: 80%; color: #777" >${tripVO.createDate}  /  ${tripVO.userId}</span>
 				<br/>
 				<br/>
 				<br/>
@@ -437,16 +437,15 @@
 						<c:forEach items="${tripVO.tripPartVO}" var="tripPart">
 							<div>
 						 	<img src="<c:url value="/trip/detail/download/${tripPart.tripPartId}"/>" width="400px" height="300px"/><br/>
-							시작시간 : ${tripPart.startTime}시<br/>
-							끝나는시간 : ${tripPart.endTime}시( ${tripPart.timeControl} )<br/>
-							장소 : ${tripPart.place}<br/>
-							주소 : ${tripPart.map}<br/><br/>
-							${tripPart.content}<br/>
+							<br/>${tripPart.startTime}시 ~ ${tripPart.endTime}시 ( ${tripPart.timeControl} ) <br/><br/>
+							<div style="font-weight: bold; font-size: 18.5px;">${tripPart.place}</div><br/>
+							<div style="color: #777; font-size: 13px;">${tripPart.map}</div><br/><br/>
+							<textarea style="width: 80%; overflow: visible; resize: none; height: 150px;" readonly="readonly">${tripPart.content}</textarea><br/>
 							<div class="x" style="display:none">${tripPart.x}</div>
 							<div class="y"style="display:none">${tripPart.y}</div>
-							</div><br>
+							</div><br/><br/>
 						</c:forEach>
-						<br/><br/>총 평 : ${tripVO.overAll}<br/>
+						<br/><hr style="border-top: 1px solid #dedede;" /><br/><br/><textarea style="width: 80%;height:200px; border:0;overflow-y:hidden;background:clear; resize: none;" readonly="readonly">${tripVO.overAll}</textarea><br/><br/>
 						<br/><br/>
 						<div style="text-align: right; margin-right: 11%;">
 							<c:forEach items="${hashTagList}" var="hashTag">

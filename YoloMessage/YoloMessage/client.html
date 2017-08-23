@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://192.168.201.29:3000/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://192.168.201.29:3000/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+
+        // Spring이 접근하기 위해  $().ready(); 밖에서 선언
+
+        document.addEventListener('DOMContentLoaded',function(){
+            //$().ready(function(){
+
+            var name = $('#loginUserId').val();
+            //var name = prompt('enter your name!');
+            var myId = "";
+            var receiver = "all";
+            var chat = "";
+
+            var toasts;
+
+            var socket = io.connect("http://192.168.201.29:3000"); // socket 연결
+
+
+            // 로그인 시 대화방 접속
+            socket.emit("join", name); // socket이 join을 호출
+
+            // 로그인 시 고유 아이디 받기
+            socket.on("getMyId",function(id){
+                myId = id; // 파라미터로 전달받은 id를 myId에 넣어준다.
+            });
+
+            // 로그인 시 메세지 전달 받기
+            socket.on("receive",function(data){
+                if( name == data.receiverName ){
+                    toasts = [new Toast('warning', 'toast-bottom-right', "[ " + data.name + " ]" + "<br/>" + data.chat)];
+                    delayToasts();
+                }
+            });
+
+            $("#submitMsgBtn").click(function(){
+                chat = $("#content").val();
+                var receiverName = $("#receiver").val();
+
+                socket.emit("broadcast",{
+                    "name" : name,
+                    "chat" : chat,
+                    "sender" : $("#loginUserId").val(),
+                    "receiver" : receiver,
+                    "receiverName" : receiverName
+                });
+
+                $.post(
+                    '',
+                    $("#messageForm").serialize(),
+                    function(data) {
+                        if (data == "OK") {
+                            alert("Successfully sent message!");
+                            window.close();
+                        } else if (data == "FAIL") {
+                            alert("Failed to send message...");
+                        }
+                });
+            });
+
+            function Toast(type, css, msg) {
+                this.type = type;
+                this.css = css;
+                this.msg = msg;
+            }
+
+            //var toasts = [new Toast('warning', 'toast-bottom-right', chat)];
+
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.options.extendedTimeOut = 0; //1000;
+            toastr.options.timeOut = 9000;
+            toastr.options.fadeOut = 250;
+            toastr.options.fadeIn = 250;
+
+            var i = 0;
+
+            $('#tryMe').click(function () {
+                $('#tryMe').prop('disabled', true);
+                delayToasts();
+            });
+
+            function delayToasts() {
+                if (i === toasts.length) { return; }
+                var delay = i === 0 ? 0 : 2100;
+                window.setTimeout(function () { showToast(); }, delay);
+
+                // re-enable the button
+                if (i === toasts.length-1) {
+                    window.setTimeout(function () {
+                        $('#tryMe').prop('disabled', false);
+                        i = 0;
+                    }, delay + 1000);
+                }
+            }
+
+            function showToast() {
+                var t = toasts[i];
+                toastr.options.positionClass = t.css;
+                toastr[t.type](t.msg);
+                i++;
+                delayToasts();
+            }
+
+        });
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+        #toast-container > .toast {
+            background-image: none !important;
+        }
+
+        #toast-container > .toast:before {
+            position: fixed;
+            font-family: FontAwesome;
+            font-size: 24px;
+            line-height: 18px;
+            float: left;
+            color: #FFF;
+            padding-right: 0.5em;
+            margin: auto 0.5em auto -1.5em;
+        }
+
+        #toast-container > .toast-warning:before {
+            content: "\f003";
+        }
+
+    </style>
+
+<body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+</body>
+</head>
+</html>
