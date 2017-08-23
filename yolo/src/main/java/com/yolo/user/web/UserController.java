@@ -165,10 +165,14 @@ public class UserController {
 		List<TripReplyVO> tripReplyList = new ArrayList<TripReplyVO>();
 		TripReplyVO replyVO;
 		
-		for ( int i=0; i<tripList.size();i++){
+		for ( int i = 0; i<tripList.size();i++){
 			String tripId = tripList.get(i).getTripId();
+			String title = tripList.get(i).getTitle();
 			tripReply = userService.getAllReplies(tripId);
-			
+			if ( title.length() >= 14 ){
+				title = title.substring(0, 14)+"...";
+				tripList.get(i).setTitle(title);
+			}
 			for ( int j = 0; j< tripReply.size(); j++){
 				replyVO = new TripReplyVO();
 				String content = tripReply.get(j).getContent();
@@ -181,6 +185,7 @@ public class UserController {
 				replyVO.setUserId(userId);
 				tripReplyList.add(replyVO);
 			}
+	
 		}
 		for(int i = 0; i < MessagesBySender.size() ; i++){
 			String input = MessagesBySender.get(i).getContent();

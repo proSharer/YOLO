@@ -1,7 +1,9 @@
 package com.yolo.common.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.yolo.hashtag.biz.HashTagBiz;
 import com.yolo.hashtag.vo.PopularHashTagVO;
@@ -40,7 +42,7 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	@Override
-	public List<TripVO> selectAllRecommendTrips(UserVO userVO) {
+	public Set<TripVO> selectAllRecommendTrips(UserVO userVO) {
 		if( userVO == null || userVO.getUserId() == null ){
 			userVO = new UserVO();
 			userVO.setUserId("");
@@ -49,10 +51,10 @@ public class MainServiceImpl implements MainService {
 		if ( likeList.size() == 0 ){
 			return null;
 		}
-		List<TripVO> tripList = null;
+		Set<TripVO> tripList = null;
 		List<LikeVO> like;
 		List<LikeVO> otherLike;
-		List<TripVO> recommendList = new ArrayList<TripVO>();
+		Set<TripVO> recommendList = new HashSet<TripVO>();
 		TripVO tripVO = null;
 	
 		for ( int i = 0 ; i < likeList.size(); i++) {
@@ -63,7 +65,7 @@ public class MainServiceImpl implements MainService {
 			
 			for ( int j = 0 ; j < like.size(); j++ ){ // 이리스트만큼 
 				
-				tripList = new ArrayList<TripVO>();
+				tripList = new HashSet<TripVO>();
 				String userId = like.get(j).getUserId(); // 여기서 좋아요한 유저를 가져와서 
 
 				if ( !userId.equals(userVO.getUserId()) ) { // 유저가 지금 나와같지 않다면 
