@@ -318,11 +318,6 @@
 							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
 							<li><a class="page-scroll" href="<c:url value="/user/naver/signout" />">Logout</a></li>
 						</c:when>
-						<%-- <c:when test="${ sessionScope._USER_.loginType eq 'ggl' }">
-							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
-							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>
-							<li><a class="page-scroll" href="<c:url value="/user/google/signout" />">Logout</a></li>
-						</c:when> --%>
 						<c:when test="${ sessionScope._USER_.loginType eq 'kko' }">
 							<li><a class="page-scroll" href="<c:url value="/user/mypage" />" id="mypageBtn">MyPage</a></li>
 							<li><a class="page-scroll" href="<c:url value="/chat" />" id="chatBtn">Chat</a></li>

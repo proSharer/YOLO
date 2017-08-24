@@ -146,8 +146,8 @@
 		<section id="list">
 	
 			<div class="container">
-				<div class="row">
-<h1> 리스트 페이지</h1>
+				<div class="row" style="text-align: center;">
+<%-- <h1> 리스트 페이지</h1>
 <table>
 	<tr>
 		<th>아이디</th>
@@ -178,7 +178,9 @@
 </table>
 <p>
 		<a href="<c:url value ="/daily/write"/>" >글쓰기</a>
-	</p>
+	</p> --%>
+	
+				<img src="<c:url value="/static/img/center_img.png"/>" />
 			</div>
 		</div>
 	</section>
