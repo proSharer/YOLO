@@ -2,6 +2,7 @@ package com.yolo.common.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,7 +73,7 @@ public class MainController {
 			content.add(hashTagList.get(i).getContent());
 		}
 		
-		List<TripVO> recommendList = mainService.selectAllRecommendTrips(user);
+		Set<TripVO> recommendList = mainService.selectAllRecommendTrips(user);
 		
 		if ( recommendList != null ){
 			view.addObject("recommendList", recommendList);

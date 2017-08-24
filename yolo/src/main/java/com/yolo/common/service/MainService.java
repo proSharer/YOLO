@@ -1,6 +1,7 @@
 package com.yolo.common.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.yolo.hashtag.vo.PopularHashTagVO;
 import com.yolo.trip.vo.TripVO;
@@ -12,6 +13,6 @@ public interface MainService {
 	
 	public List<PopularHashTagVO> getPopularHashTagListByTripId();
 	
-	public List<TripVO> selectAllRecommendTrips(UserVO userVO);
+	public Set<TripVO> selectAllRecommendTrips(UserVO userVO);
 
 }

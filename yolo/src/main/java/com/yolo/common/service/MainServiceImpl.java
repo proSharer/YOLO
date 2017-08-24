@@ -1,7 +1,9 @@
 package com.yolo.common.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.yolo.hashtag.biz.HashTagBiz;
 import com.yolo.hashtag.vo.PopularHashTagVO;
@@ -40,47 +42,47 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	@Override
-	public List<TripVO> selectAllRecommendTrips(UserVO userVO) {
+	public Set<TripVO> selectAllRecommendTrips(UserVO userVO) {
 		if( userVO == null || userVO.getUserId() == null ){
 			userVO = new UserVO();
 			userVO.setUserId("");
 		}
-		List<LikeVO> likeList = likeBiz.getAllLikesByUserID(userVO);
+		List<LikeVO> likeList = likeBiz.getAllLikesByUserID(userVO); // 내가좋아요한 리스트.
 		if ( likeList.size() == 0 ){
 			return null;
 		}
-		List<TripVO> tripList = null;
+		Set<TripVO> tripList = null;
 		List<LikeVO> like;
 		List<LikeVO> otherLike;
-		List<TripVO> recommendList = new ArrayList<TripVO>();
+		Set<TripVO> recommendList = new HashSet<TripVO>();
 		TripVO tripVO = null;
 	
 		for ( int i = 0 ; i < likeList.size(); i++) {
 			
 			like = new ArrayList<LikeVO>();	
-			String tripId = likeList.get(i).getTripId();
-			like = likeBiz.getLikeListByTripId(tripId);
+			String tripId = likeList.get(i).getTripId();// 내가좋아요한 tripId 
+			like = likeBiz.getLikeListByTripId(tripId); // 내가 좋아요한 tripId의 좋아요 list
 			
-			for ( int j = 0 ; j < like.size(); j++ ){
+			for ( int j = 0 ; j < like.size(); j++ ){ // 이리스트만큼 
 				
-				tripList = new ArrayList<TripVO>();
-				String userId = like.get(j).getUserId();
+				tripList = new HashSet<TripVO>();
+				String userId = like.get(j).getUserId(); // 여기서 좋아요한 유저를 가져와서 
 
-				if ( !userId.equals(userVO.getUserId()) ) {
+				if ( !userId.equals(userVO.getUserId()) ) { // 유저가 지금 나와같지 않다면 
 					
-					UserVO user = new UserVO();
+					UserVO user = new UserVO(); 
 					user.setUserId(userId);
-					otherLike = likeBiz.getAllLikesByUserID(user);
+					otherLike = likeBiz.getAllLikesByUserID(user); // 그 또다른 유저가 좋아요한 목록을 가져와서 
 					
 					for ( int k = 0 ; k< otherLike.size(); k++ ){
 						
 						tripVO = new TripVO();
-						String trip = otherLike.get(k).getTripId(); 
-						tripVO = tripBiz.selectOneTrip(trip);
-						tripList.add(tripVO);
+						String trip = otherLike.get(k).getTripId(); // 그좋아요한 목록의 id 를가져와서
+						tripVO = tripBiz.selectOneTrip(trip); // 하나씩 가져와..
+						tripList.add(tripVO); // 그래서 리스트에 담아 
 						
 					}
-					recommendList.addAll(tripList);
+					recommendList.addAll(tripList); // 리스트 ++
 				} 
 				
 			}
